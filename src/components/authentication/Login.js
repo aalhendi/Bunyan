@@ -1,7 +1,7 @@
 import React from 'react';
 import { GlobalStyle } from './styles';
 
-function Signin() {
+function Login() {
     return (
         <div>
             <GlobalStyle />
@@ -10,4 +10,4 @@ function Signin() {
     );
 }
 
-export default Signin;
+export default Login;

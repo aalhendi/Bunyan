@@ -4,7 +4,7 @@ import React from 'react';
 import { CoverImage } from "./styles";
 
 
-function Signup() {
+function Register() {
     return (
         <div className="d-md-flex h-md-100 align-items-center">
 
@@ -23,4 +23,4 @@ function Signup() {
     );
 }
 
-export default Signup;
+export default Register;
