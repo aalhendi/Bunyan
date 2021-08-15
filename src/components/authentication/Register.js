@@ -1,9 +1,21 @@
 import React from "react";
+import authStore from "../../stores/authStore"
+import { observer } from "mobx-react";
+
+
+import { Redirect } from 'react-router-dom';
+
 
 /* Styles */
 import { CoverImage } from "./styles";
 
 function Register() {
+    /* Submit handler */
+    const handleSubmit = () => {
+        /* for testing */
+        authStore.user = true
+    }
+    if (authStore.user) return <Redirect to="/products" />;
     return (
         <div className="d-md-flex h-md-100 align-items-center">
             {/* Left Side */}
@@ -16,7 +28,7 @@ function Register() {
                 <div className="align-items-center h-md-100 p-5 justify-content-center">
                     {/* Company Logo */}
                     <div className="brand">
-                        <img />
+                        <img alt="LOGO" />
                         LOGO
                     </div>
 
@@ -24,12 +36,12 @@ function Register() {
                     <p className="text-center">Create An Account</p>
 
                     {/* Register Form */}
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="row g-3 mb-3">
-                            <div class="col">
+                            <div className="col">
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
                                     placeholder="Username"
                                 />
                             </div>
@@ -39,6 +51,7 @@ function Register() {
                                 type="password"
                                 className="form-control"
                                 placeholder="Password"
+                                autoComplete="password"
                             />
                         </div>
                         <button type="submit" className="btn btn-dark w-100 d-grid mx-auto">
@@ -51,4 +64,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default observer(Register);

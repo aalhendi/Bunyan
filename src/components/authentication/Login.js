@@ -17,7 +17,7 @@ function Login() {
                 <div className="align-items-center h-md-100 p-5 justify-content-center">
                     {/* Company Logo */}
                     <div className="brand">
-                        <img />
+                        <img alt="LOGO" />
                         LOGO
                     </div>
 
@@ -27,10 +27,10 @@ function Login() {
                     {/* Register Form */}
                     <form>
                         <div className="row g-3 mb-3">
-                            <div class="col">
+                            <div className="col">
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
                                     placeholder="Username"
                                 />
                             </div>
