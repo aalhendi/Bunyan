@@ -42,7 +42,7 @@ const Signin = ({ navigation }) => {
             placeholder="password" // mx={4}
           />
         </View>
-        <Button> Sign in</Button>
+        <Button onPress={() => navigation.replace("Home")}> Sign in</Button>
       </Box>
       <View>
         <AuthOther>don't have an account?</AuthOther>
