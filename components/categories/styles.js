@@ -19,4 +19,13 @@ export const style = StyleSheet.create({
     fontWeight: "500",
     color: "#5588A3",
   },
+  card: {
+    flex: 1,
+    marginHorizontal: "5%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    shadowRadius: 7.5,
+    shadowOpacity: 0.15,
+    marginTop: "5%",
+  },
 });
