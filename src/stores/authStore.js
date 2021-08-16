@@ -60,6 +60,8 @@ class AuthStore {
         }
     }
 
+    /* Profile request */
+
 }
 const authStore = new AuthStore() // create instance
 authStore.checkForToken()
