@@ -55,12 +55,20 @@ const Singup = ({ navigation }) => {
             <View style={{ marginBottom: 10 }}>
               <Input
                 InputLeftElement={
+                  <Icon as={<Entypo name="phone" />} size="md" m={2} />
+                }
+                placeholder="number" // mx={4}
+              />
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <Input
+                InputLeftElement={
                   <Icon as={<Entypo name="email" />} size="md" m={2} />
                 }
                 placeholder="email" // mx={4}
               />
             </View>
-            <Button>Sign up</Button>
+            <Button onPress={() => navigation.replace("Home")}>Sign up</Button>
           </Box>
           <AuthOther>already have an account?</AuthOther>
           <AuthButtonText onPress={() => navigation.navigate("Signin")}>

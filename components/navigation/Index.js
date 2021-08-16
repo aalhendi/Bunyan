@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Signin from "../authentication/Signin";
 import Signup from "../authentication/Signup";
 import Home from "../Home";
+import CategoryList from "../categories/CategoryList";
 
 const Stack = createStackNavigator();
 
@@ -13,12 +14,9 @@ export default RootNavigator = () => {
       initialRouteName="Signin"
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#6b705c",
+          backgroundColor: "#5588A3",
         },
         headerTintColor: "white",
-        headerTitleStyle: {
-          fontWeight: "bold",
-        },
       }}
     >
       <Stack.Screen
@@ -38,6 +36,13 @@ export default RootNavigator = () => {
       <Stack.Screen
         name="Home"
         component={Home}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="CategoryList"
+        component={CategoryList}
         options={{
           headerShown: false,
         }}

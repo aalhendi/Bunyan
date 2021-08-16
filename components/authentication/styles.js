@@ -20,8 +20,3 @@ export const AuthBackground = styled.ImageBackground`
   flex: 1;
   width: 100%;
 `;
-export const AuthWhiteBackground = styled.ImageBackground`
-  width: 100%;
-  height: 50%;
-  opacity: 0.5;
-`;

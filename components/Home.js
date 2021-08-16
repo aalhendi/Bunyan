@@ -6,12 +6,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { Feather, AntDesign } from "@expo/vector-icons";
 import { observer } from "mobx-react";
 import { style } from "./styles";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View
@@ -28,7 +27,10 @@ const Home = () => {
             <Text style={style.nameText}> Mohammad Alzamami </Text>
           </View>
         </View>
-        <TouchableOpacity style={style.mainContainer}>
+        <TouchableOpacity
+          style={style.mainContainer}
+          onPress={() => navigation.navigate("CategoryList")}
+        >
           <Text style={style.mainText}>Your Home</Text>
           <View style={style.homeIconStyled}>
             <AntDesign name="home" size={137.5} color="white" />
@@ -45,8 +47,7 @@ const Home = () => {
             <View style={style.tryContainer}></View>
             <View style={style.tryContainer}></View>
             <View style={style.tryContainer}></View>
-            <View style={style.tryContainer2}></View>
-            <View style={style.tryContainer2}></View>
+            <View style={style.tryContainer}></View>
           </ScrollView>
         </View>
       </View>

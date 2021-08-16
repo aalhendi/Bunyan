@@ -59,7 +59,8 @@ export const style = StyleSheet.create({
   activityView: {
     backgroundColor: "white",
     width: "100%",
-    // flexGrow: 1,
+    flexGrow: 1,
+    height: "10%",
     marginTop: "5%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
