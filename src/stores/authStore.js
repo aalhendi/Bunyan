@@ -15,6 +15,7 @@ class AuthStore {
     /* Create New Contractor */
     register = async (newUser) => {
         try {
+            console.log(newUser)
             const res = await instance.post("/register", newUser)
             this.setUser(res.data.token)
         } catch (error) {

@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CoverImage, Logo } from './styles';
 import LoGo from "../../media/LOGO.svg";
 
 
 /* Routes Library */
 import { Link } from "react-router-dom"
+import authStore from '../../stores/authStore';
 
 
 function Login() {
+    /* New State to handle the object of user */
+    const [user, setUser] = useState({
+        username: "",
+        password: ""
+    })
+
+    /* handle the input change */
+    const handleChange = (event) => {
+        setUser({ ...user, [event.target.name]: event.target.value })
+    }
+
+    /* handle sumbit of the form */
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        authStore.login(user)
+    }
+
     return (
         <div className="d-md-flex h-md-100 align-items-center">
             {/* Left Side */}
@@ -28,21 +46,25 @@ function Login() {
                     <h3 className="text-center mb-3">Sign into your account</h3>
 
                     {/* Register Form */}
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="row g-3 mb-3">
                             <div className="col">
                                 <input
+                                    name="username"
                                     type="text"
                                     className="form-control"
                                     placeholder="Username"
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
                         <div className="mb-3">
                             <input
+                                name="password"
                                 type="password"
                                 className="form-control"
                                 placeholder="Password"
+                                onChange={handleChange}
                             />
                         </div>
                         <button type="submit" className="btn btn-dark w-100 d-grid mx-auto">
