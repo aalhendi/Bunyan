@@ -1,8 +1,5 @@
-/* Imports */
-const SequlizeSlugify = require("sequelize-slugify");
-
 module.exports = (sequelize, DataTypes) => {
-  const Test = sequelize.define("Test", {
+  const Company = sequelize.define("Company", {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -13,10 +10,9 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
-    slug: { type: DataTypes.STRING, unique: true },
+    bio: { type: DataTypes.STRING },
     image: { type: DataTypes.STRING },
   });
-  SequlizeSlugify.slugifyModel(Test, { source: ["name"] });
 
-  return Test;
+  return Company;
 };
