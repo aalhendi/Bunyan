@@ -13,7 +13,7 @@ class AuthStore {
     };
 
     /* Create New Contractor */
-    createUser = async (newUser) => {
+    register = async (newUser) => {
         try {
             const res = await instance.post("/register", newUser)
             this.setUser(res.data.token)
@@ -23,7 +23,7 @@ class AuthStore {
     };
 
     /* Login Contractor */
-    signin = async (userData) => {
+    login = async (userData) => {
         try {
             const res = await instance.post("/login", userData)
             this.setUser(res.data.token)
@@ -33,7 +33,7 @@ class AuthStore {
     };
 
     /* Signout Contractor */
-    signout = () => {
+    logout = () => {
         delete instance.defaults.headers.common.Authorization;
         localStorage.removeItem("myToken")
         this.user = null;
