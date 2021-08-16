@@ -19,6 +19,7 @@ function Register() {
         email: "",
         phoneNumber: "",
     })
+
     /* handle the change of all inputs */
     const handleChange = (event) => {
         setUser({ ...user, [event.target.name]: event.target.value })
@@ -31,6 +32,7 @@ function Register() {
         user.userType = "company"
         authStore.register(user)
     }
+
     /* redirect to profile page */
     //if (authStore.user) return <Redirect to="/:username/contractList" />;
     return (
@@ -92,6 +94,9 @@ function Register() {
                                     className="form-control"
                                     placeholder="Phone Number"
                                     onChange={handleChange}
+                                    minLength="6"
+                                    maxLength="7"
+                                    pattern="[0-9]+"
                                 />
                             </div>
                         </div>
