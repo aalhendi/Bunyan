@@ -1,8 +1,11 @@
 import React from 'react';
-import { CoverImage } from './styles';
+import { CoverImage, Logo } from './styles';
+import LoGo from "../../media/LOGO.svg";
+
 
 /* Routes Library */
 import { Link } from "react-router-dom"
+
 
 function Login() {
     return (
@@ -16,13 +19,13 @@ function Login() {
             <div className="col-md-6 p-0 bg-white h-md-100 loginarea">
                 <div className="align-items-center h-md-100 p-5 justify-content-center">
                     {/* Company Logo */}
-                    <div className="brand">
-                        <img alt="LOGO" />
-                        LOGO
+                    <div className="brand d-flex flex-column align-items-center">
+                        <Logo alt="LOGO" src={LoGo} />
+                        <h4>Bunyan</h4>
                     </div>
 
                     {/* Title Form */}
-                    <p className="text-center">Sign into your account</p>
+                    <h3 className="text-center mb-3">Sign into your account</h3>
 
                     {/* Register Form */}
                     <form>
