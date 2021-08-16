@@ -1,69 +1,69 @@
 /* Global Libraries */
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from "mobx";
 import decode from "jwt-decode";
 
 import instance from "./instance";
 
 class AuthStore {
-    /* Assign user */
-    user = null;
+  /* Assign user */
+  loading = true;
+  user = null;
 
-    constructor() {
-        makeAutoObservable(this)
-    };
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-    /* Create New Contractor */
-    register = async (newUser) => {
-        try {
-            console.log(newUser)
-            const res = await instance.post("/register", newUser)
-            this.setUser(res.data.token)
-        } catch (error) {
-            console.error(error) // error message 
-        }
-    };
-
-    /* Login Contractor */
-    login = async (userData) => {
-        try {
-            const res = await instance.post("/login", userData)
-            this.setUser(res.data.token)
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    /* Signout Contractor */
-    logout = () => {
-        delete instance.defaults.headers.common.Authorization;
-        localStorage.removeItem("myToken")
-        this.user = null;
-    };
-
-    /* set contractor token in local storage */
-    setUser = (token) => {
-        localStorage.setItem("myToken", token)
-        instance.defaults.headers.common.Authorization = `Bearer ${token}`
-        this.user = decode(token);
-    };
-
-    /* Check the Contractor Token */
-    checkForToken = () => {
-        const token = localStorage.getItem("myToken");
-        if (token) {
-            const currentTime = Date.now();
-            const user = decode(token);
-            if (user.exp >= currentTime) {
-                this.setUser(token);
-            } else {
-                this.signout();
-            }
-        }
+  /* Create New Contractor */
+  register = async (newUser) => {
+    try {
+      const res = await instance.post("/register", newUser);
+      this.setUser(res.data.token);
+    } catch (error) {
+      console.error(error); // error message
     }
+  };
 
-    /* Profile request */
+  /* Login Contractor */
+  login = async (userData) => {
+    try {
+      const res = await instance.post("/login", userData);
+      this.setUser(res.data.token);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  /* Signout Contractor */
+  logout = () => {
+    delete instance.defaults.headers.common.Authorization;
+    localStorage.removeItem("myToken");
+    this.user = null;
+  };
+
+  /* set contractor token in local storage */
+  setUser = (token) => {
+    localStorage.setItem("myToken", token);
+    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+    this.user = decode(token);
+  };
+
+  /* Check the Contractor Token */
+  checkForToken = () => {
+    const token = localStorage.getItem("myToken");
+    if (token) {
+      const currentTime = Date.now();
+      const user = decode(token);
+      if (user.exp >= currentTime) {
+        this.setUser(token);
+      } else {
+        this.signout();
+      }
+      this.loading = false;
+    }
+  };
+
+  /* Profile request */
 }
-const authStore = new AuthStore() // create instance
-authStore.checkForToken()
-export default authStore; // export it 
+const authStore = new AuthStore(); // create instance
+authStore.checkForToken();
+export default authStore; // export it

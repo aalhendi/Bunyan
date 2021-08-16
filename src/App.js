@@ -1,11 +1,14 @@
-import './App.css';
-/* Global Library */
-import { Switch, Route } from 'react-router'
-import Register from './components/authentication/Register';
-import Login from './components/authentication/Login';
-import { Redirect } from 'react-router-dom';
+/* Imports */
+import { Switch, Route } from "react-router";
+import { Link } from "react-router-dom";
+/* Components */
+import Register from "./components/authentication/Register";
+import Login from "./components/authentication/Login";
+/* State and Store */
+import authStore from "./stores/authStore";
+import { observer } from "mobx-react";
 
-function App() {
+const App = () => {
   return (
     <Switch>
       <Route path="/register">
@@ -15,10 +18,18 @@ function App() {
         <Login />
       </Route>
       <Route exact path="/">
-        <Redirect to="/login" />
+        <h1>Hello</h1>
+        {authStore.user && (
+          <button onClick={() => authStore.logout()}>Logout</button>
+        )}
+        {!authStore.user && (
+          <button>
+            <Link to="/login">Login</Link>
+          </button>
+        )}
       </Route>
     </Switch>
   );
-}
+};
 
-export default App;
+export default observer(App);
