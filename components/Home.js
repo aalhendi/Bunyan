@@ -1,24 +1,53 @@
 import React from "react";
-import { SafeAreaView, StatusBar, Text, View } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { observer } from "mobx-react";
 import { style } from "./styles";
 
 const Home = () => {
   return (
-    <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
-      <StatusBar
-        translucent={false}
-        backgroundColor="white"
-        barStyle="dark-content"
-      />
-      <View style={style.mainView}>
-        <View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          alignItems: "center",
+        }}
+      >
+        <View style={style.mainView}>
           <Feather name="menu" size={25} color="#5588A3" />
+          <View style={style.header}>
+            <Text style={style.welcomeText}> Welcome, </Text>
+            <Text style={style.nameText}> Mohammad Alzamami </Text>
+          </View>
         </View>
-        <View style={style.header}>
-          <Text style={style.welcomeText}> Welcome, </Text>
-          <Text style={style.nameText}> Mohammad Alzamami </Text>
+        <TouchableOpacity style={style.mainContainer}>
+          <Text style={style.mainText}>Your Home</Text>
+          <View style={style.homeIconStyled}>
+            <AntDesign name="home" size={137.5} color="white" />
+          </View>
+        </TouchableOpacity>
+        <View style={style.activityView}>
+          <Text style={style.activityTextStyled}>Activity</Text>
+          <ScrollView style={style.scrollView}>
+            <View style={style.tryContainer}></View>
+            <View style={style.tryContainer}></View>
+            <View style={style.tryContainer}></View>
+            <View style={style.tryContainer}></View>
+            <View style={style.tryContainer}></View>
+            <View style={style.tryContainer}></View>
+            <View style={style.tryContainer}></View>
+            <View style={style.tryContainer}></View>
+            <View style={style.tryContainer2}></View>
+            <View style={style.tryContainer2}></View>
+          </ScrollView>
         </View>
       </View>
     </SafeAreaView>

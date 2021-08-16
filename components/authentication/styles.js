@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 export const AuthTitle = styled.Text`
   color: black;
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 5%;
   border-bottom-color: black;
 `;
 export const AuthButtonText = styled.Text`
@@ -13,5 +13,10 @@ export const AuthButtonText = styled.Text`
 `;
 export const AuthOther = styled.Text`
   color: grey;
-  margin-top: 10px;
+  margin-top: 4%;
+`;
+
+export const AuthBackground = styled.ImageBackground`
+  flex: 1;
+  width: 100%;
 `;
