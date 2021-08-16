@@ -12,7 +12,7 @@ if (!fs.existsSync("./.env")) {
 const db = require("./db/models");
 
 /* Route Imports */
-const testRoutes = require("./API/test/routes");
+const companyRoutes = require("./API/company/routes");
 const userRoutes = require("./API/user/routes");
 
 const app = express();
@@ -26,7 +26,7 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 /* Routes */
-app.use("/test", testRoutes);
+app.use("/companies", companyRoutes);
 app.use("/", userRoutes);
 app.use("/media", express.static("media"));
 

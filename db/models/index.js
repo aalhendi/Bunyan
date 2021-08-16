@@ -45,15 +45,61 @@ db.Sequelize = Sequelize;
 
 /* Model Relations */
 
-db.User.hasMany(db.Test, {
-  /* Attributes */
-  as: "test",
+db.User.hasOne(db.Company, {
+  as: "company",
   foreignKey: "userId",
 });
 
-db.Test.belongsTo(db.User, {
-  /* Attributes */
+db.Company.belongsTo(db.User, {
   as: "user",
+});
+
+db.User.hasOne(db.Client, {
+  as: "client",
+  foreignKey: "userId",
+});
+
+db.Client.belongsTo(db.User, {
+  as: "user",
+});
+
+db.User.hasOne(db.Worker, {
+  as: "worker",
+  foreignKey: "userId",
+});
+
+db.Worker.belongsTo(db.User, {
+  as: "user",
+});
+
+db.Company.hasMany(db.Worker, {
+  foreignKey: "companyId",
+  allowNull: false,
+  as: "workers",
+});
+
+db.Worker.belongsTo(db.Company, {
+  as: "company",
+});
+
+db.Company.belongsToMany(db.Client, {
+  through: db.CompanyClient,
+  foreignKey: "companyId",
+});
+
+db.Client.belongsToMany(db.Company, {
+  through: db.CompanyClient,
+  foreignKey: "clientId",
+});
+
+db.Category.hasMany(db.Company, {
+  foreignKey: "categoryId",
+  allowNull: false,
+  as: "companies",
+});
+
+db.Company.belongsTo(db.Category, {
+  as: "category",
 });
 
 module.exports = db;

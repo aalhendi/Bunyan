@@ -24,6 +24,34 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
+    phoneNumber: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Phone Number is required",
+        },
+        len: {
+          args: [7, 8],
+          msg: "Number must be either 7 or 8 characters",
+        },
+      },
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "E-mail is required",
+        },
+        isEmail: {
+          args: true,
+          msg: "Must be a valid email",
+        },
+      },
+    },
   });
 
   return User;
