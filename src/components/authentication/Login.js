@@ -3,8 +3,17 @@ import { Input, Icon, Center, Box, Button } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 import { AuthBackground, AuthButtonText, AuthOther, AuthTitle } from "./styles";
+import authStore from "../../stores/authStore";
 
 const Login = ({ navigation }) => {
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+  const handleSubmit = async () => {
+    await authStore.login(user, navigation);
+  };
+
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   return (
@@ -23,6 +32,7 @@ const Login = ({ navigation }) => {
                 <Icon as={<Ionicons name="person" />} size="md" m={2} />
               }
               placeholder="username" // mx={4}
+              onChangeText={(username) => setUser({ ...user, username })}
             />
           </View>
           <View style={{ marginBottom: 15 }}>
@@ -42,9 +52,10 @@ const Login = ({ navigation }) => {
                 />
               }
               placeholder="password" // mx={4}
+              onChangeText={(password) => setUser({ ...user, password })}
             />
           </View>
-          <Button onPress={() => navigation.replace("Home")}>Log in</Button>
+          <Button onPress={handleSubmit}>Log in</Button>
         </Box>
         <AuthOther>don't have an account?</AuthOther>
         <AuthButtonText onPress={() => navigation.navigate("Register")}>

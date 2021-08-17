@@ -2,16 +2,23 @@ import React, { useState } from "react";
 import { Input, Icon, Center, Box, Button } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
-import {
-  AuthBackground,
-  AuthButtonText,
-  AuthOther,
-  AuthTitle,
-  AuthWhiteBackground,
-} from "./styles";
+import { AuthBackground, AuthButtonText, AuthOther, AuthTitle } from "./styles";
 import { Entypo } from "@expo/vector-icons";
+import authStore from "../../stores/authStore";
 
 const Register = ({ navigation }) => {
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+    email: "",
+    phoneNumber: "",
+  });
+
+  const handleSubmit = async () => {
+    user.userType = "client";
+    await authStore.register(user, navigation);
+  };
+
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   return (
@@ -30,6 +37,7 @@ const Register = ({ navigation }) => {
                 <Icon as={<Ionicons name="person" />} size="md" m={2} />
               }
               placeholder="username" // mx={4}
+              onChangeText={(username) => setUser({ ...user, username })}
             />
           </View>
           <View style={{ marginBottom: 10 }}>
@@ -49,6 +57,7 @@ const Register = ({ navigation }) => {
                 />
               }
               placeholder="password" // mx={4}
+              onChangeText={(password) => setUser({ ...user, password })}
             />
           </View>
           <View style={{ marginBottom: 10 }}>
@@ -57,6 +66,7 @@ const Register = ({ navigation }) => {
                 <Icon as={<Entypo name="phone" />} size="md" m={2} />
               }
               placeholder="number" // mx={4}
+              onChangeText={(phoneNumber) => setUser({ ...user, phoneNumber })}
             />
           </View>
           <View style={{ marginBottom: 10 }}>
@@ -65,9 +75,10 @@ const Register = ({ navigation }) => {
                 <Icon as={<Entypo name="email" />} size="md" m={2} />
               }
               placeholder="email" // mx={4}
+              onChangeText={(email) => setUser({ ...user, email })}
             />
           </View>
-          <Button onPress={() => navigation.replace("Home")}>Register</Button>
+          <Button onPress={handleSubmit}>Register</Button>
         </Box>
         <AuthOther>already have an account?</AuthOther>
         <AuthButtonText onPress={() => navigation.navigate("Login")}>
