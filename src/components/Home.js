@@ -16,9 +16,15 @@ import {
   SafeAreaView,
   MenuIcon,
   HomeIcon,
+  LogoutIcon,
 } from "./styles";
+import authStore from "../stores/authStore";
 
 const Home = ({ navigation }) => {
+  const handleSubmit = async () => {
+    await authStore.logout();
+    navigation.replace("Login");
+  };
   return (
     <SafeAreaView>
       <CenteringElementStyled>
@@ -28,6 +34,7 @@ const Home = ({ navigation }) => {
             <WelcomeText> Welcome, </WelcomeText>
             <NameText> Mohammad Alzamami </NameText>
           </TextTopNavigationBar>
+          <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
         </TopNavigationBar>
         <MainContainer onPress={() => navigation.navigate("CategoryList")}>
           <MainContainerText>Your Home</MainContainerText>

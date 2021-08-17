@@ -79,6 +79,9 @@ export const ActivityContainer = styled.View`
 export const MenuIcon = styled(Feather)`
   color: #5588a3;
 `;
+export const LogoutIcon = styled(Feather)`
+  color: red;
+`;
 export const HomeIcon = styled(AntDesign)`
   color: white;
 `;

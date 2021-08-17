@@ -5,6 +5,7 @@ import Login from "../authentication/Login";
 import Register from "../authentication/Register";
 import Home from "../Home";
 import CategoryList from "../categories/CategoryList";
+import EditProfile from "../profile/EditProfile";
 
 const Stack = createStackNavigator();
 
@@ -43,6 +44,13 @@ export default RootNavigator = () => {
       <Stack.Screen
         name="CategoryList"
         component={CategoryList}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
         options={{
           headerShown: false,
         }}
