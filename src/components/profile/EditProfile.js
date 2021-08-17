@@ -1,8 +1,28 @@
-import { Box, Button, Input } from "native-base";
-import React from "react";
+/* Imports */
+import { Box, Button, Input, Spinner } from "native-base";
+import React, { useState } from "react";
 import { View, Text } from "react-native";
 
-const EditProfile = () => {
+/* State and Store */
+import authStore from "../../stores/authStore";
+import profileStore from "../../stores/profileStore";
+import { observer } from "mobx-react";
+
+const EditProfile = ({ navigation }) => {
+  const [profile, setProfile] = useState({
+    firstName: "",
+    lastName: "",
+  });
+
+  if (authStore.loading) {
+    return <Spinner />;
+  }
+
+  const handleSubmit = async () => {
+    await profileStore.updateProfile(profile);
+    navigation.replace("Home");
+  };
+
   return (
     <View
       style={{
@@ -16,21 +36,19 @@ const EditProfile = () => {
         <View style={{ marginBottom: 10 }}>
           <Input
             placeholder="first name" // mx={4}
-            onChangeText={(firstName) => setUser({ ...user, firstName })}
+            onChangeText={(firstName) => setProfile({ ...profile, firstName })}
           />
         </View>
         <View style={{ marginBottom: 10 }}>
           <Input
             placeholder="last name" // mx={4}
-            onChangeText={(lastName) => setUser({ ...user, lastName })}
+            onChangeText={(lastName) => setProfile({ ...profile, lastName })}
           />
         </View>
-        <Button onPress={() => console.log("add first and last name")}>
-          Continue
-        </Button>
+        <Button onPress={handleSubmit}>Continue</Button>
       </Box>
     </View>
   );
 };
 
-export default EditProfile;
+export default observer(EditProfile);
