@@ -1,10 +1,11 @@
-/* Global Libraries */
-import { makeAutoObservable } from "mobx";
+/* Imports */
 import decode from "jwt-decode";
-
 import instance from "./instance";
 
+/* State and Store */
+import { makeAutoObservable } from "mobx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import profileStore from "./profileStore";
 
 class AuthStore {
   /* Assign user */
@@ -17,10 +18,12 @@ class AuthStore {
 
   /* Create New user for Client */
   register = async (newUser, navigation) => {
+    console.log("Hello");
     try {
       const res = await instance.post("/register", newUser);
       this.setUser(res.data.token);
-      navigation.replace("EditProfile");
+      console.log(this.user);
+      navigation.replace("EditProfile", (navigation = { navigation }));
     } catch (error) {
       console.error(error); // error message
     }
@@ -59,10 +62,11 @@ class AuthStore {
       const user = decode(token);
       if (user.exp >= currentTime) {
         this.setUser(token);
+        this.loading = false;
+        profileStore.fetchProfile(this.user.id);
       } else {
         this.logout();
       }
-      this.loading = false;
     }
   };
 
