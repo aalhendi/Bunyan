@@ -1,8 +1,8 @@
-/* Global Libraries */
-import { makeAutoObservable } from "mobx";
-import decode from "jwt-decode";
-
+/* Imports */
 import instance from "./instance";
+import decode from "jwt-decode";
+import companyStore from "./companyStore";
+import { makeAutoObservable } from "mobx";
 
 class AuthStore {
   /* Assign user */
@@ -55,6 +55,7 @@ class AuthStore {
       const user = decode(token);
       if (user.exp >= currentTime) {
         this.setUser(token);
+        companyStore.fetchCompany(this.user.id);
       } else {
         this.signout();
       }
