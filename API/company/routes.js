@@ -4,12 +4,7 @@ const passport = require("passport");
 const { upload } = require("../../middleware/multer");
 
 /* Route Imports */
-const {
-  fetchTest,
-  routeTest,
-  uploadImage,
-  deleteImage,
-} = require("./controllers");
+const { fetchCompanies } = require("./controllers");
 
 const router = express.Router();
 
@@ -27,21 +22,6 @@ router.param("testId", async (req, res, next, testId) => {
 });
 
 /* Fetch Test Objects */
-router.get("/", routeTest);
-
-/* Upload Image */
-router.post(
-  "/uploadImage",
-  passport.authenticate("jwt", { session: false }),
-  upload.single("image"),
-  uploadImage
-);
-
-/* Delete Image */
-router.delete(
-  "/:testId",
-  passport.authenticate("jwt", { session: false }),
-  deleteImage
-);
+router.get("/", fetchCompanies);
 
 module.exports = router;

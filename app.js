@@ -12,9 +12,10 @@ if (!fs.existsSync("./.env")) {
 const db = require("./db/models");
 
 /* Route Imports */
-const companyRoutes = require("./API/company/routes");
 const userRoutes = require("./API/user/routes");
+const companyRoutes = require("./API/company/routes");
 const clientRoutes = require("./API/client/routes");
+const taskRoutes = require("./API/task/routes");
 const app = express();
 
 /* Middleware */
@@ -26,10 +27,11 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 /* Routes */
-app.use("/companies", companyRoutes);
 app.use("/", userRoutes);
+app.use("/companies", companyRoutes);
+app.use("/clients", clientRoutes);
+app.use("/tasks", taskRoutes);
 app.use("/media", express.static("media"));
-app.use("/", clientRoutes);
 /* Error Handling */
 app.use((err, req, res, next) => {
   res

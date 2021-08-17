@@ -19,7 +19,7 @@ exports.register = async (req, res, next) => {
     validateUserType(userType);
     const newUser = await User.create(req.body);
     // TODO: merge validateUserType() and createUserProfile() functions (?)
-    createUserProfile(userType, newUser);
+    createUserProfile(userType, newUser, req.body);
     const payload = {
       id: newUser.id,
       username: newUser.username,
@@ -60,30 +60,34 @@ const validateUserType = (userType) => {
   }
 };
 
-const createUserProfile = async (userType, newUser) => {
-  switch (userType) {
-    case "company":
-      await Company.create({
-        userId: newUser.id,
-        name: newUser.username,
-        companyId: newUser.companyId,
-      });
-      break;
-    case "client":
-      await Client.create({
-        userId: newUser.id,
-        firstName: "firstName",
-        lastName: "lastName",
-      });
-      break;
-    case "worker":
-      await Worker.create({
-        userId: newUser.id,
-        name: newUser.username,
-        companyId: newUser.companyId,
-      });
-      break;
-    default:
-      throw new Error("Invalid userType");
+const createUserProfile = async (userType, newUser, reqBody) => {
+  try {
+    switch (userType) {
+      case "company":
+        await Company.create({
+          userId: newUser.id,
+          name: newUser.username,
+          companyId: newUser.companyId,
+        });
+        break;
+      case "client":
+        await Client.create({
+          userId: newUser.id,
+          firstName: "firstName",
+          lastName: "lastName",
+        });
+        break;
+      case "worker":
+        await Worker.create({
+          userId: newUser.id,
+          name: newUser.username,
+          companyId: reqBody.companyId,
+        });
+        break;
+      default:
+        throw new Error("Invalid userType");
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
