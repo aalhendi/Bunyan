@@ -64,6 +64,13 @@ export default RootNavigator = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="TaskList"
+        component={TaskList}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };
