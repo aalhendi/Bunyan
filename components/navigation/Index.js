@@ -1,8 +1,8 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Signin from "../authentication/Signin";
-import Signup from "../authentication/Signup";
+import Login from "../authentication/Login";
+import Register from "../authentication/Register";
 import Home from "../Home";
 import CategoryList from "../categories/CategoryList";
 
@@ -20,15 +20,15 @@ export default RootNavigator = () => {
       }}
     >
       <Stack.Screen
-        name="Signin"
-        component={Signin}
+        name="Login"
+        component={Login}
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="Signup"
-        component={Signup}
+        name="Register"
+        component={Register}
         options={{
           headerShown: false,
         }}
