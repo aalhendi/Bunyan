@@ -1,48 +1,41 @@
 /* Imports */
 const express = require("express");
 const passport = require("passport");
-const { upload } = require("../../middleware/multer");
 
 /* Route Imports */
 const {
-  fetchTest,
-  routeTest,
-  uploadImage,
-  deleteImage,
-  FetchTasks,
+  fetchClient,
+  fetchClients,
+  updateProfile,
+  findClient,
 } = require("./controllers");
 
 const router = express.Router();
 
 /* Params Middleware */
-router.param("testId", async (req, res, next, testId) => {
-  const test = await fetchTest(testId, next);
-  if (test) {
-    req.test = test;
+router.param("clientId", async (req, res, next, clientId) => {
+  const client = await fetchClient(clientId, next);
+  if (client) {
+    req.client = client;
     next();
   } else {
-    const error = new Error("Test Object Not Found.");
+    const error = new Error("Client Object Not Found.");
     error.status = 404;
     next(error);
   }
 });
 
-/* Fetch Test Objects */
-router.get("/", routeTest);
+/* Fetch Client Objects */
+router.get("/", fetchClients);
 
-/* Upload Image */
-router.post(
-  "/uploadImage",
-  passport.authenticate("jwt", { session: false }),
-  upload.single("image"),
-  uploadImage
-);
+/* Fetch Client Objects */
+router.get("/:clientId", findClient);
 
-/* Delete Image */
-router.delete(
-  "/:testId",
+/* Update Client Profile */
+router.put(
+  "/:clientId",
   passport.authenticate("jwt", { session: false }),
-  deleteImage
+  updateProfile
 );
 
 module.exports = router;
