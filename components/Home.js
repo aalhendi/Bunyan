@@ -29,7 +29,7 @@ const Home = ({ navigation }) => {
             <NameText> Mohammad Alzamami </NameText>
           </TextTopNavigationBar>
         </TopNavigationBar>
-        <MainContainer onPress={() => navigation.navigate("CategoryList")}>
+        <MainContainer onPress={() => navigation.navigate("TaskList")}>
           <MainContainerText>Your Home</MainContainerText>
           <HomeIconStyled>
             <HomeIcon name="home" size={137.5} />
