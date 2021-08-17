@@ -27,9 +27,6 @@ router.param("testId", async (req, res, next, testId) => {
   }
 });
 
-/* Fetch Task*/
-router.get("/tasks", FetchTasks);
-
 /* Fetch Test Objects */
 router.get("/", routeTest);
 
