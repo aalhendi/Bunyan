@@ -36,7 +36,7 @@ const Home = ({ navigation }) => {
           </TextTopNavigationBar>
           <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
         </TopNavigationBar>
-        <MainContainer onPress={() => navigation.navigate("CategoryList")}>
+        <MainContainer onPress={() => navigation.navigate("TaskList")}>
           <MainContainerText>Your Home</MainContainerText>
           <HomeIconStyled>
             <HomeIcon name="home" size={137.5} />
