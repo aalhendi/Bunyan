@@ -2,13 +2,6 @@
 import { Box, Button, Input, Spinner } from "native-base";
 import React, { useState } from "react";
 import { View, Text } from "react-native";
-import authStore from "../../stores/authStore";
-
-const EditProfile = ({ navigation }) => {
-  const [user, setUser] = useState({
-    firstName: "",
-    LastName: "",
-  });
 
 /* State and Store */
 import authStore from "../../stores/authStore";
