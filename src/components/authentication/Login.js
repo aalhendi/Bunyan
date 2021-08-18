@@ -12,10 +12,14 @@ const Login = ({ navigation }) => {
   });
   const handleSubmit = async () => {
     await authStore.login(user, navigation);
+    authStore.user.email.endsWith("@worker.com")
+      ? navigation.replace("SiteList")
+      : navigation.replace("Home");
   };
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
+
   return (
     <AuthBackground
       blurRadius={12.5}

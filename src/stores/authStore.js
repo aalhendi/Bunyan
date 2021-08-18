@@ -31,7 +31,6 @@ class AuthStore {
     try {
       const res = await instance.post("/login", userData);
       this.setUser(res.data.token);
-      navigation.replace("Home");
     } catch (error) {
       console.error(error);
     }

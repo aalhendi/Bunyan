@@ -1,8 +1,20 @@
 import { Box, Button, Input } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import { View, Text } from "react-native";
+import authStore from "../../stores/authStore";
 
-const EditProfile = () => {
+const EditProfile = ({ navigation }) => {
+  const [user, setUser] = useState({
+    firstName: "",
+    LastName: "",
+  });
+
+  handleNavigate = () => {
+    authStore.user.email.endsWith("@worker.com")
+      ? navigation.replace("SiteList")
+      : navigation.replace("Home");
+  };
+
   return (
     <View
       style={{
@@ -25,9 +37,7 @@ const EditProfile = () => {
             onChangeText={(lastName) => setUser({ ...user, lastName })}
           />
         </View>
-        <Button onPress={() => console.log("add first and last name")}>
-          Continue
-        </Button>
+        <Button onPress={handleNavigate}>Continue</Button>
       </Box>
     </View>
   );
