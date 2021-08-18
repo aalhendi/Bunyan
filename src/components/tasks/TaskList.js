@@ -7,7 +7,9 @@ import { ScrollView, Text } from "react-native";
 import TaskItem from "./TaskItem";
 //stores
 import taskStore from "../../stores/taskStore";
-// import authStore from "../../stores/authStore";
+import authStore from "../../stores/authStore";
+import workerStore from "../../stores/workerStore";
+import clientStore from "../../stores/clientStore";
 //styles
 import {
   SafeAreaView,
@@ -22,19 +24,47 @@ import {
 
 const TaskList = ({ navigation }) => {
   if (taskStore.loading) return <Spinner />;
-  const taskList = taskStore.tasks.map((task) => (
-    <TaskItem task={task} key={task.id} navigation={navigation} />
-  ));
+
+  const workers = workerStore.workers
+    .filter((worker) => worker.userId === authStore.user?.id)
+    .map((worker) => worker);
+  const worker = Object.assign({}, ...workers);
+
+  const clients = clientStore.clients
+    .filter((client) => client.userId === authStore.user?.id)
+    .map((client) => client);
+  const client = Object.assign({}, ...clients);
+
+  const taskList = authStore.user.email.endsWith("@worker.com")
+    ? taskStore.tasks
+        .filter((task) => task.workerId === worker?.id)
+        .map((task) => (
+          <TaskItem task={task} key={task.id} navigation={navigation} />
+        ))
+    : taskStore.tasks
+        .filter((task) => task.clientId === client?.id)
+        .map((task) => (
+          <TaskItem task={task} key={task.id} navigation={navigation} />
+        ));
+
   //   .filter((task) => task.userId !== authStore.user?.id)
   return (
     <SafeAreaView>
       <TopNavigationBar>
         <FlexView>
-          <BackIcon
-            name="chevron-back"
-            size={35}
-            onPress={() => navigation.goBack("Home")}
-          />
+          {authStore.user.email.endsWith("@worker.com") ? (
+            <BackIcon
+              name="chevron-back"
+              size={35}
+              onPress={() => navigation.goBack("SiteList")}
+            />
+          ) : (
+            <BackIcon
+              name="chevron-back"
+              size={35}
+              onPress={() => navigation.goBack("Home")}
+            />
+          )}
         </FlexView>
         <TextTopNavigationBar>
           <TopBarText>Tasks</TopBarText>

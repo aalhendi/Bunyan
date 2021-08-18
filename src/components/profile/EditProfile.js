@@ -19,10 +19,10 @@ const EditProfile = ({ navigation }) => {
   }
 
   const handleSubmit = async () => {
-    await profileStore.updateProfile(profile);
-    navigation.replace("Home");
+      await profileStore.updateProfile(profile);
+      navigation.replace("Home")
   };
-
+  
   return (
     <View
       style={{

@@ -8,6 +8,7 @@ import CategoryList from "../categories/CategoryList";
 import EditProfile from "../profile/EditProfile";
 import TaskList from "../tasks/TaskList";
 import TaskDetail from "../tasks/TaskDetail";
+import SiteList from "../sites/SiteList";
 
 const Stack = createStackNavigator();
 
@@ -67,6 +68,13 @@ export default RootNavigator = () => {
       <Stack.Screen
         name="TaskList"
         component={TaskList}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SiteList"
+        component={SiteList}
         options={{
           headerShown: false,
         }}
