@@ -15,6 +15,7 @@ const db = require("./db/models");
 const companyRoutes = require("./API/company/routes");
 const userRoutes = require("./API/user/routes");
 const clientRoutes = require("./API/client/routes");
+const workerRoutes = require("./API/worker/routes");
 const app = express();
 
 /* Middleware */
@@ -30,6 +31,7 @@ app.use("/companies", companyRoutes);
 app.use("/", userRoutes);
 app.use("/media", express.static("media"));
 app.use("/", clientRoutes);
+app.use("/", workerRoutes);
 /* Error Handling */
 app.use((err, req, res, next) => {
   res

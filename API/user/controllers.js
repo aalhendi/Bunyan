@@ -23,21 +23,24 @@ exports.register = async (req, res, next) => {
     const payload = {
       id: newUser.id,
       username: newUser.username,
+      email: newUser.email,
       exp: Date.now() + JWT_EXPIRATION_MS,
     };
+    console.log(payload);
     const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
     res.json({ token });
   } catch (error) {
     next(error);
   }
 };
-
+//added email to payload cuz its needed
 exports.login = async (req, res, next) => {
   try {
     const { user } = req;
     const payload = {
       id: user.id,
       username: user.username,
+      email: user.email,
       exp: Date.now() + JWT_EXPIRATION_MS,
     };
     const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);

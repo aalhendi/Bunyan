@@ -9,6 +9,7 @@ const {
   routeTest,
   uploadImage,
   deleteImage,
+  FetchClients,
   FetchTasks,
 } = require("./controllers");
 
@@ -29,6 +30,9 @@ router.param("testId", async (req, res, next, testId) => {
 
 /* Fetch Task*/
 router.get("/tasks", FetchTasks);
+
+/* Fetch Task*/
+router.get("/clients", FetchClients);
 
 /* Fetch Test Objects */
 router.get("/", routeTest);

@@ -9,6 +9,7 @@ const {
   routeTest,
   uploadImage,
   deleteImage,
+  FetchWorkers,
 } = require("./controllers");
 
 const router = express.Router();
@@ -25,6 +26,8 @@ router.param("testId", async (req, res, next, testId) => {
     next(error);
   }
 });
+/* Fetch Workers*/
+router.get("/workers", FetchWorkers);
 
 /* Fetch Test Objects */
 router.get("/", routeTest);

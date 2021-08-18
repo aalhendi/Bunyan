@@ -2,13 +2,23 @@
 const normalize = require("normalize-path");
 
 /* Models */
-const { Test } = require("../../db/models/");
+const { Test, Worker } = require("../../db/models/");
 
 /* Controllers */
 exports.fetchTest = async (testId, next) => {
   try {
     const test = await Test.findByPk(testId);
     return test;
+  } catch (error) {
+    next(error);
+  }
+};
+exports.FetchWorkers = async (req, res, next) => {
+  try {
+    const workers = await Worker.findAll({
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
+    res.json(workers);
   } catch (error) {
     next(error);
   }
