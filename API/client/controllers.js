@@ -1,18 +1,29 @@
 /* Imports */
 
 /* Models */
-const { Client } = require("../../db/models/");
+const { Client, Task } = require("../../db/models/");
 
 /* Controllers */
+exports.fetchTasks = async (req, res, next) => {
+  try {
+    const tasks = await Task.findAll({
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
+    res.json(tasks);
+    } catch (error) {
+    next(error);
+  }
+};
+    
 exports.fetchClient = async (clientId, next) => {
   try {
     const client = await Client.findByPk(clientId);
     return client;
-  } catch (error) {
+    } catch (error) {
     next(error);
   }
 };
-
+    
 exports.fetchClients = async (req, res, next) => {
   try {
     clients = await Client.findAll();

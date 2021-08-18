@@ -112,4 +112,14 @@ db.Task.belongsTo(db.Worker, {
   as: "worker",
 });
 
+db.Client.hasMany(db.Task, {
+  foreignKey: "clientId",
+  allowNull: false,
+  as: "tasks",
+});
+
+db.Task.belongsTo(db.Client, {
+  as: "client",
+});
+
 module.exports = db;

@@ -4,6 +4,7 @@ const passport = require("passport");
 
 /* Route Imports */
 const {
+  fetchTasks,
   fetchClient,
   fetchClients,
   updateProfile,
@@ -24,6 +25,9 @@ router.param("clientId", async (req, res, next, clientId) => {
     next(error);
   }
 });
+
+/* Fetch Task*/
+router.get("/tasks", fetchTasks);
 
 /* Fetch Client Objects */
 router.get("/", fetchClients);

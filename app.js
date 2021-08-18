@@ -15,6 +15,7 @@ const db = require("./db/models");
 const userRoutes = require("./API/user/routes");
 const companyRoutes = require("./API/company/routes");
 const clientRoutes = require("./API/client/routes");
+const workerRoutes = require("./API/worker/routes");
 const taskRoutes = require("./API/task/routes");
 const app = express();
 
@@ -30,8 +31,10 @@ passport.use(jwtStrategy);
 app.use("/", userRoutes);
 app.use("/companies", companyRoutes);
 app.use("/clients", clientRoutes);
+app.use("/workers", workerRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/media", express.static("media"));
+
 /* Error Handling */
 app.use((err, req, res, next) => {
   res
