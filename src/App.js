@@ -13,10 +13,14 @@ import { observer } from "mobx-react";
 import Home from "./components/dashboard/Home";
 import ClientList from "./components/client/ClientList";
 import WorkerList from "./components/worker/WorkerList";
+import Profile from "./components/profile/Profile";
 
 const App = () => {
   return (
     <Switch>
+      <Route path="/profile">
+        <Profile />
+      </Route>
       <Route path="/workerList">
         <Navbar />
         <WorkerList />
@@ -47,7 +51,6 @@ const App = () => {
         ) : (
           <Redirect to="/login" />
         )}
-        <h1>Hello</h1>
       </Route>
     </Switch>
   );

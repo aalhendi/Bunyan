@@ -19,6 +19,7 @@ class AuthStore {
     try {
       const res = await instance.post("/register", newUser);
       this.setUser(res.data.token);
+      companyStore.fetchCompany(this.user.id);
     } catch (error) {
       console.error(error); // error message
     }
