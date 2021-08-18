@@ -3,6 +3,7 @@ import instance from "./instance";
 import decode from "jwt-decode";
 import companyStore from "./companyStore";
 import { makeAutoObservable } from "mobx";
+import workerStore from "./workerStore";
 
 class AuthStore {
   /* Assign user */
@@ -57,6 +58,7 @@ class AuthStore {
       if (user.exp >= currentTime) {
         this.setUser(token);
         companyStore.fetchCompany(this.user.id);
+        workerStore.fetchWorker(this.user.id);
       } else {
         this.signout();
       }
