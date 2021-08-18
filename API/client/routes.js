@@ -9,8 +9,7 @@ const {
   routeTest,
   uploadImage,
   deleteImage,
-  FetchClients,
-  FetchTasks,
+  fetchTasks,
 } = require("./controllers");
 
 const router = express.Router();
@@ -29,10 +28,7 @@ router.param("testId", async (req, res, next, testId) => {
 });
 
 /* Fetch Task*/
-router.get("/tasks", FetchTasks);
-
-/* Fetch Task*/
-router.get("/clients", FetchClients);
+router.get("/tasks", fetchTasks);
 
 /* Fetch Test Objects */
 router.get("/", routeTest);
