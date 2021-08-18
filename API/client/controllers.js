@@ -14,7 +14,7 @@ exports.fetchTest = async (testId, next) => {
   }
 };
 
-exports.FetchTasks = async (req, res, next) => {
+exports.fetchTasks = async (req, res, next) => {
   try {
     const tasks = await Task.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
