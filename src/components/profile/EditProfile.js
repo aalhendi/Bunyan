@@ -5,7 +5,6 @@ import { View, Text } from "react-native";
 
 /* State and Store */
 import authStore from "../../stores/authStore";
-import profileStore from "../../stores/profileStore";
 import { observer } from "mobx-react";
 
 const EditProfile = ({ navigation }) => {
@@ -19,10 +18,10 @@ const EditProfile = ({ navigation }) => {
   }
 
   const handleSubmit = async () => {
-      await profileStore.updateProfile(profile);
-      navigation.replace("Home")
+    await profileStore.updateProfile(profile);
+    navigation.replace("Home");
   };
-  
+
   return (
     <View
       style={{

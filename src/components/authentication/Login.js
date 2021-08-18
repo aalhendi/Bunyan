@@ -1,8 +1,14 @@
+/* Imports */
 import React, { useState } from "react";
-import { Input, Icon, Center, Box, Button } from "native-base";
+import { Input, Icon, Center, Box, Button, Spinner } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
+
+/* Styles */
 import { AuthBackground, AuthButtonText, AuthOther, AuthTitle } from "./styles";
+
+/* State and Store */
+import { observer } from "mobx-react";
 import authStore from "../../stores/authStore";
 
 const Login = ({ navigation }) => {
@@ -10,15 +16,20 @@ const Login = ({ navigation }) => {
     username: "",
     password: "",
   });
-  const handleSubmit = async () => {
-    await authStore.login(user, navigation);
-    authStore.user.email.endsWith("@worker.com")
-      ? navigation.replace("SiteList")
-      : navigation.replace("Home");
-  };
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
+
+  const handleSubmit = async () => {
+    const loginStatus = await authStore.login(user, navigation);
+    if (loginStatus) {
+      authStore.user.email.endsWith("@worker.com")
+        ? navigation.replace("SiteList")
+        : navigation.replace("Home");
+    } else {
+      alert("Login Failed");
+    }
+  };
 
   return (
     <AuthBackground
@@ -70,4 +81,4 @@ const Login = ({ navigation }) => {
   );
 };
 
-export default Login;
+export default observer(Login);

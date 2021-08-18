@@ -1,10 +1,15 @@
+/* Imports */
 import React, { useState } from "react";
 import { Input, Icon, Center, Box, Button } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
-import { AuthBackground, AuthButtonText, AuthOther, AuthTitle } from "./styles";
 import { Entypo } from "@expo/vector-icons";
+
+/* State and Store */
 import authStore from "../../stores/authStore";
+
+/* Styles */
+import { AuthBackground, AuthButtonText, AuthOther, AuthTitle } from "./styles";
 
 const Register = ({ navigation }) => {
   const [user, setUser] = useState({

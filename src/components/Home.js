@@ -18,22 +18,16 @@ import {
   HomeIcon,
   LogoutIcon,
 } from "./styles";
-import { Spinner } from "native-base";
 
 /* State and Store */
 import { observer } from "mobx-react";
 import authStore from "../stores/authStore";
-import profileStore from "../stores/profileStore";
 
 const Home = ({ navigation }) => {
   const handleSubmit = async () => {
     await authStore.logout();
     navigation.replace("Login");
   };
-
-  if (profileStore.loading) {
-    return <Spinner />;
-  }
 
   return (
     <SafeAreaView>
@@ -42,13 +36,7 @@ const Home = ({ navigation }) => {
           <MenuIcon name="menu" size={25} />
           <TextTopNavigationBar>
             <WelcomeText> Welcome, </WelcomeText>
-            <NameText>
-              {profileStore.profile.name ? (
-                <>{`${profileStore.profile.name}`}</>
-              ) : (
-                <>{`${profileStore.profile.firstName} ${profileStore.profile.lastName}`}</>
-              )}
-            </NameText>
+            <NameText>Hello</NameText>
           </TextTopNavigationBar>
           <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
         </TopNavigationBar>

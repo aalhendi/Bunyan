@@ -1,7 +1,10 @@
-//library imports
+/* Imports */
 import React from "react";
+
+/* State and Store */
 import { observer } from "mobx-react";
-//styles
+
+/* Styles */
 import { TaskContainer, ListItem, TaskText } from "./styles";
 
 const SiteItem = ({ site, navigation }) => {

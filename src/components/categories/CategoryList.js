@@ -1,4 +1,8 @@
+/* Imports */
 import React from "react";
+import CircularProgress from "react-native-circular-progress-indicator";
+
+/* Styles */
 import {
   CenterView,
   TopNavigationBar,
@@ -17,7 +21,6 @@ import {
   CompanyInfoLogo,
   CompanyInfoText,
 } from "./styles";
-import CircularProgress from "react-native-circular-progress-indicator";
 
 const x = 90;
 const CategoryList = ({ navigation }) => {

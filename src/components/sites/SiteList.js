@@ -1,15 +1,19 @@
-//library imports
+/* Imports */
 import React from "react";
 import { Spinner } from "native-base";
-import { observer } from "mobx-react";
 import { ScrollView } from "react-native";
-//components
+
+/* Components */
 import SiteItem from "./SiteItem";
-//stores
+
+/* State and Store */
+import { observer } from "mobx-react";
 import clientStore from "../../stores/clientStore";
 import authStore from "../../stores/authStore";
 import taskStore from "../../stores/taskStore";
-//styles
+
+/* Styles */
+import { LogoutIcon } from "../styles";
 import {
   SafeAreaView,
   TopNavigationBar,
@@ -25,7 +29,6 @@ const SiteList = ({ navigation }) => {
   const oneTask = taskStore.tasks.map((task) => task.clientId);
 
   const unique = [...new Set(oneTask)];
-  console.log(unique);
   //   const task = Object.assign({}, ...tasks);
 
   const clients = clientStore.clients
@@ -56,11 +59,17 @@ const SiteList = ({ navigation }) => {
 
   //   .filter((task) => task.userId !== authStore.user?.id)
 
+  const handleSubmit = async () => {
+    await authStore.logout();
+    navigation.replace("Login");
+  };
+
   return (
     <SafeAreaView>
       <TopNavigationBar>
         <TextTopNavigationBar>
           <TopBarText>Sites</TopBarText>
+          <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
         </TextTopNavigationBar>
         <FlexView />
       </TopNavigationBar>

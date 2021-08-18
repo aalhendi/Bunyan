@@ -1,6 +1,5 @@
-//library imports
-import { makeAutoObservable } from "mobx";
-//components
+/* State and Store */
+import { makeAutoObservable, runInAction } from "mobx";
 import instance from "./instance";
 
 class WorkerStore {
@@ -14,8 +13,8 @@ class WorkerStore {
   fetchWorkers = async () => {
     try {
       const response = await instance.get("/workers");
-      this.workers = response.data;
-      this.loading = false;
+      runInAction(() => (this.workers = response.data));
+      runInAction(() => (this.loading = false));
     } catch (error) {
       console.error("fetchWorkers: ", error);
     }

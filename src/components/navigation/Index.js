@@ -1,6 +1,8 @@
+/* Imports */
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
+/* Components */
 import Login from "../authentication/Login";
 import Register from "../authentication/Register";
 import Home from "../Home";
@@ -10,9 +12,12 @@ import TaskList from "../tasks/TaskList";
 import TaskDetail from "../tasks/TaskDetail";
 import SiteList from "../sites/SiteList";
 
+/* State and Store */
+import { observer } from "mobx-react";
+
 const Stack = createStackNavigator();
 
-export default RootNavigator = () => {
+const RootNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="Login"
@@ -82,3 +87,5 @@ export default RootNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+export default observer(RootNavigator);

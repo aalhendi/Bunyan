@@ -3,9 +3,8 @@ import decode from "jwt-decode";
 import instance from "./instance";
 
 /* State and Store */
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import profileStore from "./profileStore";
 
 class AuthStore {
   /* Assign user */
@@ -18,24 +17,26 @@ class AuthStore {
 
   /* Create New user for Client */
   register = async (newUser, navigation) => {
-    console.log("Hello");
     try {
       const res = await instance.post("/register", newUser);
-      this.setUser(res.data.token);
-      console.log(this.user);
+      runInAction(() => this.setUser(res.data.token));
       navigation.replace("EditProfile", (navigation = { navigation }));
+      return true;
     } catch (error) {
       console.error(error); // error message
+      return false;
     }
   };
 
   /* Login for Client */
-  login = async (userData, navigation) => {
+  login = async (userData) => {
     try {
       const res = await instance.post("/login", userData);
-      this.setUser(res.data.token);
+      runInAction(() => this.setUser(res.data.token));
+      return true;
     } catch (error) {
       console.error(error);
+      return false;
     }
   };
 
@@ -43,15 +44,15 @@ class AuthStore {
   logout = async () => {
     delete instance.defaults.headers.common.Authorization;
     await AsyncStorage.removeItem("myToken");
-    this.user = null;
+    runInAction(() => (this.user = null));
   };
 
   /* set Client token in AsyncStorage */
   setUser = async (token) => {
     await AsyncStorage.setItem("myToken", token);
     instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-    this.user = decode(token);
-    await profileStore.fetchProfile(this.user.id);
+    runInAction(() => (this.user = decode(token)));
+    runInAction(() => (this.loading = false));
   };
 
   /* Check the Client Token */
@@ -61,16 +62,13 @@ class AuthStore {
       const currentTime = Date.now();
       const user = decode(token);
       if (user.exp >= currentTime) {
-        this.setUser(token);
-        this.loading = false;
-        profileStore.fetchProfile(this.user.id);
+        runInAction(() => this.setUser(token));
+        runInAction(() => (this.loading = false));
       } else {
         this.logout();
       }
     }
   };
-
-  /* Profile request */
 }
 const authStore = new AuthStore(); // create instance
 authStore.checkForToken();

@@ -1,7 +1,6 @@
-//library imports
-import { makeAutoObservable } from "mobx";
-//components
+/* State and Store */
 import instance from "./instance";
+import { makeAutoObservable } from "mobx";
 
 class ClientStore {
   clients = [];

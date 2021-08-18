@@ -2,7 +2,7 @@
 import instance from "./instance";
 
 /* State and Store */
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import authStore from "./authStore";
 
 class ProfileStore {
@@ -30,9 +30,15 @@ class ProfileStore {
   };
 
   updateProfile = async (updatedProfile) => {
-    const tmp = await this.getProfileByUserId(authStore.user.id);
-    const res = await instance.put(`/clients/${tmp.id}`, updatedProfile);
-    this.profile = res.data;
+    try {
+      const tmp = await this.getProfileByUserId(authStore.user.id);
+      const res = await instance.put(`/clients/${tmp.id}`, updatedProfile);
+      runInAction(() => (this.profile = res.data));
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   };
 }
 

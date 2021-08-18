@@ -1,6 +1,5 @@
-//library imports
-import { makeAutoObservable } from "mobx";
-//components
+/* State and Store */
+import { makeAutoObservable, runInAction } from "mobx";
 import instance from "./instance";
 
 class TaskStore {
@@ -14,8 +13,8 @@ class TaskStore {
   fetchTasks = async () => {
     try {
       const response = await instance.get("/tasks");
-      this.tasks = response.data;
-      this.loading = false;
+      runInAction(() => (this.tasks = response.data));
+      runInAction(() => (this.loading = false));
     } catch (error) {
       console.error("fetchTasks: ", error);
     }

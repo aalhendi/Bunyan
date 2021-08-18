@@ -1,7 +1,7 @@
+/* Imports*/
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
-import React from "react";
-
 import RootNavigator from "./src/components/navigation/Index";
 import { ThemeProvider } from "styled-components";
 
