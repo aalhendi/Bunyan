@@ -50,6 +50,8 @@ exports.login = async (req, res, next) => {
   }
 };
 
+// i think we discussed this already
+// but i think there're ways to avoid this route/controller
 exports.getClientByUserId = async (req, res, next) => {
   try {
     const { userId } = req.query;
@@ -69,6 +71,7 @@ exports.getClientByUserId = async (req, res, next) => {
   }
 };
 
+// clearly this doesn't do anything.
 const validateUserType = (userType) => {
   switch (userType) {
     case "company":
@@ -85,11 +88,13 @@ const validateUserType = (userType) => {
 const createUserProfile = async (userType, newUser, reqBody) => {
   try {
     switch (userType) {
+      // maybe use reqBody in all these .create()s and leave it for the FE to make sure the body of
+      // the request has all the data needed for that type of user.
       case "company":
         await Company.create({
           userId: newUser.id,
           name: newUser.username,
-          companyId: newUser.companyId,
+          companyId: newUser.companyId, // does a company have a companyId?
         });
         break;
       case "client":
@@ -113,3 +118,6 @@ const createUserProfile = async (userType, newUser, reqBody) => {
     console.log(err);
   }
 };
+
+// I commend whoever wrote all this code for thinking independently.
+// while some of this needs correcting, it's natural when carving your own path.

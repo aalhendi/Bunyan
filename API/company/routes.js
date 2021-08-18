@@ -21,6 +21,9 @@ router.param("testId", async (req, res, next, testId) => {
   }
 });
 
+// fetching all companies?
+// you don't need this route
+// there's no screen that displays a list of ALL companies in the DB
 /* Fetch Test Objects */
 router.get("/", fetchCompanies);
 

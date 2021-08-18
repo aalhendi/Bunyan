@@ -15,6 +15,8 @@ exports.fetchWorker = async (workerId, next) => {
 
 exports.fetchWorkers = async (req, res, next) => {
   try {
+    // again with the findAll?
+    // you know what my comment is gonna be.... no need to repeat it.
     const workers = await Worker.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });

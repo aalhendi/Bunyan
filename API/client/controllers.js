@@ -3,18 +3,20 @@
 /* Models */
 const { Client } = require("../../db/models/");
 
-/* Controllers */   
+/* Controllers */
 exports.fetchClient = async (clientId, next) => {
   try {
     const client = await Client.findByPk(clientId);
     return client;
-    } catch (error) {
+  } catch (error) {
     next(error);
   }
 };
-    
+
 exports.fetchClients = async (req, res, next) => {
   try {
+    // findAll()??
+    // do you ever need to display a list of ALL clients in the DB?
     clients = await Client.findAll();
     res.json(clients);
   } catch (error) {
@@ -24,6 +26,8 @@ exports.fetchClients = async (req, res, next) => {
 
 exports.findClient = async (req, res, next) => {
   try {
+    // this is very confusing too
+    // I don't think you need this route/controller.
     res.json(req.client);
   } catch (error) {
     next(error);

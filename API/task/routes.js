@@ -6,6 +6,8 @@ const { fetchTasks } = require("./controllers");
 
 const router = express.Router();
 
+// do you need this param route?
+// Ans: no.
 /* Params Middleware */
 router.param("taskId", async (req, res, next, taskId) => {
   const task = await fetchTask(taskId, next);

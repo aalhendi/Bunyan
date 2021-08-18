@@ -4,7 +4,7 @@ const passport = require("passport");
 
 /* Route Imports */
 const {
-  fetchTasks,
+  fetchTasks, // remove unused import
   fetchClient,
   fetchClients,
   updateProfile,
@@ -26,9 +26,12 @@ router.param("clientId", async (req, res, next, clientId) => {
   }
 });
 
+// do you need fetch clients?
 /* Fetch Client Objects */
 router.get("/", fetchClients);
 
+// this is extremely confusing
+// what is this for? I don't think you need this route.
 /* Fetch Client Objects */
 router.get("/:clientId", findClient);
 
