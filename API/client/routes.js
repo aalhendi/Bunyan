@@ -26,9 +26,6 @@ router.param("clientId", async (req, res, next, clientId) => {
   }
 });
 
-/* Fetch Task*/
-router.get("/tasks", fetchTasks);
-
 /* Fetch Client Objects */
 router.get("/", fetchClients);
 
