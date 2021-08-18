@@ -6,7 +6,6 @@ function WorkerItem({ worker }) {
     <tr>
       {/* Client Name */}
       <td>{worker.name}</td>
-      <td>{worker.name}</td>
     </tr>
   );
 }

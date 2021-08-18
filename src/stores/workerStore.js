@@ -16,6 +16,7 @@ class WorkerStore {
     try {
       const response = await instance.get(`/workers/${userId}`);
       this.worker = response.data;
+      console.log(userId)
       this.loading = false;
     } catch (error) {
       console.error("fetchClient: ", error);

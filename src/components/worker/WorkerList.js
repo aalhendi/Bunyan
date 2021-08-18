@@ -9,11 +9,6 @@ import { observer } from "mobx-react";
 
 function WorkerList() {
   /* ToDo: Function to find all workers for the login user and pass props to worker item */
-
-  const workerItem = workerStore.worker.map((worker) => (
-    <WorkerItem worker={worker} />
-  ));
-
   /* Modal Function */
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
@@ -25,18 +20,22 @@ function WorkerList() {
   if (authStore.loading || companyStore.loading) {
     return <h1>Loading...</h1>;
   }
+  const workerItem = workerStore.worker.map((worker) => (
+    <WorkerItem worker={worker} />
+  ));
+
+
   return (
     <div className="d-md-flex h-md-100 align-items-center">
       {/* Left Side */}
-      <div className="col-md-12 p-0  h-md-100">
+      <div className="col-md-6 p-0  h-md-100 mx-auto">
         <CreateNew onClick={openModal} />
         <AddWorker isOpen={isOpen} closeModal={closeModal} />
         <div className="d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">Worker</th>
-                <th scope="col">Phone Number</th>
+                <th scope="col">Worker Account</th>
               </tr>
             </thead>
             <tbody>{workerItem}</tbody>

@@ -28,12 +28,11 @@ const AddWorker = (props) => {
 
   /* Submit handler */
   const handleSubmit = async (event) => {
-    event.preventDefault();
     user.userType = "worker";
     user.email = `${user.username}@worker.com`;
     // TODO: inherit company id
     user.companyId = companyStore.company.id;
-    await authStore.register(user);
+    await authStore.register(user, true);
     event.target.reset();
     props.closeModal();
   };

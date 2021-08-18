@@ -5,7 +5,6 @@ import Register from "./components/authentication/Register";
 import Login from "./components/authentication/Login";
 import Navbar from "./components/navbar/Navbar";
 
-import RegisterWorker from "./components/worker/RegisterWorker";
 /* State and Store */
 import authStore from "./stores/authStore";
 import { observer } from "mobx-react";
@@ -36,12 +35,8 @@ const App = () => {
       <Route path="/register">
         <Register />
       </Route>
-
       <Route path="/login">
         <Login />
-      </Route>
-      <Route path="/registerWorker">
-        <RegisterWorker />
       </Route>
       <Route exact path="/">
         {authStore.user ? (
