@@ -52,6 +52,7 @@ class AuthStore {
     await AsyncStorage.setItem("myToken", token);
     instance.defaults.headers.common.Authorization = `Bearer ${token}`;
     this.user = decode(token);
+    await profileStore.fetchProfile(this.user.id);
   };
 
   /* Check the Client Token */

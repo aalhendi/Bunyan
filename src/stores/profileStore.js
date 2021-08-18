@@ -6,7 +6,7 @@ import { makeAutoObservable } from "mobx";
 import authStore from "./authStore";
 
 class ProfileStore {
-  profile = [];
+  profile = null;
   loading = true;
 
   constructor() {
