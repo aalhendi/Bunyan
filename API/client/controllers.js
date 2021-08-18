@@ -1,56 +1,55 @@
 /* Imports */
-const normalize = require("normalize-path");
 
 /* Models */
-const { Test, Task, Client } = require("../../db/models/");
+const { Client, Task } = require("../../db/models/");
 
 /* Controllers */
-exports.fetchTest = async (testId, next) => {
-  try {
-    const test = await Test.findByPk(testId);
-    return test;
-  } catch (error) {
-    next(error);
-  }
-};
-
 exports.fetchTasks = async (req, res, next) => {
   try {
     const tasks = await Task.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });
     res.json(tasks);
+    } catch (error) {
+    next(error);
+  }
+};
+    
+exports.fetchClient = async (clientId, next) => {
+  try {
+    const client = await Client.findByPk(clientId);
+    return client;
+    } catch (error) {
+    next(error);
+  }
+};
+    
+exports.fetchClients = async (req, res, next) => {
+  try {
+    clients = await Client.findAll();
+    res.json(clients);
   } catch (error) {
     next(error);
   }
 };
 
-exports.routeTest = async (req, res, next) => {
+exports.findClient = async (req, res, next) => {
   try {
-    test = await Test.findAll();
-    res.json(test);
+    res.json(req.client);
   } catch (error) {
     next(error);
   }
 };
 
-exports.uploadImage = async (req, res, next) => {
+exports.updateProfile = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.image = `http://${req.get("host")}/${normalize(req.file.path)}`;
+    if (req.user.id !== req.client.userId) {
+      const error = new Error("Unauthorized.");
+      error.status = 401;
+      next(error);
     }
-    req.body.userId = req.user.id;
-    const newTest = await Test.create(req.body);
-    res.status(201).json(newTest);
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.deleteImage = async (req, res, next) => {
-  try {
-    await req.test.destroy();
-    res.status(204).end();
+    await req.client.update(req.body);
+    res.json(req.client);
   } catch (error) {
     next(error);
   }
