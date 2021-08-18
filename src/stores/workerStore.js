@@ -1,11 +1,12 @@
 /* Imports */
 import { makeAutoObservable } from "mobx";
+import companyStore from "./companyStore";
 import instance from "./instance";
 
 class WorkerStore {
   /* Assign user */
   loading = true;
-  worker = [];
+  workers = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -14,12 +15,14 @@ class WorkerStore {
   /* Fetch Company Profile */
   fetchWorker = async (userId) => {
     try {
-      const response = await instance.get(`/workers/${userId}`);
-      this.worker = response.data;
-      console.log(userId)
+      const res = await instance.get(`/workers`);
+      this.workers = res.data.filter(
+        (worker) => worker.companyId === companyStore.company.id
+      );
+      console.log(userId);
       this.loading = false;
     } catch (error) {
-      console.error("fetchClient: ", error);
+      console.error("fetchWorker: ", error);
     }
   };
 }

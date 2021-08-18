@@ -20,10 +20,9 @@ function WorkerList() {
   if (authStore.loading || companyStore.loading) {
     return <h1>Loading...</h1>;
   }
-  const workerItem = workerStore.worker.map((worker) => (
+  const workerItem = workerStore.workers.map((worker) => (
     <WorkerItem worker={worker} />
   ));
-
 
   return (
     <div className="d-md-flex h-md-100 align-items-center">

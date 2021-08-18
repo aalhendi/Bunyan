@@ -20,10 +20,15 @@ function Login() {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
+  const [invalid, setInvalid] = useState(false);
+
   /* handle sumbit of the form */
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await authStore.login(user);
+    const loginStatus = await authStore.login(user);
+    console.log(loginStatus);
+    setInvalid(!loginStatus);
     event.target.reset();
   };
 
@@ -77,6 +82,11 @@ function Login() {
             <button type="submit" className="btn btn-dark w-100 d-grid mx-auto">
               Login
             </button>
+            {invalid && (
+              <p style={{ margin: "10px", color: "red" }}>
+                Invalid credentials
+              </p>
+            )}
           </form>
           <Link to="/register">Don't have an account? Register here</Link>
         </div>

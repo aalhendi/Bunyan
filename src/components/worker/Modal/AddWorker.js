@@ -28,9 +28,9 @@ const AddWorker = (props) => {
 
   /* Submit handler */
   const handleSubmit = async (event) => {
+    // TODO: Prevent default form submit and still live render
     user.userType = "worker";
     user.email = `${user.username}@worker.com`;
-    // TODO: inherit company id
     user.companyId = companyStore.company.id;
     await authStore.register(user, true);
     event.target.reset();

@@ -32,8 +32,10 @@ class AuthStore {
     try {
       const res = await instance.post("/login", userData);
       this.setUser(res.data.token);
+      return true;
     } catch (error) {
       console.error(error);
+      return false;
     }
   };
 
@@ -53,16 +55,16 @@ class AuthStore {
   };
 
   /* Check the Contractor Token */
-  checkForToken = () => {
+  checkForToken = async () => {
     const token = localStorage.getItem("myToken");
     if (token) {
       const currentTime = Date.now();
       const user = decode(token);
       if (user.exp >= currentTime) {
         this.setUser(token);
-        companyStore.fetchCompany(this.user.id);
+        await companyStore.fetchCompany(this.user.id);
       } else {
-        this.signout();
+        this.logout();
       }
       this.loading = false;
     }
@@ -72,5 +74,7 @@ class AuthStore {
 }
 const authStore = new AuthStore(); // create instance
 authStore.checkForToken();
-workerStore.fetchWorker(authStore.user.id);
+if (authStore.user?.id) {
+  workerStore.fetchWorker(authStore.user.id);
+}
 export default authStore; // export it
