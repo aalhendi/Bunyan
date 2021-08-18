@@ -13,7 +13,7 @@ exports.fetchTest = async (testId, next) => {
     next(error);
   }
 };
-exports.FetchWorkers = async (req, res, next) => {
+exports.fetchWorkers = async (req, res, next) => {
   try {
     const workers = await Worker.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
