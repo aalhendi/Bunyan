@@ -3,6 +3,7 @@ import instance from "./instance";
 import decode from "jwt-decode";
 import companyStore from "./companyStore";
 import { makeAutoObservable } from "mobx";
+import workerStore from "./workerStore";
 
 class AuthStore {
   /* Assign user */
@@ -14,10 +15,13 @@ class AuthStore {
   }
 
   /* Create New Contractor */
-  register = async (newUser) => {
+  register = async (newUser, isWorker = false) => {
     try {
       const res = await instance.post("/register", newUser);
-      this.setUser(res.data.token);
+      if (!isWorker) {
+        this.setUser(res.data.token);
+      }
+      companyStore.fetchCompany(this.user.id);
     } catch (error) {
       console.error(error); // error message
     }
@@ -68,4 +72,5 @@ class AuthStore {
 }
 const authStore = new AuthStore(); // create instance
 authStore.checkForToken();
+workerStore.fetchWorker(authStore.user.id);
 export default authStore; // export it
