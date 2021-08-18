@@ -27,24 +27,6 @@ router.param("testId", async (req, res, next, testId) => {
   }
 });
 /* Fetch Workers*/
-router.get("/workers", fetchWorkers);
-
-/* Fetch Test Objects */
-router.get("/", routeTest);
-
-/* Upload Image */
-router.post(
-  "/uploadImage",
-  passport.authenticate("jwt", { session: false }),
-  upload.single("image"),
-  uploadImage
-);
-
-/* Delete Image */
-router.delete(
-  "/:testId",
-  passport.authenticate("jwt", { session: false }),
-  deleteImage
-);
+router.get("/", fetchWorkers);
 
 module.exports = router;
