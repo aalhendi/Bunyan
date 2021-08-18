@@ -13,17 +13,7 @@ exports.fetchTest = async (testId, next) => {
     next(error);
   }
 };
-//added but debatable
-exports.FetchClients = async (req, res, next) => {
-  try {
-    const clients = await Client.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
-    });
-    res.json(clients);
-  } catch (error) {
-    next(error);
-  }
-};
+
 exports.FetchTasks = async (req, res, next) => {
   try {
     const tasks = await Task.findAll({
