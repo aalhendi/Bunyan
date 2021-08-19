@@ -1,7 +1,9 @@
 /* Imports */
+require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../../config/keys");
+const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_EXPIRATION_MS = process.env.JWT_EXPIRATION_MS;
 
 /* Models */
 const { User, Company, Client, Worker } = require("../../db/models");
@@ -18,30 +20,56 @@ exports.register = async (req, res, next) => {
     req.body.password = hashedPassword;
     validateUserType(userType);
     const newUser = await User.create(req.body);
-    // TODO: merge validateUserType() and createUserProfile() functions (?)
-    createUserProfile(userType, newUser, req.body);
     const payload = {
       id: newUser.id,
       username: newUser.username,
       email: newUser.email,
+      phoneNumber: newUser.phoneNumber,
       exp: Date.now() + JWT_EXPIRATION_MS,
+      profile: await createUserProfile(userType, newUser, req.body),
     };
-    console.log(payload);
     const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
     res.json({ token });
   } catch (error) {
     next(error);
   }
 };
-//added email to payload cuz its needed
+
 exports.login = async (req, res, next) => {
   try {
     const { user } = req;
+
+    if (user.email.endsWith("@worker.com")) {
+      var profile = await Worker.findOne({
+        where: {
+          userId: user.id,
+        },
+      });
+      console.log("Worker: ", profile?.dataValues);
+    } else {
+      var profile = await Client.findOne({
+        where: {
+          userId: user.id,
+        },
+      });
+      console.log("Client: ", profile?.dataValues);
+      if (!profile?.dataValues) {
+        profile = await Company.findOne({
+          where: {
+            userId: user.id,
+          },
+        });
+        console.log("Company: ", profile?.dataValues);
+      }
+    }
+
     const payload = {
       id: user.id,
       username: user.username,
       email: user.email,
+      phoneNumber: user.phoneNumber,
       exp: Date.now() + JWT_EXPIRATION_MS,
+      profile: profile.dataValues,
     };
     const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
     res.json({ token });
@@ -70,15 +98,12 @@ exports.getClientByUserId = async (req, res, next) => {
 };
 
 const validateUserType = (userType) => {
-  switch (userType) {
-    case "company":
-      break;
-    case "client":
-      break;
-    case "worker":
-      break;
-    default:
-      throw new Error("Invalid userType");
+  if (
+    userType !== "company" &&
+    userType !== "client" &&
+    userType !== "worker"
+  ) {
+    throw new Error("Invalid userType");
   }
 };
 
@@ -86,26 +111,23 @@ const createUserProfile = async (userType, newUser, reqBody) => {
   try {
     switch (userType) {
       case "company":
-        await Company.create({
+        return await Company.create({
           userId: newUser.id,
           name: newUser.username,
           companyId: newUser.companyId,
         });
-        break;
       case "client":
-        await Client.create({
+        return await Client.create({
           userId: newUser.id,
           firstName: "firstName",
           lastName: "lastName",
         });
-        break;
       case "worker":
-        await Worker.create({
+        return await Worker.create({
           userId: newUser.id,
           name: newUser.username,
           companyId: reqBody.companyId,
         });
-        break;
       default:
         throw new Error("Invalid userType");
     }
