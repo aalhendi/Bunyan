@@ -1,6 +1,6 @@
 /* Imports */
 import { makeAutoObservable } from "mobx";
-import companyStore from "./companyStore";
+import authStore from "./authStore";
 import instance from "./instance";
 
 class WorkerStore {
@@ -17,7 +17,7 @@ class WorkerStore {
     try {
       const res = await instance.get(`/workers`);
       this.workers = res.data.filter(
-        (worker) => worker.companyId === companyStore.company.id
+        (worker) => worker.companyId === authStore.user.profile.id
       );
       console.log(userId);
       this.loading = false;

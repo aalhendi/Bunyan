@@ -4,7 +4,6 @@ import Modal from "react-modal";
 import React, { useState } from "react";
 /* State and Store */
 import authStore from "../../../stores/authStore";
-import companyStore from "../../../stores/companyStore";
 import { observer } from "mobx-react";
 
 /* Client Store */
@@ -17,7 +16,7 @@ const AddWorker = (props) => {
     phoneNumber: "",
   });
 
-  if (authStore.loading || companyStore.loading) {
+  if (authStore.loading) {
     return <h1>Loading...</h1>;
   }
 
@@ -28,13 +27,15 @@ const AddWorker = (props) => {
 
   /* Submit handler */
   const handleSubmit = async (event) => {
-    // TODO: Prevent default form submit and still live render
+    // TODO: Make this live render
+    event.preventDefault();
     user.userType = "worker";
     user.email = `${user.username}@worker.com`;
-    user.companyId = companyStore.company.id;
+    user.companyId = authStore.user.profile.id;
     await authStore.register(user, true);
     event.target.reset();
     props.closeModal();
+    window.location.reload();
   };
   /* Style modal  */
   const customStyles = {

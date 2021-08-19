@@ -1,7 +1,6 @@
 /* Imports */
 import instance from "./instance";
 import decode from "jwt-decode";
-import companyStore from "./companyStore";
 import { makeAutoObservable } from "mobx";
 import workerStore from "./workerStore";
 
@@ -21,7 +20,6 @@ class AuthStore {
       if (!isWorker) {
         this.setUser(res.data.token);
       }
-      companyStore.fetchCompany(this.user.id);
     } catch (error) {
       console.error(error); // error message
     }
@@ -62,7 +60,6 @@ class AuthStore {
       const user = decode(token);
       if (user.exp >= currentTime) {
         this.setUser(token);
-        await companyStore.fetchCompany(this.user.id);
       } else {
         this.logout();
       }

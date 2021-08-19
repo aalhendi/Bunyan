@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import authStore from "../../stores/authStore";
-import companyStore from "../../stores/companyStore";
 import workerStore from "../../stores/workerStore";
 import AddWorker from "./Modal/AddWorker";
 import { CreateNew } from "./styles";
@@ -17,7 +16,7 @@ function WorkerList() {
   const closeModal = () => {
     setIsOpen(false);
   };
-  if (authStore.loading || companyStore.loading) {
+  if (authStore.loading) {
     return <h1>Loading...</h1>;
   }
   const workerItem = workerStore.workers.map((worker) => (
