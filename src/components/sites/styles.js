@@ -10,7 +10,6 @@ export const TopNavigationBar = styled.View`
   flex-direction: row;
   align-content: center;
   align-items: center;
-  padding-horizontal: 4%;
 `;
 export const TextTopNavigationBar = styled.View`
   flex: 6;
@@ -42,12 +41,12 @@ export const ListItemContainer = styled(List)`
 `;
 export const ListItem = styled(List.Item)`
   border-radius: 10px;
-  box-shadow: 2px 2px 4px #000000;
+  box-shadow: 2px 2px 3px #000000;
   border: 0.4px solid grey;
   margin-right: auto;
   margin-left: auto;
-  margin-top: 2.5%;
-  width: 98%;
+  margin-top: 3%;
+  width: 90%;
   background-color: ${({ theme }) => theme.white};
 `;
 export const TaskText = styled.Text`

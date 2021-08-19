@@ -27,7 +27,6 @@ const SiteList = ({ navigation }) => {
   if (clientStore.loading) return <Spinner />;
 
   const oneTask = taskStore.tasks.map((task) => task.clientId);
-
   const unique = [...new Set(oneTask)];
   //   const task = Object.assign({}, ...tasks);
 
@@ -67,11 +66,11 @@ const SiteList = ({ navigation }) => {
   return (
     <SafeAreaView>
       <TopNavigationBar>
+        <FlexView />
         <TextTopNavigationBar>
           <TopBarText>Sites</TopBarText>
-          <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
         </TextTopNavigationBar>
-        <FlexView />
+        <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
       </TopNavigationBar>
       <ScrollView>
         <ListItemContainer>{siteList}</ListItemContainer>
