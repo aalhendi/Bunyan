@@ -9,19 +9,19 @@ const { fetchCompanies } = require("./controllers");
 const router = express.Router();
 
 /* Params Middleware */
-router.param("testId", async (req, res, next, testId) => {
-  const test = await fetchTest(testId, next);
-  if (test) {
-    req.test = test;
+router.param("companyId", async (req, res, next, companyId) => {
+  const company = await fetchCompany(companyId, next);
+  if (company) {
+    req.company = company;
     next();
   } else {
-    const error = new Error("Test Object Not Found.");
+    const error = new Error("Company Object Not Found.");
     error.status = 404;
     next(error);
   }
 });
 
-/* Fetch Test Objects */
+/* Fetch Company Objects */
 router.get("/", fetchCompanies);
 
 module.exports = router;

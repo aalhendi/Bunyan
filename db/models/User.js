@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: {
+        args: true,
+        msg: "Phone Number is already in-use",
+      },
       validate: {
         notEmpty: {
           args: true,
@@ -41,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: {
+        args: true,
+        msg: "email is already in-use",
+      },
       validate: {
         notEmpty: {
           args: true,

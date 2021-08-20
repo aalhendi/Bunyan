@@ -17,6 +17,7 @@ const companyRoutes = require("./API/company/routes");
 const clientRoutes = require("./API/client/routes");
 const workerRoutes = require("./API/worker/routes");
 const taskRoutes = require("./API/task/routes");
+const companyclientRoutes = require("./API/companyclient/routes");
 const app = express();
 
 /* Middleware */
@@ -33,6 +34,7 @@ app.use("/companies", companyRoutes);
 app.use("/clients", clientRoutes);
 app.use("/workers", workerRoutes);
 app.use("/tasks", taskRoutes);
+app.use("/companyclient", companyclientRoutes);
 app.use("/media", express.static("media"));
 
 /* Error Handling */
