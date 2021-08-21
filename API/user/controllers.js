@@ -25,7 +25,7 @@ exports.register = async (req, res, next) => {
       username: newUser.username,
       email: newUser.email,
       phoneNumber: newUser.phoneNumber,
-      exp: Date.now() + JWT_EXPIRATION_MS,
+      exp: Date.now() + parseInt(JWT_EXPIRATION_MS),
       profile: await createUserProfile(userType, newUser, req.body),
     };
     const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
@@ -65,7 +65,7 @@ exports.login = async (req, res, next) => {
       username: user.username,
       email: user.email,
       phoneNumber: user.phoneNumber,
-      exp: Date.now() + JWT_EXPIRATION_MS,
+      exp: Date.now() + parseInt(JWT_EXPIRATION_MS),
       profile: profile.dataValues,
     };
     const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
