@@ -23,9 +23,9 @@ const SiteList = ({ navigation }) => {
   if (clientStore.loading) return <Spinner />;
 
   const siteList = clientStore.statuses
-    .filter((client) => client.companyId === authStore.user.profile.companyId)
+    .filter((client) => client.companyId === authStore.user?.profile.companyId)
     .map((client) => (
-      <SiteItem client={client} key={client.id} navigation={navigation} />
+      <SiteItem client={client} key={client.clientId} navigation={navigation} />
     ));
 
   const handleSubmit = async () => {
