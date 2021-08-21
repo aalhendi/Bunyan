@@ -41,7 +41,7 @@ const Register = ({ navigation }) => {
               InputLeftElement={
                 <Icon as={<Ionicons name="person" />} size="md" m={2} />
               }
-              placeholder="username" // mx={4}
+              placeholder="username"
               onChangeText={(username) => setUser({ ...user, username })}
             />
           </View>
@@ -61,7 +61,7 @@ const Register = ({ navigation }) => {
                   m={2}
                 />
               }
-              placeholder="password" // mx={4}
+              placeholder="password"
               onChangeText={(password) => setUser({ ...user, password })}
             />
           </View>

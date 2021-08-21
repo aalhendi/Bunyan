@@ -5,7 +5,6 @@ import { observer } from "mobx-react";
 //styles
 import {
   SafeAreaView,
-  CenterView,
   TopNavigationBar,
   FlexView,
   BackIcon,

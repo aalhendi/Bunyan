@@ -12,7 +12,6 @@ import workerStore from "../../stores/workerStore";
 //styles
 import {
   SafeAreaView,
-  CenterView,
   TopNavigationBar,
   FlexView,
   BackIcon,

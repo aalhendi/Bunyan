@@ -1,6 +1,6 @@
 /* Imports */
 import React, { useState } from "react";
-import { Input, Icon, Center, Box, Button, Spinner } from "native-base";
+import { Input, Icon, Center, Box, Button } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 
@@ -46,7 +46,7 @@ const Login = ({ navigation }) => {
               InputLeftElement={
                 <Icon as={<Ionicons name="person" />} size="md" m={2} />
               }
-              placeholder="username" // mx={4}
+              placeholder="username"
               onChangeText={(username) => setUser({ ...user, username })}
             />
           </View>
@@ -66,7 +66,7 @@ const Login = ({ navigation }) => {
                   m={2}
                 />
               }
-              placeholder="password" // mx={4}
+              placeholder="password"
               onChangeText={(password) => setUser({ ...user, password })}
             />
           </View>
