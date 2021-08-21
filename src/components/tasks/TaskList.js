@@ -9,6 +9,7 @@ import TaskItem from "./TaskItem";
 import taskStore from "../../stores/taskStore";
 import authStore from "../../stores/authStore";
 import workerStore from "../../stores/workerStore";
+import clientStore from "../../stores/clientStore";
 //styles
 import {
   SafeAreaView,
@@ -22,25 +23,32 @@ import {
 
 const TaskList = ({ navigation, route }) => {
   if (taskStore.loading) return <Spinner />;
-  const { client } = route.params;
+
+  const client = authStore.user.email.endsWith("@worker.com")
+    ? route.params.client
+    : clientStore.statuses
+        .filter(
+          (client) => client.companyId === authStore.user?.profile.companyId
+        )
+        .map((client) => client);
+
   const workers = workerStore.workers
     .filter((worker) => worker.userId === authStore.user?.id)
     .map((worker) => worker);
   const worker = Object.assign({}, ...workers);
 
-  const taskList =
-    authStore.user.profile.companyId !== null //better implementaion so company wont be able to login
-      ? taskStore.tasks
-          .filter((task) => task.workerId === worker?.id)
-          .filter((task) => task.clientId === client.clientId)
-          .map((task) => (
-            <TaskItem task={task} key={task.id} navigation={navigation} />
-          ))
-      : taskStore.tasks
-          .filter((task) => task.clientId === authStore.user.profile.userId)
-          .map((task) => (
-            <TaskItem task={task} key={task.id} navigation={navigation} />
-          ));
+  const taskList = authStore.user.email.endsWith("@worker.com")
+    ? taskStore.tasks
+        .filter((task) => task.workerId === worker?.id)
+        .filter((task) => task.clientId === client.clientId)
+        .map((task) => (
+          <TaskItem task={task} key={task.id} navigation={navigation} />
+        ))
+    : taskStore.tasks
+        .filter((task) => task.clientId === authStore.user.profile.userId)
+        .map((task) => (
+          <TaskItem task={task} key={task.id} navigation={navigation} />
+        ));
 
   const handleBack = () => {
     authStore.user.profile.companyId !== null
