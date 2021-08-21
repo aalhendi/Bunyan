@@ -5,8 +5,9 @@ import { observer } from "mobx-react";
 function Home() {
     return (
         <div>
-            Coming Soon
+            Soon
         </div>
+
     );
 }
 
