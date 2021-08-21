@@ -4,6 +4,7 @@ import { makeAutoObservable } from "mobx";
 
 class ClientStore {
   clients = [];
+  statuses = [];
   loading = true;
 
   constructor() {
@@ -19,8 +20,19 @@ class ClientStore {
       console.error("fetchClients: ", error);
     }
   };
+
+  fetchStatuses = async () => {
+    try {
+      const response = await instance.get("/companyclient");
+      this.statuses = response.data;
+      this.loading = false;
+    } catch (error) {
+      console.error("fetchCompanyClient: ", error);
+    }
+  };
 }
 
 const clientStore = new ClientStore();
 clientStore.fetchClients();
+clientStore.fetchStatuses();
 export default clientStore;

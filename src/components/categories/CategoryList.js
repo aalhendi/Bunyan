@@ -49,10 +49,10 @@ const CategoryList = ({ navigation }) => {
               <CenterCircularProgress>
                 <CircularProgress
                   value={x}
-                  valuePrefix={"%"}
-                  inActiveStrokeColor={"grey"}
+                  valuePrefix="%"
+                  inActiveStrokeColor="grey"
                   inActiveStrokeOpacity={0.25}
-                  activeStrokeColor={"#5588A3"}
+                  activeStrokeColor="#5588A3"
                 />
               </CenterCircularProgress>
             </CategoryType>

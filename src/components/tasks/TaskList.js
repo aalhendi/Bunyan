@@ -2,18 +2,16 @@
 import React from "react";
 import { Spinner } from "native-base";
 import { observer } from "mobx-react";
-import { ScrollView, Text } from "react-native";
+import { ScrollView } from "react-native";
 //components
 import TaskItem from "./TaskItem";
 //stores
 import taskStore from "../../stores/taskStore";
 import authStore from "../../stores/authStore";
 import workerStore from "../../stores/workerStore";
-import clientStore from "../../stores/clientStore";
 //styles
 import {
   SafeAreaView,
-  CenterView,
   TopNavigationBar,
   FlexView,
   BackIcon,
@@ -22,49 +20,38 @@ import {
   ListItemContainer,
 } from "./styles";
 
-const TaskList = ({ navigation }) => {
+const TaskList = ({ navigation, route }) => {
   if (taskStore.loading) return <Spinner />;
-
+  const { client } = route.params;
   const workers = workerStore.workers
     .filter((worker) => worker.userId === authStore.user?.id)
     .map((worker) => worker);
   const worker = Object.assign({}, ...workers);
 
-  const clients = clientStore.clients
-    .filter((client) => client.userId === authStore.user?.id)
-    .map((client) => client);
-  const client = Object.assign({}, ...clients);
+  const taskList =
+    authStore.user.profile.companyId !== null //better implementaion so company wont be able to login
+      ? taskStore.tasks
+          .filter((task) => task.workerId === worker?.id)
+          .filter((task) => task.clientId === client.clientId)
+          .map((task) => (
+            <TaskItem task={task} key={task.id} navigation={navigation} />
+          ))
+      : taskStore.tasks
+          .filter((task) => task.clientId === authStore.user.profile.userId)
+          .map((task) => (
+            <TaskItem task={task} key={task.id} navigation={navigation} />
+          ));
 
-  const taskList = authStore.user.email.endsWith("@worker.com")
-    ? taskStore.tasks
-        .filter((task) => task.workerId === worker?.id)
-        .map((task) => (
-          <TaskItem task={task} key={task.id} navigation={navigation} />
-        ))
-    : taskStore.tasks
-        .filter((task) => task.clientId === client?.id)
-        .map((task) => (
-          <TaskItem task={task} key={task.id} navigation={navigation} />
-        ));
-
-  //   .filter((task) => task.userId !== authStore.user?.id)
+  const handleBack = () => {
+    authStore.user.profile.companyId !== null
+      ? navigation.goBack("SiteList")
+      : navigation.goBack("Home");
+  };
   return (
     <SafeAreaView>
       <TopNavigationBar>
         <FlexView>
-          {authStore.user.email.endsWith("@worker.com") ? (
-            <BackIcon
-              name="chevron-back"
-              size={35}
-              onPress={() => navigation.goBack("SiteList")}
-            />
-          ) : (
-            <BackIcon
-              name="chevron-back"
-              size={35}
-              onPress={() => navigation.goBack("Home")}
-            />
-          )}
+          <BackIcon name="chevron-back" size={35} onPress={handleBack} />
         </FlexView>
         <TextTopNavigationBar>
           <TopBarText>Tasks</TopBarText>

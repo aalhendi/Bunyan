@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { List } from "native-base";
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1;

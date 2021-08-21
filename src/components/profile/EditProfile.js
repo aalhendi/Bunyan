@@ -5,6 +5,7 @@ import { View, Text } from "react-native";
 
 /* State and Store */
 import authStore from "../../stores/authStore";
+import profileStore from "../../stores/profileStore";
 import { observer } from "mobx-react";
 
 const EditProfile = ({ navigation }) => {
