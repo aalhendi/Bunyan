@@ -4,7 +4,7 @@ const passport = require("passport");
 const { upload } = require("../../middleware/multer");
 
 /* Route Imports */
-const { fetchCompanies } = require("./controllers");
+const { fetchCompanies, updateProfile, fetchCompany, findCompany } = require("./controllers");
 
 const router = express.Router();
 
@@ -24,4 +24,12 @@ router.param("companyId", async (req, res, next, companyId) => {
 /* Fetch Company Objects */
 router.get("/", fetchCompanies);
 
+router.get("/:companyId", findCompany);
+
+/* Update Router */
+router.put(
+  "/:companyId",
+  passport.authenticate("jwt", { session: false }),
+  updateProfile
+);
 module.exports = router;
