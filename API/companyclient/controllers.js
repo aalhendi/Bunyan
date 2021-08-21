@@ -1,7 +1,7 @@
 /* Imports */
 
 /* Models */
-const { CompanyClient, Client, User } = require("../../db/models/");
+const { CompanyClient, Client, User, Company } = require("../../db/models/");
 
 /* Controllers */
 exports.fetchStatuses = async (req, res, next) => {
@@ -13,23 +13,62 @@ exports.fetchStatuses = async (req, res, next) => {
   }
 };
 
+exports.fetchWaitlist = async (req, res, next) => {
+  try {
+    const foundCompany = await Company.findOne({
+      where: {
+        id: req.query.companyId,
+      },
+    });
+    if (foundCompany) {
+      const waitlist = await CompanyClient.findAll({
+        where: {
+          status: 0,
+          companyId: foundCompany.id,
+        },
+      });
+
+      const clientList = [];
+      for (let i = 0; i < waitlist.length; i++) {
+        const client = await Client.findOne({
+          where: {
+            id: waitlist[i].clientId,
+          },
+        });
+        clientList.push(client);
+      }
+
+      res.json(clientList);
+      // res.json({
+      //   id: foundClient.id,
+      //   firstName: foundClient.firstName,
+      //   lastName: foundClient.lastName,
+      //   status: status.status,
+      // });
+    } else {
+      const error = new Error("Company not found");
+      error.status = 404;
+      next(error);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.requestOnboardClient = async (req, res, next) => {
   try {
     // GET DATA from req.body
-    // console.log("Req", req.body);
     const foundUser = await User.findOne({
       where: {
         phoneNumber: req.body.phoneNumber,
       },
     });
-    // console.log("user", foundUser);
     if (foundUser) {
       const foundClient = await Client.findOne({
         where: {
           userId: foundUser.id,
         },
       });
-      // console.log("client", foundClient);
       if (foundClient) {
         const foundCompanyClient = await CompanyClient.findOne({
           where: {
@@ -37,12 +76,11 @@ exports.requestOnboardClient = async (req, res, next) => {
             clientId: foundClient.id,
           },
         });
-        // console.log("companyClient", foundCompanyClient);
         if (foundCompanyClient) {
           const error = new Error("CompanyClient Relationship already exists");
           // TODO: Set err status ?
           next(error);
-          // TODO: FIX ERROR ?
+          // TODO: FIX  VALIDATION ERROR IF RELATIONSHIP EXISTS ?
         }
 
         const status = await CompanyClient.create({
@@ -50,7 +88,14 @@ exports.requestOnboardClient = async (req, res, next) => {
           companyId: req.body.companyId,
           status: req.body.status,
         });
-        res.json(status);
+
+        // TODO: Format this nicely (?)
+        res.json({
+          id: foundClient.id,
+          firstName: foundClient.firstName,
+          lastName: foundClient.lastName,
+          status: status.status,
+        });
       } else {
         const error = new Error("Client not found");
         error.status = 404;

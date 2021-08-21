@@ -4,7 +4,11 @@ const passport = require("passport");
 const { upload } = require("../../middleware/multer");
 
 /* Route Imports */
-const { fetchStatuses, requestOnboardClient } = require("./controllers");
+const {
+  fetchStatuses,
+  requestOnboardClient,
+  fetchWaitlist,
+} = require("./controllers");
 
 const router = express.Router();
 
@@ -27,5 +31,13 @@ router.get("/", fetchStatuses);
 /* Create Companyclient Object */
 // TODO: Auth perms
 router.post("/", requestOnboardClient);
+
+/* Fetch waitlist */
+router.get(
+  "/waitlist",
+  // TODO: ADD AUTH PERMS
+  // passport.authenticate("jwt", { session: false }),
+  fetchWaitlist
+);
 
 module.exports = router;

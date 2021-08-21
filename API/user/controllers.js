@@ -45,21 +45,18 @@ exports.login = async (req, res, next) => {
           userId: user.id,
         },
       });
-      console.log("Worker: ", profile?.dataValues);
     } else {
       var profile = await Client.findOne({
         where: {
           userId: user.id,
         },
       });
-      console.log("Client: ", profile?.dataValues);
       if (!profile?.dataValues) {
         profile = await Company.findOne({
           where: {
             userId: user.id,
           },
         });
-        console.log("Company: ", profile?.dataValues);
       }
     }
 
@@ -132,6 +129,6 @@ const createUserProfile = async (userType, newUser, reqBody) => {
         throw new Error("Invalid userType");
     }
   } catch (err) {
-    console.log(err);
+    throw new Error(err);
   }
 };
