@@ -1,9 +1,18 @@
-import React from 'react';
+/* Imports */
+import React from "react";
 
-function ClientWait() {
-    return (
-        <li className="list-group-item">Ali Behbahani</li>
-    );
-}
+/* State and Store */
+import { observer } from "mobx-react";
 
-export default ClientWait;
+const ClientWait = ({ clients }) => {
+  const waitingList = clients.map((client) => (
+    <li
+      className="list-group-item"
+      key={client.id}
+    >{`${client.firstName} ${client.lastName}`}</li>
+  ));
+
+  return <>{waitingList}</>;
+};
+
+export default observer(ClientWait);
