@@ -22,6 +22,7 @@ import {
 const SiteList = ({ navigation }) => {
   if (clientStore.loading) return <Spinner />;
 
+
   const siteList = clientStore.statuses
     .filter((client) => client.companyId === authStore.user?.profile.companyId)
     .map((client) => (
@@ -36,11 +37,11 @@ const SiteList = ({ navigation }) => {
   return (
     <SafeAreaView>
       <TopNavigationBar>
+        <FlexView />
         <TextTopNavigationBar>
           <TopBarText>Sites</TopBarText>
-          <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
         </TextTopNavigationBar>
-        <FlexView />
+        <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
       </TopNavigationBar>
       <ScrollView>
         <ListItemContainer>{siteList}</ListItemContainer>

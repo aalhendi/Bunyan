@@ -81,6 +81,7 @@ export const MenuIcon = styled(Feather)`
 `;
 export const LogoutIcon = styled(Feather)`
   color: red;
+  flex: 1;
 `;
 export const HomeIcon = styled(AntDesign)`
   color: white;
