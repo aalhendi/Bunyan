@@ -49,14 +49,9 @@ exports.updateTask = async (req, res, next) => {
       error.status = 401;
       next(error);
     }
-    if (req.user.id === req.task.userId) {
-      await req.task.update(req.body);
-      res.json(req.task);
-    } else {
-      await req.task.update({ status: req.body.status });
-      console.log(req.task);
-      res.json(req.task);
-    }
+    if (req.file) req.body.image = `http://localhost:8000/${req.file.path}`;
+    await req.task.update(req.body);
+    res.json(req.task);
   } catch (error) {
     next(error);
   }
