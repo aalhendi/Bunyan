@@ -39,6 +39,8 @@ export const TaskContainer = styled.TouchableOpacity`
 `;
 export const ListItemContainer = styled(List)`
   border-width: 0px;
+  margin-left: 4%;
+  margin-right: 4%;
 `;
 export const ListItem = styled(List.Item)`
   border-radius: 10px;

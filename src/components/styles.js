@@ -18,7 +18,7 @@ export const TextTopNavigationBar = styled.View`
   padding-vertical: 2.5%;
   flex-direction: column;
   align-items: center;
-  width: 75%;
+  width: 85%;
 `;
 export const WelcomeText = styled.Text`
   font-size: 25px;

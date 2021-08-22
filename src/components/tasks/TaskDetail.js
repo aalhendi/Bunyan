@@ -1,8 +1,9 @@
 //library imports
 import React, { useState, useEffect } from "react";
-import { Image, ScrollView, Text, Dimensions } from "react-native";
+import { ScrollView, Text, Dimensions } from "react-native";
 import { observer } from "mobx-react";
 import * as ImagePicker from "expo-image-picker";
+import { Image } from "native-base";
 
 //styles
 import {
@@ -15,9 +16,19 @@ import {
 } from "./styles";
 import { Button, Center } from "native-base";
 import authStore from "../../stores/authStore";
+import taskStore from "../../stores/taskStore";
+let photoInserted = false;
 
 const TaskDetail = ({ navigation, route }) => {
-  const [image, setImage] = useState(null);
+  const { task } = route.params;
+
+  const [taskInfo, setTaskInfo] = useState({
+    id: task.id,
+    name: task.name,
+    description: task.description,
+    image: { uri: task.image },
+    status: task.status,
+  });
 
   useEffect(() => {
     (async () => {
@@ -40,13 +51,29 @@ const TaskDetail = ({ navigation, route }) => {
     });
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      setTaskInfo({
+        ...taskInfo,
+        image: {
+          uri: result.uri,
+          name: result.uri.split("/").pop(),
+        },
+      });
     }
   };
-  const { task } = route.params;
+
+  const handleSubmit = async () => {
+    photoInserted = true;
+    pickImage();
+  };
+
+  const submitImage = async () => {
+    photoInserted = false;
+    await taskStore.uploadImage(taskInfo);
+  };
 
   const win = Dimensions.get("window");
-  const ratio = win.width / 541;
+  const ratio = win.width / 450;
+
   return (
     <SafeAreaView>
       <TopNavigationBar>
@@ -65,24 +92,31 @@ const TaskDetail = ({ navigation, route }) => {
       <ScrollView>
         <Text> {task.name}</Text>
         <Text> {task.description}</Text>
-        <Text> {task.image}</Text>
 
-        {authStore.user.email.endsWith("@worker.com") ? (
-          <Button onPress={pickImage}> Insert an image </Button>
-        ) : null}
-        {image && (
+        {taskInfo !== null ? (
           <Center>
             <Image
-              source={{ uri: image }}
+              source={{ uri: taskInfo.image.uri }}
+              alt={task.name}
               style={{
-                width: win.width,
+                width: win.width * 0.95,
                 height: 362 * ratio, //362 is actual height of image
-                marginTop: "5%",
                 borderRadius: 5,
                 padding: 10,
               }}
             />
           </Center>
+        ) : (
+          <Center>No Uploaded Image</Center>
+        )}
+        {authStore.user.email.endsWith("@worker.com") && !photoInserted ? (
+          <Button onPress={handleSubmit} style={{ margin: "2.5%" }}>
+            Insert an image
+          </Button>
+        ) : (
+          <Button onPress={submitImage} style={{ margin: "2.5%" }}>
+            send the image
+          </Button>
         )}
       </ScrollView>
     </SafeAreaView>
