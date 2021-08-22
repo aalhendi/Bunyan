@@ -2,7 +2,7 @@
 const express = require("express");
 
 /* Route Imports */
-const { fetchTasks } = require("./controllers");
+const { fetchTasks, addTask } = require("./controllers");
 
 const router = express.Router();
 
@@ -21,5 +21,6 @@ router.param("taskId", async (req, res, next, taskId) => {
 
 /* Fetch Task*/
 router.get("/", fetchTasks);
+router.post("/", addTask);
 
 module.exports = router;

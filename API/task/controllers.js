@@ -23,3 +23,18 @@ exports.fetchTasks = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.addTask = async (req, res, next) => {
+  try {
+    if (req.body.workerId && req.body.clientId) {
+      const newTask = await Task.create(req.body);
+      res.json(newTask);
+    } else {
+      const error = new Error("Worker or Client should not be Empty.");
+      error.status = 404;
+      next(error);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
