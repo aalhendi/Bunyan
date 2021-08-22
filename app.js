@@ -34,7 +34,7 @@ app.use("/companies", companyRoutes);
 app.use("/clients", clientRoutes);
 app.use("/workers", workerRoutes);
 app.use("/tasks", taskRoutes);
-app.use("/contract", contractRoutes);
+app.use("/contracts", contractRoutes);
 app.use("/media", express.static("media"));
 
 /* Error Handling */
