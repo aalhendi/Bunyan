@@ -5906,6 +5906,13 @@ react-native-circular-progress-indicator@^1.1.2:
   resolved "https://registry.npmjs.org/react-native-circular-progress-indicator/-/react-native-circular-progress-indicator-1.1.2.tgz"
   integrity sha512-kBRuIclMd9gu8/DNgjkUXqZ80tK2wT2kzGNvrJL+1HxUCtjtAlpz4mf3vewUq/YEK3WnNrHxiZJyJcWvNZHvZA==
 
+react-native-document-picker@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-6.0.3.tgz#a58f16ef27e3d476fc7ffaef75bca461945aff18"
+  integrity sha512-PHO7HbWJyZy8medcvo37tdw656sFsHIcu6rCMLxBJhJ2IV/uMCYIahaO3A/fydyZ1Si2fnGE6Lef168xSEnjdQ==
+  dependencies:
+    invariant "^2.2.4"
+
 react-native-gesture-handler@^1.10.3:
   version "1.10.3"
   resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-1.10.3.tgz"

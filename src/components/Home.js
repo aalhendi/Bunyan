@@ -24,6 +24,7 @@ import {
 /* State and Store */
 import { observer } from "mobx-react";
 import authStore from "../stores/authStore";
+import { FlexView } from "./tasks/styles";
 
 const Home = ({ navigation }) => {
   const handleSubmit = async () => {
