@@ -24,10 +24,27 @@ exports.fetchTasks = async (req, res, next) => {
   }
 };
 
+exports.addTask = async (req, res, next) => {
+  try {
+    if (req.body.workerId && req.body.clientId) {
+      const newTask = await Task.create(req.body);
+      res.json(newTask);
+    } else {
+      const error = new Error("Worker or Client should not be Empty.");
+      error.status = 404;
+      next(error);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+/* Modify task and update the status value */
 exports.updateTask = async (req, res, next) => {
   try {
-    // TODO: See if worker.id !== task.workerId
-    if (!req.task.workerId) {
+    if (
+      req.user.id !==
+      (req.task.userId || req.task.clientId || req.task.workerId)
+    ) {
       const error = new Error("Unauthorized.");
       error.status = 401;
       next(error);

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const CompanyClient = sequelize.define("CompanyClient", {
+  const Contract = sequelize.define("Contract", {
     status: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -11,5 +11,5 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   });
-  return CompanyClient;
+  return Contract;
 };

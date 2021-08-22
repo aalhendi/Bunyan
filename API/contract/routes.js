@@ -13,22 +13,22 @@ const {
 const router = express.Router();
 
 /* Params Middleware */
-router.param("companyclientId", async (req, res, next, companyclientId) => {
-  const companyclient = await fetchCompanyclient(companyclientId, next);
-  if (companyclient) {
-    req.companyclient = companyclient;
+router.param("contractId", async (req, res, next, contractId) => {
+  const contract = await fetchContract(contractId, next);
+  if (contract) {
+    req.contract = contract;
     next();
   } else {
-    const error = new Error("Companyclient Object Not Found.");
+    const error = new Error("Contract Object Not Found.");
     error.status = 404;
     next(error);
   }
 });
 
-/* Fetch Companyclient Objects */
+/* Fetch Contract Objects */
 router.get("/", fetchStatuses);
 
-/* Create Companyclient Object */
+/* Create Contract Object */
 // TODO: Auth perms
 router.post("/", requestOnboardClient);
 
