@@ -24,11 +24,13 @@ function Profile() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     /* ToDo: update the profile */
-    authStore.updateProfile(profile)
+    authStore.updateProfile(profile);
     event.target.reset();
   };
   /* Check if the user not logged in will redirect to login  */
-  if (!authStore.user) { return <Redirect to="/login" /> }
+  if (!authStore.user) {
+    return <Redirect to="/login" />;
+  }
   return (
     <div className="d-md-flex h-md-100 align-items-center">
       {/* Left Side */}
@@ -71,7 +73,9 @@ function Profile() {
               />
             </div>
             <button type="submit" className="btn btn-dark w-100 d-grid mx-auto">
-              <Link exact to="/" className="text-decoration-none text-white">Save</Link>
+              <Link exact to="/" className="text-decoration-none text-white">
+                Save
+              </Link>
             </button>
           </form>
         </div>

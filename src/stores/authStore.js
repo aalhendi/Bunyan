@@ -50,7 +50,7 @@ class AuthStore {
     localStorage.setItem("myToken", token);
     instance.defaults.headers.common.Authorization = `Bearer ${token}`;
     this.user = decode(token);
-    workerStore.fetchWorker(authStore.user.id)
+    workerStore.fetchWorker(authStore.user.id);
   };
 
   /* Check the Contractor Token */
@@ -71,12 +71,13 @@ class AuthStore {
   /* Profile request */
   updateProfile = async (updateProfile) => {
     try {
-      const res = await instance.put(`/companies/${authStore.user.id}`, updateProfile);
+      const res = await instance.put(
+        `/companies/${authStore.user.id}`,
+        updateProfile
+      );
       runInAction(() => (this.profile = res.data));
-    } catch (error) {
-
-    }
-  }
+    } catch (error) {}
+  };
 }
 const authStore = new AuthStore();
 authStore.checkForToken();

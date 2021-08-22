@@ -29,7 +29,7 @@ class ClientStore {
   requestOnboardClient = async (newClient) => {
     try {
       newClient.companyId = authStore.user.profile.id;
-      const res = await instance.post("/companyclient", newClient);
+      const res = await instance.post("/contracts", newClient);
       runInAction(() => this.waitList.push(res.data));
     } catch (error) {
       console.error(error);
@@ -39,7 +39,7 @@ class ClientStore {
   fetchWaitlist = async () => {
     try {
       // TODO: change params to a req.body
-      const res = await instance.get(`/companyclient/waitlist`, {
+      const res = await instance.get(`/contracts/waitlist`, {
         params: { companyId: authStore.user.profile.id },
       });
       runInAction(() => (this.waitList = res.data));
@@ -49,6 +49,7 @@ class ClientStore {
   };
 }
 const clientStore = new ClientStore();
+// TODO: waitlist shows another user logs in. updates/disappears on refresh
 clientStore.fetchWaitlist();
 clientStore.fetchClients();
 export default clientStore;
