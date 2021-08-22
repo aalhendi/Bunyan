@@ -37,7 +37,7 @@ class AuthStore {
     }
   };
 
-  /* Signout Contractor */
+  /* Logout Contractor */
   logout = () => {
     delete instance.defaults.headers.common.Authorization;
     localStorage.removeItem("myToken");
@@ -45,12 +45,12 @@ class AuthStore {
     /* ToDo: redirect to the login page */
   };
 
-  /* set contractor token in local storage */
+  /* Set contractor token in local storage */
   setUser = (token) => {
     localStorage.setItem("myToken", token);
     instance.defaults.headers.common.Authorization = `Bearer ${token}`;
     this.user = decode(token);
-    workerStore.fetchWorker(authStore.user.id)
+    workerStore.fetchWorker(authStore.user.id);
   };
 
   /* Check the Contractor Token */
@@ -79,9 +79,9 @@ class AuthStore {
     }
   }
 }
-const authStore = new AuthStore(); // create instance
+const authStore = new AuthStore();
 authStore.checkForToken();
 if (authStore.user?.id) {
   workerStore.fetchWorker(authStore.user.id);
 }
-export default authStore; // export it
+export default authStore;
