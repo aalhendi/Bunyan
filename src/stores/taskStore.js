@@ -20,7 +20,7 @@ class TaskStore {
     }
   };
 
-  uploadImage = async (updatedTask) => {
+  updaeTask = async (updatedTask) => {
     try {
       const formData = new FormData();
       for (const key in updatedTask) {

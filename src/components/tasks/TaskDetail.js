@@ -68,7 +68,14 @@ const TaskDetail = ({ navigation, route }) => {
 
   const submitImage = async () => {
     photoInserted = false;
-    await taskStore.uploadImage(taskInfo);
+    await taskStore.updaeTask(taskInfo);
+  };
+  const handleChangeStatus = async () => {
+    setTaskInfo({
+      ...taskInfo,
+      status: 1,
+    });
+    await taskStore.updaeTask(taskInfo);
   };
 
   const win = Dimensions.get("window");
@@ -110,14 +117,36 @@ const TaskDetail = ({ navigation, route }) => {
           <Center>No Uploaded Image</Center>
         )}
         {authStore.user.email.endsWith("@worker.com") && !photoInserted ? (
-          <Button onPress={handleSubmit} style={{ margin: "2.5%" }}>
+          <Button
+            onPress={handleSubmit}
+            style={{
+              marginTop: "7.5%",
+              marginBottom: "2.5%",
+              marginHorizontal: "2.5%",
+            }}
+          >
             Insert an image
           </Button>
         ) : (
-          <Button onPress={submitImage} style={{ margin: "2.5%" }}>
+          <Button
+            onPress={submitImage}
+            style={{
+              marginTop: "7.5%",
+              marginBottom: "2.5%",
+              marginHorizontal: "2.5%",
+            }}
+          >
             send the image
           </Button>
         )}
+        {authStore.user.email.endsWith("@worker.com") ? (
+          <Button
+            onPress={handleChangeStatus}
+            style={{ marginHorizontal: "2.5%" }}
+          >
+            Job is Done
+          </Button>
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
