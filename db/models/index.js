@@ -122,14 +122,14 @@ db.Company.belongsTo(db.Category, {
   as: "category",
 });
 
-db.Task.hasMany(db.Contract, {
-  foreignKey: "taskId",
+db.Contract.hasMany(db.Task, {
+  foreignKey: "contractId",
   allowNull: false,
-  as: "contracts",
+  as: "tasks",
 });
 
-db.Contract.belongsTo(db.Task, {
-  as: "task",
+db.Task.belongsTo(db.Contract, {
+  as: "contract",
 });
 
 module.exports = db;

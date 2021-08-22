@@ -75,25 +75,6 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.getClientByUserId = async (req, res, next) => {
-  try {
-    const { userId } = req.query;
-    if (!userId) {
-      const error = new Error("Missing userId");
-      error.status = 400;
-      next(error);
-    }
-    const client = await Client.findOne({
-      where: {
-        userId: userId,
-      },
-    });
-    res.json(client.dataValues);
-  } catch (error) {
-    next(error);
-  }
-};
-
 const validateUserType = (userType) => {
   if (
     userType !== "company" &&

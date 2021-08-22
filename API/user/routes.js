@@ -4,7 +4,7 @@ const passport = require("passport");
 const router = express.Router();
 
 /* Controller Imports */
-const { register, login, getClientByUserId } = require("./controllers");
+const { register, login } = require("./controllers");
 
 /* Create user */
 router.post("/register", register);
@@ -15,7 +15,5 @@ router.post(
   passport.authenticate("local", { session: false }),
   login
 );
-
-router.get("/clientByUserId/", getClientByUserId);
 
 module.exports = router;
