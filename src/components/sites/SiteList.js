@@ -22,7 +22,6 @@ import {
 const SiteList = ({ navigation }) => {
   if (clientStore.loading) return <Spinner />;
 
-
   const siteList = clientStore.statuses
     .filter((client) => client.companyId === authStore.user?.profile.companyId)
     .map((client) => (
