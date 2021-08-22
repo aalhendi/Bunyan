@@ -122,16 +122,6 @@ db.Company.belongsTo(db.Category, {
   as: "category",
 });
 
-db.Worker.hasMany(db.Task, {
-  foreignKey: "workerId",
-  allowNull: false,
-  as: "tasks",
-});
-
-db.Task.belongsTo(db.Worker, {
-  as: "worker",
-});
-
 db.Task.hasMany(db.Contract, {
   foreignKey: "taskId",
   allowNull: false,
