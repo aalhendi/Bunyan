@@ -1,5 +1,6 @@
 /* Imports */
 const jwt_decode = require("jwt-decode");
+const Sequelize = require("sequelize");
 
 /* Models */
 const { Contract, Client, User, Company } = require("../../db/models");
@@ -61,39 +62,28 @@ exports.fetchClientsByCompany = async (req, res, next) => {
     /* Decode bearer token to get profile object*/
     const user = jwt_decode(req.headers["authorization"].split(" ")[1]);
 
-    // TODO: Check if this is even needed
-    if (user.id !== req.user.id) {
-      const error = new Error("User mismatch");
-      error.status = 500;
-      next(error);
-    }
-
-    /* Find contracts that match companyId */
     const contracts = await Contract.findAll({
       where: {
+        /* Find contracts that match companyId */
         companyId: user.profile.id,
       },
+      attributes: [
+        /* Only find distinct (unique) clientIds */
+        [Sequelize.fn("DISTINCT", Sequelize.col("clientId")), "clientId"],
+        "status",
+        // Question: How can I include all other columns without listing them all?
+      ],
     });
 
-    /* get unique clientIds from contracts */
-    const contractClientIds = [
-      ...new Set(contracts.map((contract) => contract.clientId)),
-    ];
-    const clientList = [];
-
     /* Find clients that match clientIds */
-    for (let i = 0; i < contractClientIds.length; i++) {
-      const client = await Client.findOne({
-        where: {
-          id: contractClientIds[i],
-        },
-      });
-      /* Add client to clientList with status from contracts */
-      client.dataValues.status = contracts.find(
-        (contract) => contract.clientId === client.id
-      ).status;
-      clientList.push(client);
-    }
+    const clientList = await Promise.all(
+      contracts.map(async (contract) => {
+        const client = await Client.findByPk(contract.clientId);
+        /* Add status to the client object from the contract */
+        client.dataValues.status = contract.status;
+        return client;
+      })
+    );
 
     res.json(clientList);
   } catch (error) {

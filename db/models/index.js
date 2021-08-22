@@ -45,6 +45,7 @@ db.Sequelize = Sequelize;
 
 /* Model Relations */
 
+/* User Company */
 db.User.hasOne(db.Company, {
   as: "company",
   foreignKey: "userId",
@@ -54,6 +55,7 @@ db.Company.belongsTo(db.User, {
   as: "user",
 });
 
+/* User Client */
 db.User.hasOne(db.Client, {
   as: "client",
   foreignKey: "userId",
@@ -63,6 +65,7 @@ db.Client.belongsTo(db.User, {
   as: "user",
 });
 
+/* User Woker */
 db.User.hasOne(db.Worker, {
   as: "worker",
   foreignKey: "userId",
@@ -72,6 +75,7 @@ db.Worker.belongsTo(db.User, {
   as: "user",
 });
 
+/* Company Worker */
 db.Company.hasMany(db.Worker, {
   foreignKey: "companyId",
   allowNull: false,
@@ -82,6 +86,7 @@ db.Worker.belongsTo(db.Company, {
   as: "company",
 });
 
+/* Company Contract */
 db.Company.hasMany(db.Contract, {
   foreignKey: "companyId",
   allowNull: false,
@@ -92,6 +97,7 @@ db.Contract.belongsTo(db.Company, {
   as: "company",
 });
 
+/* Client Contract */
 db.Client.hasMany(db.Contract, {
   foreignKey: "clientId",
   allowNull: false,
@@ -102,6 +108,7 @@ db.Contract.belongsTo(db.Client, {
   as: "client",
 });
 
+/* Worker Contract */
 db.Worker.hasMany(db.Contract, {
   foreignKey: "workerId",
   allowNull: false,
@@ -112,6 +119,7 @@ db.Contract.belongsTo(db.Worker, {
   as: "worker",
 });
 
+/* Category Company */
 db.Category.hasMany(db.Company, {
   foreignKey: "categoryId",
   allowNull: false,
@@ -122,6 +130,7 @@ db.Company.belongsTo(db.Category, {
   as: "category",
 });
 
+/* Contract Task */
 db.Contract.hasMany(db.Task, {
   foreignKey: "contractId",
   allowNull: false,
