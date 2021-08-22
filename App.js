@@ -8,6 +8,7 @@ import { ThemeProvider } from "styled-components";
 const theme = {
   grey: "#eeeeee",
   white: "#ffffff",
+  blue: "#5588A3",
 };
 export default function App() {
   return (

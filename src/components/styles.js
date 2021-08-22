@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { Feather, AntDesign } from "@expo/vector-icons";
+import { Feather, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -85,4 +85,14 @@ export const LogoutIcon = styled(Feather)`
 `;
 export const HomeIcon = styled(AntDesign)`
   color: white;
+`;
+export const ProfileButton = styled(MaterialCommunityIcons)`
+  color: ${({ theme }) => theme.blue};
+  flex: 1;
+`;
+export const FlexView = styled.View`
+  padding-vertical: 2.5%;
+  flex-direction: row;
+  align-items: center;
+  width: 15%;
 `;

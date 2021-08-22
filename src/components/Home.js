@@ -17,6 +17,8 @@ import {
   MenuIcon,
   HomeIcon,
   LogoutIcon,
+  ProfileButton,
+  FlexView,
 } from "./styles";
 
 /* State and Store */
@@ -39,7 +41,14 @@ const Home = ({ navigation }) => {
             <WelcomeText> Welcome, </WelcomeText>
             <NameText>Hello</NameText>
           </TextTopNavigationBar>
-          <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
+          <FlexView>
+            <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
+            <ProfileButton
+              name="face-profile"
+              size={30}
+              onPress={() => navigation.navigate("Profile")}
+            />
+          </FlexView>
         </TopNavigationBar>
         <MainContainer onPress={() => navigation.navigate("TaskList")}>
           <MainContainerText>Your Home</MainContainerText>
