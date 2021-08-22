@@ -47,7 +47,22 @@ class AuthStore {
     runInAction(() => (this.user = null));
   };
 
-  /* set Client token in AsyncStorage */
+  updateProfile = async (updatedProfile) => {
+    try {
+      console.log("Im trying my best:", updatedProfile);
+      const res = await instance.put(
+        `/clients/${authStore.user.profile.id}`,
+        updatedProfile
+      );
+      runInAction(() => (this.user.profile = res.data));
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  /* Set Client token in AsyncStorage */
   setUser = async (token) => {
     await AsyncStorage.setItem("myToken", token);
     instance.defaults.headers.common.Authorization = `Bearer ${token}`;

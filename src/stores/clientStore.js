@@ -13,8 +13,8 @@ class ClientStore {
 
   fetchClients = async () => {
     try {
-      const response = await instance.get("/clients");
-      this.clients = response.data;
+      const res = await instance.get("/clients");
+      this.clients = res.data;
       this.loading = false;
     } catch (error) {
       console.error("fetchClients: ", error);
@@ -23,8 +23,8 @@ class ClientStore {
 
   fetchStatuses = async () => {
     try {
-      const response = await instance.get("/companyclient");
-      this.statuses = response.data;
+      const res = await instance.get("/contracts");
+      this.statuses = res.data;
       this.loading = false;
     } catch (error) {
       console.error("fetchCompanyClient: ", error);

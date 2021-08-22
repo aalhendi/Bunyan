@@ -1,7 +1,7 @@
 /*imports*/
 import React from "react";
 import { Text } from "react-native";
-import { Spinner } from "native-base";
+import { Button, Spinner } from "native-base";
 import { observer } from "mobx-react";
 /*Stores*/
 import authStore from "../../stores/authStore";
@@ -46,6 +46,7 @@ const Profile = ({ navigation }) => {
         <Text> {client.profile.lastName}</Text>
         <Text> {client.email}</Text>
         <Text> {client.phoneNumber}</Text>
+        <Button onPress={() => navigation.navigate("EditProfile")}>EDIT</Button>
       </FlexView>
     </SafeAreaView>
   );
