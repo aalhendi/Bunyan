@@ -20,9 +20,8 @@ function WorkerList() {
     return <h1>Loading...</h1>;
   }
   const workerItem = workerStore.workers.map((worker) => (
-    <WorkerItem worker={worker} />
+    <WorkerItem worker={worker} key={worker.name} />
   ));
-
   return (
     <div className="d-md-flex h-md-100 align-items-center">
       {/* Left Side */}

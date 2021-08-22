@@ -67,17 +67,17 @@ class AuthStore {
       this.loading = false;
     }
   };
-
   /* Profile request */
   updateProfile = async (updateProfile) => {
     try {
-      const res = await instance.put(
-        `/companies/${authStore.user.id}`,
-        updateProfile
-      );
-      runInAction(() => (this.profile = res.data));
-    } catch (error) {}
-  };
+      const res = await instance.put(`/companies/${authStore.user.profile.id}`, updateProfile);
+      runInAction(() => (this.user.profile = res.data));
+      this.loading = false
+      /* ToDo: Refresh the token */
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
 const authStore = new AuthStore();
 authStore.checkForToken();

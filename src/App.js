@@ -13,6 +13,7 @@ import Home from "./components/dashboard/Home";
 import ClientList from "./components/client/ClientList";
 import WorkerList from "./components/worker/WorkerList";
 import Profile from "./components/profile/Profile";
+import TaskList from "./components/task/TaskList";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
       <Route path="/task">
         <Navbar />
         {/* ToDo: Add Task Component */}
+        <TaskList />
       </Route>
       <Route path="/clientlist">
         <Navbar />
@@ -39,7 +41,7 @@ const App = () => {
         <Login />
       </Route>
       <Route exact path="/">
-        {authStore.user ? (
+        {(authStore.user) ? (
           <>
             <Navbar /> <Home />
           </>
