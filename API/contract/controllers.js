@@ -1,4 +1,5 @@
 /* Imports */
+const jwt_decode = require("jwt-decode");
 
 /* Models */
 const { Contract, Client, User, Company } = require("../../db/models");
@@ -50,6 +51,51 @@ exports.fetchWaitlist = async (req, res, next) => {
       error.status = 404;
       next(error);
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.fetchClientsByCompany = async (req, res, next) => {
+  try {
+    /* Decode bearer token to get profile object*/
+    const user = jwt_decode(req.headers["authorization"].split(" ")[1]);
+
+    // TODO: Check if this is even needed
+    if (user.id !== req.user.id) {
+      const error = new Error("User mismatch");
+      error.status = 500;
+      next(error);
+    }
+
+    /* Find contracts that match companyId */
+    const contracts = await Contract.findAll({
+      where: {
+        companyId: user.profile.id,
+      },
+    });
+
+    /* get unique clientIds from contracts */
+    const contractClientIds = [
+      ...new Set(contracts.map((contract) => contract.clientId)),
+    ];
+    const clientList = [];
+
+    /* Find clients that match clientIds */
+    for (let i = 0; i < contractClientIds.length; i++) {
+      const client = await Client.findOne({
+        where: {
+          id: contractClientIds[i],
+        },
+      });
+      /* Add client to clientList with status from contracts */
+      client.dataValues.status = contracts.find(
+        (contract) => contract.clientId === client.id
+      ).status;
+      clientList.push(client);
+    }
+
+    res.json(clientList);
   } catch (error) {
     next(error);
   }

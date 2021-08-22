@@ -8,6 +8,7 @@ const {
   fetchStatuses,
   requestOnboardClient,
   fetchWaitlist,
+  fetchClientsByCompany,
 } = require("./controllers");
 
 const router = express.Router();
@@ -31,6 +32,13 @@ router.get("/", fetchStatuses);
 /* Create Contract Object */
 // TODO: Auth perms
 router.post("/", requestOnboardClient);
+
+router.get(
+  //TODO: Better name (?)
+  "/clientsByCompany",
+  passport.authenticate("jwt", { session: false }),
+  fetchClientsByCompany
+);
 
 /* Fetch waitlist */
 router.get(
