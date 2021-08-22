@@ -1,12 +1,12 @@
 /* Imports */
 
 /* Models */
-const { CompanyClient, Client, User, Company } = require("../../db/models/");
+const { Contract, Client, User, Company } = require("../../db/models");
 
 /* Controllers */
 exports.fetchStatuses = async (req, res, next) => {
   try {
-    const statuses = await CompanyClient.findAll();
+    const statuses = await Contract.findAll();
     res.json(statuses);
   } catch (error) {
     next(error);
@@ -21,7 +21,7 @@ exports.fetchWaitlist = async (req, res, next) => {
       },
     });
     if (foundCompany) {
-      const waitlist = await CompanyClient.findAll({
+      const waitlist = await Contract.findAll({
         where: {
           status: 0,
           companyId: foundCompany.id,
@@ -70,20 +70,20 @@ exports.requestOnboardClient = async (req, res, next) => {
         },
       });
       if (foundClient) {
-        const foundCompanyClient = await CompanyClient.findOne({
+        const foundContract = await Contract.findOne({
           where: {
             companyId: req.body.companyId,
             clientId: foundClient.id,
           },
         });
-        if (foundCompanyClient) {
-          const error = new Error("CompanyClient Relationship already exists");
+        if (foundContract) {
+          const error = new Error("Contract Relationship already exists");
           // TODO: Set err status ?
           next(error);
           // TODO: FIX  VALIDATION ERROR IF RELATIONSHIP EXISTS ?
         }
 
-        const status = await CompanyClient.create({
+        const status = await Contract.create({
           clientId: foundClient.id,
           companyId: req.body.companyId,
           status: req.body.status,

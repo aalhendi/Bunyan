@@ -82,14 +82,34 @@ db.Worker.belongsTo(db.Company, {
   as: "company",
 });
 
-db.Company.belongsToMany(db.Client, {
-  through: db.CompanyClient,
+db.Company.hasMany(db.Contract, {
   foreignKey: "companyId",
+  allowNull: false,
+  as: "contracts",
 });
 
-db.Client.belongsToMany(db.Company, {
-  through: db.CompanyClient,
+db.Contract.belongsTo(db.Company, {
+  as: "company",
+});
+
+db.Client.hasMany(db.Contract, {
   foreignKey: "clientId",
+  allowNull: false,
+  as: "contracts",
+});
+
+db.Contract.belongsTo(db.Client, {
+  as: "client",
+});
+
+db.Worker.hasMany(db.Contract, {
+  foreignKey: "workerId",
+  allowNull: false,
+  as: "contracts",
+});
+
+db.Contract.belongsTo(db.Worker, {
+  as: "worker",
 });
 
 db.Category.hasMany(db.Company, {
@@ -112,14 +132,14 @@ db.Task.belongsTo(db.Worker, {
   as: "worker",
 });
 
-db.Client.hasMany(db.Task, {
-  foreignKey: "clientId",
+db.Task.hasMany(db.Contract, {
+  foreignKey: "taskId",
   allowNull: false,
-  as: "tasks",
+  as: "contracts",
 });
 
-db.Task.belongsTo(db.Client, {
-  as: "client",
+db.Contract.belongsTo(db.Task, {
+  as: "task",
 });
 
 module.exports = db;
