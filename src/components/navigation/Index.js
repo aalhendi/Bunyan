@@ -11,6 +11,7 @@ import EditProfile from "../profile/EditProfile";
 import TaskList from "../tasks/TaskList";
 import TaskDetail from "../tasks/TaskDetail";
 import SiteList from "../sites/SiteList";
+import Profile from "../profile/Profile";
 
 /* State and Store */
 import { observer } from "mobx-react";
@@ -80,6 +81,13 @@ const RootNavigator = () => {
       <Stack.Screen
         name="SiteList"
         component={SiteList}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
         options={{
           headerShown: false,
         }}
