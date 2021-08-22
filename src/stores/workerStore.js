@@ -19,7 +19,6 @@ class WorkerStore {
       this.workers = res.data.filter(
         (worker) => worker.companyId === authStore.user.profile.id
       );
-      console.log(userId);
       this.loading = false;
     } catch (error) {
       console.error("fetchWorker: ", error);

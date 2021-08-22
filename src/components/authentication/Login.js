@@ -27,7 +27,6 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const loginStatus = await authStore.login(user);
-    console.log(loginStatus);
     setInvalid(!loginStatus);
     event.target.reset();
   };

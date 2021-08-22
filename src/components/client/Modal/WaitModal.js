@@ -1,14 +1,11 @@
 /* Libraries */
-import { useState } from "react";
 import Modal from "react-modal";
 
 /* Client Store */
 
 const WaitModal = (props) => {
   /* Store Client Phone number  */
-  const [client, setClient] = useState({
-    phoneNumber: "",
-  });
+
   /* Style modal  */
   const customStyles = {
     content: {
@@ -22,7 +19,6 @@ const WaitModal = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(client);
     /* ToDo: Add the client to waiting List */
     props.closeModal();
   };
@@ -44,7 +40,6 @@ const WaitModal = (props) => {
               minLength="7"
               maxLength="8"
               pattern="[0-9]+"
-              onChange={(event) => setClient(event.target.value)}
             />
           </div>
           <button type="submit" class="btn btn-outline-dark col-md-3 mx-auto">

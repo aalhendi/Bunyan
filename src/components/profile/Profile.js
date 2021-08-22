@@ -1,34 +1,40 @@
 import React, { useState } from "react";
 
 import { observer } from "mobx-react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import authStore from "../../stores/authStore";
 
 import { CoverImage, Logo } from "./styles";
 import LoGo from "../../media/LOGO.svg";
-
 function Profile() {
+  /* Fetch Profile */
+  const userProfile = authStore.user.profile
+  console.log(userProfile)
   /* New State to handle the object of user */
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = useState(userProfile ? userProfile : {
     name: "",
     bio: "",
     /*ToDo: image  */
   });
+
+  const [click, setClick] = useState(false)
 
   /* handle the input change */
   const handleChange = (event) => {
     setProfile({ ...profile, [event.target.name]: event.target.value });
   };
 
+
   /* handle sumbit of the form */
   const handleSubmit = async (event) => {
     event.preventDefault();
     /* ToDo: update the profile */
-    authStore.updateProfile(profile)
+    await authStore.updateProfile(profile)
+    setClick(true)
     event.target.reset();
   };
   /* Check if the user not logged in will redirect to login  */
-  if (!authStore.user) { return <Redirect to="/login" /> }
+  if (click || !authStore.user) { return <Redirect to="/login" /> }
   return (
     <div className="d-md-flex h-md-100 align-items-center">
       {/* Left Side */}
@@ -58,6 +64,8 @@ function Profile() {
                   className="form-control"
                   placeholder="Company Name"
                   onChange={handleChange}
+                  value={profile.name}
+                  minLength="1"
                 />
               </div>
             </div>
@@ -68,10 +76,11 @@ function Profile() {
                 className="form-control"
                 placeholder="Compnay Bio"
                 onChange={handleChange}
+                value={profile.bio}
               />
             </div>
             <button type="submit" className="btn btn-dark w-100 d-grid mx-auto">
-              <Link exact to="/" className="text-decoration-none text-white">Save</Link>
+              Save
             </button>
           </form>
         </div>
