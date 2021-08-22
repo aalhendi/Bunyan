@@ -13,17 +13,6 @@ class ClientStore {
   constructor() {
     makeAutoObservable(this);
   }
-  /* Read the Clients */
-  /* ToDo: find only the client related to the login user */
-  fetchClients = async () => {
-    try {
-      const res = await instance.get("/clients");
-      this.clients = res.data;
-      this.loading = false;
-    } catch (error) {
-      console.error("fetchClient: ", error);
-    }
-  };
 
   /* Add new Client in the waiting list */
   requestOnboardClient = async (newClient) => {
@@ -36,13 +25,17 @@ class ClientStore {
     }
   };
 
-  fetchWaitlist = async () => {
+  fetchClientsByCompany = async () => {
     try {
-      // TODO: change params to a req.body
-      const res = await instance.get(`/contracts/waitlist`, {
-        params: { companyId: authStore.user.profile.id },
-      });
-      runInAction(() => (this.waitList = res.data));
+      // TODO: Ask about runInAction wihtout disabling strict mode or disabling enforcing
+      const res = await instance.get(`/contracts/clientsByCompany`);
+      runInAction(
+        () => (this.clients = res.data.filter((client) => client.status !== 0))
+      );
+      runInAction(
+        () => (this.waitList = res.data.filter((client) => client.status === 0))
+      );
+      runInAction(() => (this.loading = false));
     } catch (error) {
       console.error("fetchWaitlist: ", error);
     }
@@ -50,6 +43,5 @@ class ClientStore {
 }
 const clientStore = new ClientStore();
 // TODO: waitlist shows another user logs in. updates/disappears on refresh
-clientStore.fetchWaitlist();
-clientStore.fetchClients();
+clientStore.fetchClientsByCompany();
 export default clientStore;

@@ -15,9 +15,6 @@ import clientStore from "../../stores/clientStore";
 import authStore from "../../stores/authStore";
 
 const ClientList = () => {
-  /* ToDo: Function to find all clients for the login user and pass props to Client item */
-  const clientItem = <ClientItem />;
-
   /* Modal Function */
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
@@ -27,9 +24,17 @@ const ClientList = () => {
     setIsOpen(false);
   };
 
-  if (authStore.loading) {
+  if (authStore.loading || clientStore.loading) {
     return <h1> Loading...</h1>;
   }
+
+  const clientList = clientStore.clients.map((client) => {
+    return (
+      <tbody>
+        <ClientItem client={client} />
+      </tbody>
+    );
+  });
 
   return (
     <div className="d-md-flex h-md-100 align-items-center">
@@ -43,7 +48,7 @@ const ClientList = () => {
                 <th scope="col">Progressive</th>
               </tr>
             </thead>
-            <tbody>{clientItem}</tbody>
+            {clientList}
           </table>
         </div>
       </div>

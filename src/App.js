@@ -41,7 +41,7 @@ const App = () => {
         <Login />
       </Route>
       <Route exact path="/">
-        {(authStore.user) ? (
+        {authStore.user ? (
           <>
             <Navbar /> <Home />
           </>
