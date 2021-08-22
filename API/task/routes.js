@@ -3,7 +3,6 @@ const express = require("express");
 const passport = require("passport");
 const { upload } = require("../../middleware/multer");
 
-
 /* Route Imports */
 const { fetchTasks, addTask, updateTask, fetchTask } = require("./controllers");
 
@@ -26,12 +25,6 @@ router.param("taskId", async (req, res, next, taskId) => {
 router.get("/", fetchTasks);
 router.post("/", addTask);
 /* Update Task status  */
-router.put(
-  "/:taskId",
-  passport.authenticate("jwt", { session: false }),
-  updateTask
-);
-
 router.put(
   "/:taskId",
   passport.authenticate("jwt", { session: false }),
