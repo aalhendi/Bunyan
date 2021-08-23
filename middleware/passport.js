@@ -38,6 +38,7 @@ exports.jwtStrategy = new JWTStrategy(
     }
     try {
       const user = await User.findByPk(jwtPayload.id);
+      user.profile = jwtPayload.profile
       done(null, user);
     } catch (error) {
       done(error);

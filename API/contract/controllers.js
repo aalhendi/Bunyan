@@ -59,9 +59,7 @@ exports.fetchWaitlist = async (req, res, next) => {
 
 exports.fetchClientsByCompany = async (req, res, next) => {
   try {
-    /* Decode bearer token to get profile object*/
-    const user = jwt_decode(req.headers["authorization"].split(" ")[1]);
-
+    const { user } = req
     const contracts = await Contract.findAll({
       where: {
         /* Find contracts that match companyId */
