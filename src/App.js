@@ -22,6 +22,7 @@ const App = () => {
         <Profile />
       </Route>
       <Route path="/workerList">
+        {/* TODO: Causes console error: <a> is not a valid child of <a> */}
         <Navbar />
         <WorkerList />
       </Route>
@@ -43,7 +44,9 @@ const App = () => {
       <Route exact path="/">
         {authStore.user ? (
           <>
-            <Navbar /> <Home />
+            {/* TODO: Causes console error: <a> is not a valid child of <a> */}
+            <Navbar />
+            <Home />
           </>
         ) : (
           <Redirect to="/login" />
