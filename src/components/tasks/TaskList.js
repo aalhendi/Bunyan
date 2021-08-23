@@ -21,34 +21,12 @@ import {
   ListItemContainer,
 } from "./styles";
 
-const TaskList = ({ navigation, route }) => {
-  if (taskStore.loading) return <Spinner />;
+const TaskList = ({ navigation }) => {
+  if (taskStore.loading || clientStore.loading) return <Spinner />;
 
-  const client = authStore.user.email.endsWith("@worker.com")
-    ? route.params.client
-    : clientStore.statuses
-        .filter(
-          (client) => client.companyId === authStore.user?.profile.companyId
-        )
-        .map((client) => client);
-
-  const workers = workerStore.workers
-    .filter((worker) => worker.userId === authStore.user?.id)
-    .map((worker) => worker);
-  const worker = Object.assign({}, ...workers);
-
-  const taskList = authStore.user.email.endsWith("@worker.com")
-    ? taskStore.tasks
-        .filter((task) => task.workerId === worker?.id)
-        .filter((task) => task.clientId === client.clientId)
-        .map((task) => (
-          <TaskItem task={task} key={task.id} navigation={navigation} />
-        ))
-    : taskStore.tasks
-        .filter((task) => task.clientId === authStore.user.profile.userId)
-        .map((task) => (
-          <TaskItem task={task} key={task.id} navigation={navigation} />
-        ));
+  const taskList = taskStore.tasks.map((task) => (
+    <TaskItem task={task} key={task.id} navigation={navigation} />
+  ));
 
   const handleBack = () => {
     authStore.user.profile.companyId !== null

@@ -22,10 +22,19 @@ import {
 const SiteList = ({ navigation }) => {
   if (clientStore.loading) return <Spinner />;
 
-  const siteList = clientStore.statuses
-    .filter((client) => client.companyId === authStore.user?.profile.companyId)
-    .map((client) => (
-      <SiteItem client={client} key={client.clientId} navigation={navigation} />
+  const siteList = clientStore.contracts
+    //filter by companyId => to only see the contracts of my company
+    .filter(
+      (contract) => contract.companyId === authStore.user?.profile.companyId
+    )
+    //filter by workerId => to only see the contracts Im assigned to
+    .filter((contract) => contract.workerId === authStore.user?.profile.id)
+    .map((contractSite) => (
+      <SiteItem
+        contractSite={contractSite}
+        key={contractSite.clientId}
+        navigation={navigation}
+      />
     ));
 
   const handleSubmit = async () => {
