@@ -9,7 +9,7 @@ function ClientItem({ client }) {
     <tr>
       {/* Client Name */}
       <td className="p-5">
-        <Link to="/task">{`${client.firstName} ${client.lastName}`}</Link>
+        <Link to={`/task/${client.id}`} >{`${client.firstName} ${client.lastName}`}</Link>
       </td>
       {/* Client Task Progress */}
       <td style={{ width: 100 }}>

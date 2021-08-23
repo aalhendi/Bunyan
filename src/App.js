@@ -26,7 +26,7 @@ const App = () => {
         <Navbar />
         <WorkerList />
       </Route>
-      <Route path="/task">
+      <Route path="/task/:clientId">
         <Navbar />
         {/* ToDo: Add Task Component */}
         <TaskList />
