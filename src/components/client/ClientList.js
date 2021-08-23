@@ -30,7 +30,7 @@ const ClientList = () => {
 
   const clientList = clientStore.clients.map((client) => {
     return (
-      <tbody>
+      <tbody key={client.id}>
         <ClientItem client={client} />
       </tbody>
     );

@@ -1,10 +1,17 @@
+/* Imports */
 import React, { useState } from "react";
+
+/* Components */
+import AddWorker from "./Modal/AddWorker";
+import WorkerItem from "./WorkerItem";
+
+/* State and Store */
 import authStore from "../../stores/authStore";
 import workerStore from "../../stores/workerStore";
-import AddWorker from "./Modal/AddWorker";
-import { CreateNew } from "./styles";
-import WorkerItem from "./WorkerItem";
 import { observer } from "mobx-react";
+
+/* Styles */
+import { CreateNew } from "./styles";
 
 function WorkerList() {
   /* ToDo: Function to find all workers for the login user and pass props to worker item */
@@ -29,7 +36,7 @@ function WorkerList() {
         <CreateNew onClick={openModal} />
         <AddWorker isOpen={isOpen} closeModal={closeModal} />
         <div className="d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th scope="col">Worker Account</th>

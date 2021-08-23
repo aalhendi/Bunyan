@@ -43,5 +43,4 @@ class ClientStore {
 }
 const clientStore = new ClientStore();
 // TODO: waitlist shows another user logs in. updates/disappears on refresh
-clientStore.fetchClientsByCompany();
 export default clientStore;

@@ -1,13 +1,25 @@
+/* Imports */
 import React, { useState } from "react";
-import workerStore from "../../stores/workerStore";
+import { useParams } from "react-router";
+
+/* Components */
 import AssignWorker from "./AssignWorker/AssignWorker";
-import { observer } from "mobx-react";
-import authStore from "../../stores/authStore";
 import AddTask from "./addTask/AddTask";
 import TaskItem from "./TaskItem"
+
+/* State and Store */
+import { observer } from "mobx-react";
+import authStore from "../../stores/authStore";
 import taskStore from "../../stores/taskStore";
-import { useParams } from "react-router";
 import clientStore from "../../stores/clientStore";
+import workerStore from "../../stores/workerStore";
+
+
+const TaskList = () => {
+  if (authStore.loading) {
+    <h3>Loading</h3>;
+  }
+  /* ToDo: Add Task to the client */
 
 
 function TaskList() {
@@ -29,7 +41,6 @@ function TaskList() {
     /* pass worker object to the modal */
     const workerItem = workerStore.workers.map((worker) => (worker));
     const taskItem = taskStore.tasks.filter(task => task.contract.clientId === +clientId).map(task => <TaskItem task={task} key={task.id} />)
-    console.log()
     return (
         <div>
             {/* Will show the client Name -> props from client item  */}
@@ -43,14 +54,13 @@ function TaskList() {
                     <button type="button" className="btn btn-outline-danger" onClick={openWorker}>Assign Worker</button>
                     <AssignWorker isOpen={workerOpen} closeModal={closeWorker} worker={workerItem} />
                     <AddTask isOpen={taskOpen} closeModal={closeTask} worker={workerItem} />
-
                 </div>
                 <div className="container">
                     {taskItem}
                 </div>
             </div>
-        </div>
-    );
-}
+          </div>
+  );
+};
 
 export default observer(TaskList);

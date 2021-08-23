@@ -1,8 +1,11 @@
 /* Imports */
-import instance from "./instance";
 import decode from "jwt-decode";
+
+/* State and Store */
+import instance from "./instance";
 import { makeAutoObservable, runInAction } from "mobx";
 import workerStore from "./workerStore";
+import clientStore from "./clientStore";
 
 class AuthStore {
   /* Assign user */
@@ -46,11 +49,12 @@ class AuthStore {
   };
 
   /* Set contractor token in local storage */
-  setUser = (token) => {
+  setUser = async (token) => {
     localStorage.setItem("myToken", token);
     instance.defaults.headers.common.Authorization = `Bearer ${token}`;
     this.user = decode(token);
     workerStore.fetchWorker(authStore.user.id);
+    await clientStore.fetchClientsByCompany();
   };
 
   /* Check the Contractor Token */
@@ -70,14 +74,17 @@ class AuthStore {
   /* Profile request */
   updateProfile = async (updateProfile) => {
     try {
-      const res = await instance.put(`/companies/${authStore.user.profile.id}`, updateProfile);
+      const res = await instance.put(
+        `/companies/${authStore.user.profile.id}`,
+        updateProfile
+      );
       runInAction(() => (this.user.profile = res.data));
-      this.loading = false
+      this.loading = false;
       /* ToDo: Refresh the token */
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 }
 const authStore = new AuthStore();
 authStore.checkForToken();
