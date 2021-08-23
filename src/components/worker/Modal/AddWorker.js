@@ -1,12 +1,10 @@
-/* Libraries */
-import Modal from "react-modal";
 /* Imports */
 import React, { useState } from "react";
+import Modal from "react-modal";
+
 /* State and Store */
 import authStore from "../../../stores/authStore";
 import { observer } from "mobx-react";
-
-/* Client Store */
 
 const AddWorker = (props) => {
   const [user, setUser] = useState({
@@ -55,6 +53,7 @@ const AddWorker = (props) => {
         onRequestClose={props.closeModal}
         contentLabel="Example Modal"
         style={customStyles}
+        ariaHideApp={false}
       >
         {/* Register Form */}
         <form onSubmit={handleSubmit}>

@@ -1,5 +1,5 @@
 /* Imports */
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import authStore from "./authStore";
 import instance from "./instance";
 
@@ -16,8 +16,11 @@ class WorkerStore {
   fetchWorker = async (userId) => {
     try {
       const res = await instance.get(`/workers`);
-      this.workers = res.data.filter(
-        (worker) => worker.companyId === authStore.user.profile.id
+      runInAction(
+        () =>
+          (this.workers = res.data.filter(
+            (worker) => worker.companyId === authStore.user.profile.id
+          ))
       );
       this.loading = false;
     } catch (error) {
