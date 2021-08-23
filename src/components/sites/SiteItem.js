@@ -5,13 +5,11 @@ import { observer } from "mobx-react";
 /* Styles */
 import { TaskContainer, ListItem, TaskText } from "./styles";
 
-const SiteItem = ({ client, navigation }) => {
+const SiteItem = ({ contractSite, navigation }) => {
   return (
     <ListItem>
-      <TaskContainer
-        onPress={() => navigation.navigate("TaskList", { client: client })}
-      >
-        <TaskText>{client.clientId}</TaskText>
+      <TaskContainer onPress={() => navigation.navigate("TaskList")}>
+        <TaskText>{contractSite.clientId}</TaskText>
       </TaskContainer>
     </ListItem>
   );

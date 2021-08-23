@@ -20,7 +20,6 @@ const Profile = ({ navigation }) => {
   if (authStore.loading) return <Spinner />;
 
   const client = authStore.user;
-  console.log(client);
 
   const handleSubmit = async () => {
     await authStore.logout();

@@ -10,6 +10,7 @@ import { AuthBackground, AuthButtonText, AuthOther, AuthTitle } from "./styles";
 /* State and Store */
 import { observer } from "mobx-react";
 import authStore from "../../stores/authStore";
+import taskStore from "../../stores/taskStore";
 
 const Login = ({ navigation }) => {
   const [user, setUser] = useState({
@@ -26,6 +27,7 @@ const Login = ({ navigation }) => {
       authStore.user.email.endsWith("@worker.com")
         ? navigation.replace("SiteList")
         : navigation.replace("Home");
+      taskStore.fetchTasks();
     } else {
       alert("Login Failed");
     }

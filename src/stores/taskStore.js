@@ -1,5 +1,7 @@
 /* State and Store */
 import { makeAutoObservable, runInAction } from "mobx";
+import { Spinner } from "native-base";
+import authStore from "./authStore";
 import instance from "./instance";
 
 class TaskStore {
@@ -12,11 +14,11 @@ class TaskStore {
 
   fetchTasks = async () => {
     try {
-      const response = await instance.get("/tasks");
-      runInAction(() => (this.tasks = response.data));
+      const res = await instance.get("/tasks/filter");
+      runInAction(() => (this.tasks = res.data));
       runInAction(() => (this.loading = false));
     } catch (error) {
-      console.error("fetchTasks: ", error);
+      console.error("fetchTasksByType:", error);
     }
   };
 
@@ -38,5 +40,4 @@ class TaskStore {
 }
 
 const taskStore = new TaskStore();
-taskStore.fetchTasks();
 export default taskStore;
