@@ -30,16 +30,16 @@ exports.fetchTaskByUserType = async (req, res, next) => {
   try {
     const { user } = req;
     if (user.profile.companyId) {
-      res.json(await fetchTaskByType("worker", "client", user.profile.id))
+      res.json(await fetchTaskByType("worker", "client", user.profile.id));
     } else if (user.profile.firstName) {
-      res.json(await fetchTaskByType("client", "company", user.profile.id))
+      res.json(await fetchTaskByType("client", "company", user.profile.id));
     } else {
-      res.json(await fetchTaskByType("company", "client", user.profile.id))
+      res.json(await fetchTaskByType("company", "client", user.profile.id));
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 /* Fetch all tasks by user type */
 const fetchTaskByType = async (userType, targetUserType, profileId) => {
@@ -53,37 +53,36 @@ const fetchTaskByType = async (userType, targetUserType, profileId) => {
     /* Find Tasks Matching Contract */
     const tasks = await Task.findAll({
       where: {
-        contractId: contracts.map(contract => contract.id)
+        contractId: contracts.map((contract) => contract.id),
       },
       /* Include Target User Type from Contact Model */
       include: {
         model: Contract,
         as: "contract",
-        attributes: [`${targetUserType}Id`]
-      }
-    })
-    return tasks
+        attributes: [`${targetUserType}Id`],
+      },
+    });
+    return tasks;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
-
-
+};
 
 exports.addTask = async (req, res, next) => {
   try {
-    if (req.body.workerId && req.body.clientId) {
-      const newTask = await Task.create(req.body);
-      res.json(newTask);
-    } else {
-      const error = new Error("Worker or Client should not be Empty.");
-      error.status = 404;
-      next(error);
+    if (!req.user.profile.name || req.user.email.endsWith("@worker.com")) {
+      return res.status(401).json({
+        message: "Unauthorized.",
+      });
     }
+
+    const newTask = await Task.create(req.body);
+    res.json(newTask);
   } catch (error) {
     next(error);
   }
 };
+
 /* Modify task and update the status value */
 exports.updateTask = async (req, res, next) => {
   try {
