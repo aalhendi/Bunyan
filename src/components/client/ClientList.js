@@ -24,7 +24,7 @@ const ClientList = () => {
     setIsOpen(false);
   };
 
-  if (authStore.loading || clientStore.loading) {
+  if (authStore.loading) {
     return <h1> Loading...</h1>;
   }
 

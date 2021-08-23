@@ -4,12 +4,17 @@ import AssignWorker from "./AssignWorker/AssignWorker";
 import { observer } from "mobx-react";
 import authStore from "../../stores/authStore";
 import AddTask from "./addTask/AddTask";
+import TaskItem from "./TaskItem"
+import taskStore from "../../stores/taskStore";
+import { useParams } from "react-router";
+import clientStore from "../../stores/clientStore";
 
 
 function TaskList() {
-    if (authStore.loading) { <h3>Loading</h3> }
+    if (authStore.loading || taskStore.loading || clientStore.loading) { <h3>Loading</h3> }
     /* ToDo: Add Task to the client */
-
+    const { clientId } = useParams()
+    const client = clientStore.clients.find(client => client.id === +clientId)
     /* Worker Modal */
     const [workerOpen, setWorkerOpen] = useState(false)
     const openWorker = () => { setWorkerOpen(true) };
@@ -23,10 +28,12 @@ function TaskList() {
 
     /* pass worker object to the modal */
     const workerItem = workerStore.workers.map((worker) => (worker));
+    const taskItem = taskStore.tasks.filter(task => task.contract.clientId === +clientId).map(task => <TaskItem task={task} key={task.id} />)
+    console.log()
     return (
         <div>
             {/* Will show the client Name -> props from client item  */}
-            <h1 className="text-center m-3">Meshari Al-Doukhi</h1>
+            <h1 className="text-center m-3">{`${client?.firstName} ${client?.lastName}`}</h1>
 
             {/* Task List */}
             <div className="row">
@@ -39,17 +46,7 @@ function TaskList() {
 
                 </div>
                 <div className="container">
-                    <div className="col-9 card mx-auto mb-3">
-                        <div className="card-body d-flex align-items-center">
-                            <h3>This is this task Description</h3>
-                            <div>Here is the check</div>
-                        </div>
-                    </div>
-                    <div className="col-9 card mx-auto mb-3 border-info">
-                        <div className="card-body d-flex align-items-center ">
-                            <h3>This is this task Description</h3>
-                        </div>
-                    </div>
+                    {taskItem}
                 </div>
             </div>
         </div>
