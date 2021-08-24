@@ -4,7 +4,10 @@ import { ScrollView, Text, Dimensions } from "react-native";
 import { observer } from "mobx-react";
 import * as ImagePicker from "expo-image-picker";
 import { Image } from "native-base";
-
+import { Button, Center } from "native-base";
+//Stores
+import authStore from "../../stores/authStore";
+import taskStore from "../../stores/taskStore";
 //styles
 import {
   SafeAreaView,
@@ -14,9 +17,7 @@ import {
   TextTopNavigationBar,
   TopBarText,
 } from "./styles";
-import { Button, Center } from "native-base";
-import authStore from "../../stores/authStore";
-import taskStore from "../../stores/taskStore";
+
 let photoInserted = false;
 
 const TaskDetail = ({ navigation, route }) => {
@@ -30,6 +31,7 @@ const TaskDetail = ({ navigation, route }) => {
     status: task.status,
   });
 
+  //Image picker
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -41,7 +43,6 @@ const TaskDetail = ({ navigation, route }) => {
       }
     })();
   }, []);
-
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -49,7 +50,6 @@ const TaskDetail = ({ navigation, route }) => {
       aspect: [4, 3],
       quality: 1,
     });
-
     if (!result.cancelled) {
       setTaskInfo({
         ...taskInfo,
@@ -60,24 +60,30 @@ const TaskDetail = ({ navigation, route }) => {
       });
     }
   };
-
   const handleSubmit = async () => {
     photoInserted = true;
     pickImage();
   };
-
   const submitImage = async () => {
     photoInserted = false;
     await taskStore.updaeTask(taskInfo);
   };
+
+  //Status change
   const handleChangeStatus = async () => {
-    setTaskInfo({
-      ...taskInfo,
-      status: 1,
-    });
+    authStore.user.email.endsWith("@worker.com")
+      ? setTaskInfo({
+          ...taskInfo,
+          status: 1,
+        })
+      : setTaskInfo({
+          ...taskInfo,
+          status: 3,
+        });
     await taskStore.updaeTask(taskInfo);
   };
 
+  //for image
   const win = Dimensions.get("window");
   const ratio = win.width / 450;
 
@@ -139,12 +145,20 @@ const TaskDetail = ({ navigation, route }) => {
             send the image
           </Button>
         )}
+
         {authStore.user.email.endsWith("@worker.com") ? (
           <Button
             onPress={handleChangeStatus}
             style={{ marginHorizontal: "2.5%" }}
           >
             Job is Done
+          </Button>
+        ) : task.status === 2 ? (
+          <Button
+            onPress={handleChangeStatus}
+            style={{ marginHorizontal: "2.5%" }}
+          >
+            Confirm Job
           </Button>
         ) : null}
       </ScrollView>

@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 /* Components */
 import Login from "../authentication/Login";
 import Register from "../authentication/Register";
-import Home from "../Home";
+import Home from "../home/Home";
 import CategoryList from "../categories/CategoryList";
 import EditProfile from "../profile/EditProfile";
 import TaskList from "../tasks/TaskList";

@@ -49,7 +49,6 @@ class AuthStore {
 
   updateProfile = async (updatedProfile) => {
     try {
-      console.log("Im trying my best:", updatedProfile);
       const res = await instance.put(
         `/clients/${authStore.user.profile.id}`,
         updatedProfile

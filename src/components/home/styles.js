@@ -73,7 +73,8 @@ export const ScrollView = styled.ScrollView`
 export const ActivityContainer = styled.View`
   height: 100px;
   width: 100%;
-  background-color: black;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.grey};
   margin-top: 5%;
 `;
 export const MenuIcon = styled(Feather)`

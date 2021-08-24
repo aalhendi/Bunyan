@@ -1,5 +1,8 @@
 /* Imports */
 import React from "react";
+/*Components*/
+import ActivityList from "./ActivityList";
+/*Styles*/
 import {
   ActivityText,
   ActivityView,
@@ -12,7 +15,6 @@ import {
   TopNavigationBar,
   WelcomeText,
   ScrollView,
-  ActivityContainer,
   SafeAreaView,
   MenuIcon,
   HomeIcon,
@@ -23,7 +25,7 @@ import {
 
 /* State and Store */
 import { observer } from "mobx-react";
-import authStore from "../stores/authStore";
+import authStore from "../../stores/authStore";
 
 const Home = ({ navigation }) => {
   const handleSubmit = async () => {
@@ -35,10 +37,12 @@ const Home = ({ navigation }) => {
     <SafeAreaView>
       <CenteringElementStyled>
         <TopNavigationBar>
-          <MenuIcon name="menu" size={25} />
+          {/* <MenuIcon name="menu" size={25} /> */}
           <TextTopNavigationBar>
             <WelcomeText> Welcome, </WelcomeText>
-            <NameText>Hello</NameText>
+            <NameText>
+              {`${authStore.user?.profile.firstName} ${authStore.user?.profile.lastName}`}
+            </NameText>
           </TextTopNavigationBar>
           <FlexView>
             <LogoutIcon name="log-out" size={25} onPress={handleSubmit} />
@@ -58,14 +62,7 @@ const Home = ({ navigation }) => {
         <ActivityView>
           <ActivityText>Activity</ActivityText>
           <ScrollView>
-            <ActivityContainer></ActivityContainer>
-            <ActivityContainer></ActivityContainer>
-            <ActivityContainer></ActivityContainer>
-            <ActivityContainer></ActivityContainer>
-            <ActivityContainer></ActivityContainer>
-            <ActivityContainer></ActivityContainer>
-            <ActivityContainer></ActivityContainer>
-            <ActivityContainer></ActivityContainer>
+            <ActivityList />
           </ScrollView>
         </ActivityView>
       </CenteringElementStyled>

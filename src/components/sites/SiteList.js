@@ -9,7 +9,7 @@ import SiteItem from "./SiteItem";
 import clientStore from "../../stores/clientStore";
 import authStore from "../../stores/authStore";
 //styles
-import { LogoutIcon } from "../styles";
+import { LogoutIcon } from "../home/styles";
 import {
   SafeAreaView,
   TopNavigationBar,
