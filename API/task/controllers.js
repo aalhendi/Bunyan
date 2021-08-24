@@ -86,14 +86,16 @@ exports.addTask = async (req, res, next) => {
 /* Modify task and update the status value */
 exports.updateTask = async (req, res, next) => {
   try {
-    if (
-      req.user.id !==
-      (req.task.userId || req.task.clientId || req.task.workerId)
-    ) {
-      const error = new Error("Unauthorized.");
+    /*-------------Needs to be repaired-------------√*/
+    const contract = await Contract.findByPk(req.task.contractId);
+    console.log(req.user.profile.id);
+
+    if (contract.dataValues.workerId !== req.user.profile.id) {
+      const error = new Error("Unauthorized");
       error.status = 401;
       next(error);
     }
+
     if (req.file) req.body.image = `http://localhost:8000/${req.file.path}`;
     await req.task.update(req.body);
     res.json(req.task);
