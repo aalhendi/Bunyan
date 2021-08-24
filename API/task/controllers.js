@@ -86,18 +86,39 @@ exports.addTask = async (req, res, next) => {
 /* Modify task and update the status value */
 exports.updateTask = async (req, res, next) => {
   try {
-    /*-------------Needs to be repaired-------------√*/
+    /* check if client logged in and waiting client approval => status = 2 */
     const contract = await Contract.findByPk(req.task.contractId);
-    console.log(req.user.profile.id);
-
-    if (contract.dataValues.workerId !== req.user.profile.id) {
-      const error = new Error("Unauthorized");
-      error.status = 401;
-      next(error);
+    if ((req.user.profile.firstName) && (req.task.status === 2)) {
+      if (contract.dataValues.clientId !== req.user.profile.id) {
+        const error = new Error("Unauthorized");
+        error.status = 401;
+        next(error);
+      }
+      await req.task.update({ status: req.body.status })
+    } else if (req.user.email.endsWith("@worker.com") && (req.task.status === 0)) {
+      if (contract.dataValues.workerId !== req.user.profile.id) {
+        const error = new Error("Unauthorized");
+        error.status = 401;
+        next(error);
+      }
+      if (req.file) req.body.image = `http://localhost:8000/${req.file.path}`;
+      await req.task.update({
+        image: req.body.image,
+        status: req.body.status
+      });
+    } else if (req.user.profile.name && !req.user.email.endsWith("@worker.com")) {
+      if (contract.dataValues.companyId !== req.user.profile.id) {
+        const error = new Error("Unauthorized");
+        error.status = 401;
+        next(error);
+      }
+      if (req.file) req.body.image = `http://localhost:8000/${req.file.path}`;
+      await req.task.update(req.body)
+    } else { //if logged user not company, wroker, or client or Invalid status
+      const error = new Error("Invalid UserType or Unauthorized");
+      error.status = 500;
+      next(error)
     }
-
-    if (req.file) req.body.image = `http://localhost:8000/${req.file.path}`;
-    await req.task.update(req.body);
     res.json(req.task);
   } catch (error) {
     next(error);
