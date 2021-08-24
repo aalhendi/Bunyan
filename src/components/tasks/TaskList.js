@@ -24,9 +24,11 @@ import {
 const TaskList = ({ navigation }) => {
   if (taskStore.loading || clientStore.loading) return <Spinner />;
 
-  const taskList = taskStore.tasks.map((task) => (
-    <TaskItem task={task} key={task.id} navigation={navigation} />
-  ));
+  const taskList = taskStore.tasks
+    .filter((task) => task.status === 0)
+    .map((task) => (
+      <TaskItem task={task} key={task.id} navigation={navigation} />
+    ));
 
   const handleBack = () => {
     authStore.user.profile.companyId !== null
