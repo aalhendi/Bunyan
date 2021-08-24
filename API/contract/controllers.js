@@ -59,7 +59,7 @@ exports.fetchWaitlist = async (req, res, next) => {
 
 exports.fetchClientsByCompany = async (req, res, next) => {
   try {
-    const { user } = req
+    const { user } = req;
     const contracts = await Contract.findAll({
       where: {
         /* Find contracts that match companyId */
@@ -69,6 +69,7 @@ exports.fetchClientsByCompany = async (req, res, next) => {
         /* Only find distinct (unique) clientIds */
         [Sequelize.fn("DISTINCT", Sequelize.col("clientId")), "clientId"],
         "status",
+        "id",
         // Question: How can I include all other columns without listing them all?
       ],
     });
@@ -79,6 +80,7 @@ exports.fetchClientsByCompany = async (req, res, next) => {
         const client = await Client.findByPk(contract.clientId);
         /* Add status to the client object from the contract */
         client.dataValues.status = contract.status;
+        client.dataValues.contractId = contract.id;
         return client;
       })
     );
