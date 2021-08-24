@@ -20,6 +20,16 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
+    address: {
+      type: DataTypes.STRING,
+
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Address is required",
+        },
+      },
+    },
   });
 
   return Client;
