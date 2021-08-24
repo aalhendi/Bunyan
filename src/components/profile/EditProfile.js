@@ -11,6 +11,7 @@ const EditProfile = ({ navigation }) => {
   const [profile, setProfile] = useState({
     firstName: "",
     lastName: "",
+    address: "",
   });
 
   if (authStore.loading) {
@@ -42,6 +43,12 @@ const EditProfile = ({ navigation }) => {
           <Input
             placeholder="last name" // mx={4}
             onChangeText={(lastName) => setProfile({ ...profile, lastName })}
+          />
+        </View>
+        <View style={{ marginBottom: 10 }}>
+          <Input
+            placeholder="address" // mx={4}
+            onChangeText={(address) => setProfile({ ...profile, address })}
           />
         </View>
         <Button onPress={handleSubmit}>Continue</Button>
