@@ -21,6 +21,7 @@ import {
   LogoutIcon,
   ProfileButton,
   FlexView,
+  ActivityContainer,
 } from "./styles";
 
 /* State and Store */
