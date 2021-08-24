@@ -14,6 +14,14 @@ exports.fetchStatuses = async (req, res, next) => {
     next(error);
   }
 };
+exports.fetchContract = async (contractId, next) => {
+  try {
+    const contract = await Contract.findByPk(contractId);
+    return contract;
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.fetchWaitlist = async (req, res, next) => {
   try {
@@ -41,12 +49,6 @@ exports.fetchWaitlist = async (req, res, next) => {
       }
 
       res.json(clientList);
-      // res.json({
-      //   id: foundClient.id,
-      //   firstName: foundClient.firstName,
-      //   lastName: foundClient.lastName,
-      //   status: status.status,
-      // });
     } else {
       const error = new Error("Company not found");
       error.status = 404;
@@ -146,3 +148,29 @@ exports.requestOnboardClient = async (req, res, next) => {
     next(error);
   }
 };
+
+/* Assign Wroker to client by update the contract model */
+exports.updateContract = async (req, res, next) => {
+  try {
+    /* Company will update only the workerId */
+    if (req.user.profile.name && !req.user.email.endsWith("@worker.com") && (req.user.profile.id === req.contract.companyId)) {
+      await req.contract.update({
+        workerId: req.body.workerId
+      })
+      /* Client will update only the status */
+    } else if (req.user.profile.firstName && !req.user.email.endsWith("@worker.com") && (req.user.profile.id === req.contract.clientId)) {
+      await req.contract.update({
+        status: req.body.status
+      })
+    }
+    else {
+      const error = new Error("Unauthorized");
+      error.status = 401;
+      next(error);
+    }
+    res.json(req.contract)
+  } catch (error) {
+    next(error)
+  }
+
+}
