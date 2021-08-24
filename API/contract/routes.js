@@ -1,7 +1,7 @@
 /* Imports */
 const express = require("express");
 const passport = require("passport");
-const { upload } = require("../../middleware/multer");
+const { upload } = require("../../middleware/multer"); //remooooveee diiiss
 
 /* Route Imports */
 const {
@@ -27,6 +27,8 @@ router.param("contractId", async (req, res, next, contractId) => {
 });
 
 /* Fetch Contract Objects */
+//who can fetch the statueses? all the users? company, worker and client?
+// I think you need the jwt strategy here. why? lets take a look at fetchStatueses controller
 router.get("/", fetchStatuses);
 
 /* Create Contract Object */

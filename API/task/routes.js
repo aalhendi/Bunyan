@@ -21,9 +21,13 @@ router.param("taskId", async (req, res, next, taskId) => {
   }
 });
 
+//fetch all the tasks?
 /* Fetch Task*/
 router.get("/", fetchTasks);
+
+// who can add a new task? and it is okay to add task if the user it not logged in?
 router.post("/", addTask);
+
 /* Update Task status  */
 router.put(
   "/:taskId",

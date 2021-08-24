@@ -12,7 +12,8 @@ exports.fetchTask = async (taskId, next) => {
     next(error);
   }
 };
-
+// who would fetch all the tasks?
+//fetch the tasks related to worker, ... much better
 exports.fetchTasks = async (req, res, next) => {
   try {
     const tasks = await Task.findAll({
@@ -24,6 +25,7 @@ exports.fetchTasks = async (req, res, next) => {
   }
 };
 
+// hmmmm checkout my comment in the routes! something is missing (who will add the new task?)
 exports.addTask = async (req, res, next) => {
   try {
     if (req.body.workerId && req.body.clientId) {

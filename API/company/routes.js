@@ -1,10 +1,15 @@
 /* Imports */
 const express = require("express");
 const passport = require("passport");
-const { upload } = require("../../middleware/multer");
+const { upload } = require("../../middleware/multer"); //remove this you are not using it
 
 /* Route Imports */
-const { fetchCompanies, updateProfile, fetchCompany, findCompany } = require("./controllers");
+const {
+  fetchCompanies,
+  updateProfile,
+  fetchCompany,
+  findCompany,
+} = require("./controllers");
 
 const router = express.Router();
 

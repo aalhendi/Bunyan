@@ -6,6 +6,8 @@ const Sequelize = require("sequelize");
 const { Contract, Client, User, Company } = require("../../db/models");
 
 /* Controllers */
+//why fetch all the statuses? why not only the ones related to the company or clinet or worker?
+// so if you will fetch the related statuses you need the jwt strategy thingy
 exports.fetchStatuses = async (req, res, next) => {
   try {
     const statuses = await Contract.findAll();
@@ -30,6 +32,10 @@ exports.fetchWaitlist = async (req, res, next) => {
         },
       });
 
+      // you know I'm gonna comment on this! seriously for loop😭
+      // you better use one of the iteration methods! and yes you can use index in the iteration methods. How? google it🤓
+      //but i don't think you need the index thing here!!!!
+      //Anyways you can leave it like this for now😭
       const clientList = [];
       for (let i = 0; i < waitlist.length; i++) {
         const client = await Client.findOne({
@@ -39,14 +45,17 @@ exports.fetchWaitlist = async (req, res, next) => {
         });
         clientList.push(client);
       }
+      // i hate this i hate it 7aram 3lekum👆🏻😭
 
       res.json(clientList);
+      // remove this comment if you are not gonna use it👇🏻
       // res.json({
       //   id: foundClient.id,
       //   firstName: foundClient.firstName,
       //   lastName: foundClient.lastName,
       //   status: status.status,
       // });
+      //👆🏻
     } else {
       const error = new Error("Company not found");
       error.status = 404;
@@ -76,6 +85,7 @@ exports.fetchClientsByCompany = async (req, res, next) => {
     });
 
     /* Find clients that match clientIds */
+    // why Promise.all ?
     const clientList = await Promise.all(
       contracts.map(async (contract) => {
         const client = await Client.findByPk(contract.clientId);
@@ -118,7 +128,7 @@ exports.requestOnboardClient = async (req, res, next) => {
           next(error);
           // TODO: FIX  VALIDATION ERROR IF RELATIONSHIP EXISTS ?
         }
-
+        // if you had more than one thing in the req.body(status and something else) you shouldn't do this you should use the spread operator(Saleh best friend👬🏻) keep that in mind!
         const status = await Contract.create({
           clientId: foundClient.id,
           companyId: req.body.companyId,

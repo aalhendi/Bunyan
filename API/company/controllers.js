@@ -1,4 +1,4 @@
-/* Imports */
+/* Imports */ //re`move this
 
 /* Models */
 const { Company } = require("../../db/models/");
@@ -20,8 +20,8 @@ exports.findCompany = async (req, res, next) => {
   }
 };
 
-
 /* Controllers */
+// 👆🏻 remove this comment or you can put it before the findCompany controller
 exports.fetchCompanies = async (req, res, next) => {
   try {
     const companies = await Company.findAll();

@@ -20,6 +20,7 @@ router.param("workerId", async (req, res, next, workerId) => {
 });
 
 /* Fetch Workers*/
+//who would fetch all the workers?🤔
 router.get("/", fetchWorkers);
 
 module.exports = router;

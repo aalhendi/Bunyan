@@ -1,4 +1,4 @@
-/* Imports */
+/* Imports */ // you don't need this comment remove it but I appreciate it wallah
 
 /* Models */
 const { Client } = require("../../db/models/");
@@ -12,7 +12,7 @@ exports.fetchClient = async (clientId, next) => {
     next(error);
   }
 };
-
+// why do you need to fetch all the clients? as a worker why do I need to fetch all the clients list? why not the only ones I'm working for?
 exports.fetchClients = async (req, res, next) => {
   try {
     clients = await Client.findAll();
