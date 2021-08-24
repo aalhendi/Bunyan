@@ -14,10 +14,16 @@ import ClientList from "./components/client/ClientList";
 import WorkerList from "./components/worker/WorkerList";
 import Profile from "./components/profile/Profile";
 import TaskList from "./components/task/TaskList";
+import TaskDetail from "./components/task/TaskDetail";
 
 const App = () => {
   return (
     <Switch>
+      {/* ToDo: slug */}
+      <Route path="/task/:taskId/taskDetail">
+        <Navbar />
+        <TaskDetail />
+      </Route>
       <Route path="/profile">
         <Profile />
       </Route>

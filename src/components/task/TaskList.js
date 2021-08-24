@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 
 /* Components */
 import AssignWorker from "./AssignWorker/AssignWorker";
-import AddTask from "./addTask/AddTask";
+import AddTask from "./add/AddTask";
 import TaskItem from "./TaskItem";
 
 /* State and Store */
@@ -29,6 +29,7 @@ const TaskList = () => {
 
   /* Task Modal */
   const [taskOpen, setTaskOpen] = useState(false);
+
   const openTask = () => {
     setTaskOpen(true);
   };
@@ -42,12 +43,12 @@ const TaskList = () => {
 
   const client = clientStore.clients.find((client) => client.id === +clientId);
   /* ToDo: map all task in the taskitem */
-
   /* pass worker object to the modal */
   const workerItem = workerStore.workers.map((worker) => worker);
   const taskItem = taskStore.tasks
     .filter((task) => task.contract?.clientId === +clientId)
-    .map((task) => <TaskItem task={task} key={task.id} />);
+    .map((task) => <TaskItem task={task} key={task.id} openTask={openTask} />);
+
   return (
     <div>
       {/* Will show the client Name -> props from client item  */}
@@ -75,6 +76,7 @@ const TaskList = () => {
             isOpen={workerOpen}
             closeModal={closeWorker}
             worker={workerItem}
+            contractId={client.contractId}
           />
           <AddTask
             isOpen={taskOpen}
@@ -82,7 +84,6 @@ const TaskList = () => {
             worker={workerItem}
             contractId={client.contractId}
           />
-          {console.log(clientId)}
         </div>
         <div className="container">{taskItem}</div>
       </div>
