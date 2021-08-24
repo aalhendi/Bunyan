@@ -6,9 +6,11 @@ const { upload } = require("../../middleware/multer");
 /* Route Imports */
 const {
   fetchStatuses,
+  fetchContract,
   requestOnboardClient,
   fetchWaitlist,
   fetchClientsByCompany,
+  updateContract
 } = require("./controllers");
 
 const router = express.Router();
@@ -48,4 +50,9 @@ router.get(
   fetchWaitlist
 );
 
+router.put(
+  "/:contractId",
+  passport.authenticate("jwt", { session: false }),
+  updateContract
+);
 module.exports = router;
