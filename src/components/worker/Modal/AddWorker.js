@@ -14,6 +14,8 @@ const AddWorker = (props) => {
     phoneNumber: "",
   });
 
+  console.log("Add", user);
+
   if (authStore.loading) {
     return <h1>Loading...</h1>;
   }

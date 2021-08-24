@@ -29,13 +29,11 @@ class ClientStore {
     try {
       // TODO: Ask about runInAction wihtout disabling strict mode or disabling enforcing
       const res = await instance.get(`/contracts/clientsByCompany`);
-      runInAction(
-        () => (this.clients = res.data.filter((client) => client.status !== 0))
-      );
-      runInAction(
-        () => (this.waitList = res.data.filter((client) => client.status === 0))
-      );
-      runInAction(() => (this.loading = false));
+      runInAction(() => {
+        this.clients = res.data.filter((client) => client.status !== 0);
+        this.waitList = res.data.filter((client) => client.status === 0);
+        this.loading = false;
+      });
     } catch (error) {
       console.error("fetchWaitlist: ", error);
     }
