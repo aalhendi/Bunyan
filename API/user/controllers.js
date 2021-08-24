@@ -99,6 +99,7 @@ const createUserProfile = async (userType, newUser, reqBody) => {
           userId: newUser.id,
           firstName: "firstName",
           lastName: "lastName",
+          address: "address",
         });
       case "worker":
         return await Worker.create({
