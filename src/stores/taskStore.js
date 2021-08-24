@@ -33,6 +33,19 @@ class TaskStore {
       console.error("addTask: ", error);
     }
   };
+
+  /* Assign User */
+  assignUser = async (workerId, contractId) => {
+    try {
+      await instance.put(
+        `/contracts/${contractId}`,
+        { workerId }
+      );
+      this.loading = false;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 const taskStore = new TaskStore();
 taskStore.fetchTask();

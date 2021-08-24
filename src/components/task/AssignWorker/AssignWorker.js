@@ -3,10 +3,11 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { observer } from "mobx-react";
 import { Form } from "react-bootstrap";
+import taskStore from "../../../stores/taskStore";
 
 /* Client Store */
 
-const AssignWorker = ({ isOpen, closeModal, worker }) => {
+const AssignWorker = ({ isOpen, closeModal, worker, contractId }) => {
   /* Store Client Phone number  */
   const [newWorker, setNewWorker] = useState("");
   /* Style modal  */
@@ -21,13 +22,12 @@ const AssignWorker = ({ isOpen, closeModal, worker }) => {
     },
   };
   const handleChange = (event) => {
-    setNewWorker(event.target.value);
-    console.log(event.target.id);
+    setNewWorker(event.target.id);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
     /* ToDo: Assign the worker in the task */
-    console.log(newWorker);
+    taskStore.assignUser(newWorker, contractId)
     closeModal();
   };
   return (

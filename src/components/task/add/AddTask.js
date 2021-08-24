@@ -8,7 +8,7 @@ import clientStore from "../../../stores/clientStore";
 /* Client Store */
 
 const AddTask = ({ isOpen, closeModal, contractId }) => {
-  if (clientStore.loading) {
+  if (clientStore.loading || taskStore.loading) {
     <h1>Loading...</h1>;
   }
 
@@ -20,6 +20,7 @@ const AddTask = ({ isOpen, closeModal, contractId }) => {
     contractId: contractId,
     //TODO: CHANGEME
   });
+
   /* Style modal  */
   const customStyles = {
     content: {
