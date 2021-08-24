@@ -27,7 +27,7 @@ const Login = ({ navigation }) => {
       authStore.user.email.endsWith("@worker.com")
         ? navigation.replace("SiteList")
         : navigation.replace("Home");
-      taskStore.fetchTasks();
+      await taskStore.fetchTasks();
     } else {
       alert("Login Failed");
     }

@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ScrollView, Text, Dimensions, Alert } from "react-native";
 import { observer } from "mobx-react";
 import * as ImagePicker from "expo-image-picker";
-import { Image } from "native-base";
-import { Button, Center } from "native-base";
+import { Image, Spinner, Button, Center } from "native-base";
 //Stores
 import authStore from "../../stores/authStore";
 import taskStore from "../../stores/taskStore";
@@ -22,14 +21,15 @@ let photoInserted = false;
 
 const TaskDetail = ({ navigation, route }) => {
   const { task } = route.params;
-  console.log(task.image);
+
   const [taskInfo, setTaskInfo] = useState({
     id: task.id,
     name: task.name,
     description: task.description,
     image: { uri: task.image },
-    status: 0,
+    status: task.status,
   });
+  if (taskStore.loading) <Spinner />;
 
   //Image picker
   useEffect(() => {
@@ -57,6 +57,7 @@ const TaskDetail = ({ navigation, route }) => {
           uri: result.uri,
           name: result.uri.split("/").pop(),
         },
+        status: 1,
       });
     }
   };
@@ -66,25 +67,20 @@ const TaskDetail = ({ navigation, route }) => {
   };
   const submitImage = async () => {
     photoInserted = false;
-    await taskStore.updaeTask(taskInfo);
+    await taskStore.updateTask(taskInfo);
+    if (taskInfo.status === 1) {
+      Alert.alert("Alert", "Job is Done");
+      navigation.goBack();
+    }
   };
 
   //Status change
   const handleChangeStatus = async () => {
-    authStore.user.email.endsWith("@worker.com")
-      ? setTaskInfo({
-          ...taskInfo,
-          status: 1,
-        })
-      : setTaskInfo({
-          ...taskInfo,
-          status: 3,
-        });
-    if (taskInfo.status === 1) {
-      Alert.alert("Alert", "Job is Done");
-      navigation.goBack("TaskList");
-    }
-    await taskStore.updaeTask(taskInfo);
+    setTaskInfo({
+      ...taskInfo,
+      status: 3,
+    });
+    await taskStore.updateTaskForClient(taskInfo);
   };
 
   //for image
@@ -126,43 +122,38 @@ const TaskDetail = ({ navigation, route }) => {
         ) : (
           <Center>No Uploaded Image</Center>
         )}
-        {authStore.user.email.endsWith("@worker.com") && !photoInserted ? (
-          <Button
-            onPress={handleSubmit}
-            style={{
-              marginTop: "7.5%",
-              marginBottom: "2.5%",
-              marginHorizontal: "2.5%",
-            }}
-          >
-            Insert an image
-          </Button>
-        ) : (
-          <Button
-            onPress={submitImage}
-            style={{
-              marginTop: "7.5%",
-              marginBottom: "2.5%",
-              marginHorizontal: "2.5%",
-            }}
-          >
-            send the image
-          </Button>
-        )}
+        {
+          //ToDo: make the submission button better
+          authStore.user.email.endsWith("@worker.com") ? (
+            !photoInserted ? (
+              <Button
+                onPress={handleSubmit}
+                style={{
+                  marginTop: "7.5%",
+                  marginBottom: "2.5%",
+                  marginHorizontal: "2.5%",
+                }}
+              >
+                Insert an image
+              </Button>
+            ) : (
+              <Button
+                onPress={submitImage}
+                style={{
+                  marginTop: "7.5%",
+                  marginBottom: "2.5%",
+                  marginHorizontal: "2.5%",
+                }}
+              >
+                Submit the image
+              </Button>
+            )
+          ) : null
+        }
 
-        {authStore.user.email.endsWith("@worker.com") ? (
-          <Button
-            onPress={handleChangeStatus}
-            style={{ marginHorizontal: "2.5%" }}
-          >
-            Job is Done
-          </Button>
-        ) : task.status === 2 ? (
-          <Button
-            onPress={handleChangeStatus}
-            style={{ marginHorizontal: "2.5%" }}
-          >
-            Confirm Job
+        {!authStore.user.email.endsWith("@worker.com") ? (
+          <Button onPress={handleChangeStatus} style={{ margin: "5%" }}>
+            Change Status
           </Button>
         ) : null}
       </ScrollView>
