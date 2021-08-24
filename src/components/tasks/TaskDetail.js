@@ -22,7 +22,7 @@ let photoInserted = false;
 
 const TaskDetail = ({ navigation, route }) => {
   const { task } = route.params;
-
+  console.log(task.image);
   const [taskInfo, setTaskInfo] = useState({
     id: task.id,
     name: task.name,
