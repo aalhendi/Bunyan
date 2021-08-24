@@ -34,6 +34,7 @@ const TaskList = ({ navigation, route }) => {
     ? taskStore.tasks
         //filter by clientId for specific site => so I dont get all tasks for each site I enter
         .filter((task) => task.contract.clientId === clientObject[0].id)
+        .filter((task) => task.status === 0)
         .map((task) => (
           <TaskItem task={task} key={task.id} navigation={navigation} />
         ))

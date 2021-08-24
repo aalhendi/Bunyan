@@ -62,7 +62,7 @@ const Home = ({ navigation }) => {
         <ActivityView>
           <ActivityText>Activity</ActivityText>
           <ScrollView>
-            <ActivityList />
+            <ActivityContainer></ActivityContainer>
           </ScrollView>
         </ActivityView>
       </CenteringElementStyled>

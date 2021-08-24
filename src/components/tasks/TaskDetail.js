@@ -1,6 +1,6 @@
 //library imports
 import React, { useState, useEffect } from "react";
-import { ScrollView, Text, Dimensions } from "react-native";
+import { ScrollView, Text, Dimensions, Alert } from "react-native";
 import { observer } from "mobx-react";
 import * as ImagePicker from "expo-image-picker";
 import { Image } from "native-base";
@@ -28,7 +28,7 @@ const TaskDetail = ({ navigation, route }) => {
     name: task.name,
     description: task.description,
     image: { uri: task.image },
-    status: task.status,
+    status: 0,
   });
 
   //Image picker
@@ -80,6 +80,10 @@ const TaskDetail = ({ navigation, route }) => {
           ...taskInfo,
           status: 3,
         });
+    if (taskInfo.status === 1) {
+      Alert.alert("Alert", "Job is Done");
+      navigation.goBack("TaskList");
+    }
     await taskStore.updaeTask(taskInfo);
   };
 
