@@ -49,6 +49,20 @@ class ClientStore {
       console.error(error);
     }
   };
+  deleteContract = async (contractId) => {
+    try {
+      const res = await instance.delete(`contracts/${contractId}`);
+      // if (res.status === 204) {
+      runInAction(() => {
+        this.contracts = this.contracts.filter((contract) => {
+          return contract.id !== contractId;
+        });
+      });
+      // }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 }
 
 const clientStore = new ClientStore();
