@@ -11,6 +11,8 @@ import { useState } from "react/cjs/react.development";
 import { ListItem } from "../tasks/styles";
 import clientStore from "../../stores/clientStore";
 import { Alert } from "react-native";
+import authStore from "../../stores/authStore";
+import { observer } from "mobx-react";
 
 const ActivityContractItem = ({ contract }) => {
   const [contractInfo, setContractInfo] = useState({
@@ -19,18 +21,31 @@ const ActivityContractItem = ({ contract }) => {
   });
 
   const handleChangeStatus = async () => {
-    setContractInfo({
-      ...contract,
-      status: 1,
-    });
-    await clientStore.updateContarct(contractInfo);
+    await clientStore.updateContarct({ ...contract, status: 1 });
   };
 
-  const handleAprroved = () => {
+  const handleApproved = () => {
     handleChangeStatus();
-    Alert.alert("Alert", "Job is Done");
+    Alert.alert("Alert", "Contract Approved");
   };
 
+  const handleRejected = async (contractId) => {
+    Alert.alert(
+      "Delete Request",
+      "Are you sure you wish to delete ?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel pressed"),
+        },
+        {
+          text: "Delete",
+          onPress: async () => await clientStore.deleteContract(contractId),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
   return (
     <>
       <ActivityContainer disabled={true}>
@@ -39,13 +54,13 @@ const ActivityContractItem = ({ contract }) => {
           <CrossIcon
             name="cross"
             size={40}
-            onPress={() => console.log("cross")}
+            onPress={() => handleRejected(contract.id)}
           />
-          <CheckIcon name="check" size={40} onPress={handleAprroved} />
+          <CheckIcon name="check" size={40} onPress={handleApproved} />
         </ActivityContainerView>
       </ActivityContainer>
     </>
   );
 };
 
-export default ActivityContractItem;
+export default observer(ActivityContractItem);
