@@ -10,7 +10,8 @@ const {
   requestOnboardClient,
   fetchWaitlist,
   fetchClientsByCompany,
-  updateContract
+  updateContract,
+  deleteContract,
 } = require("./controllers");
 
 const router = express.Router();
@@ -55,4 +56,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   updateContract
 );
+
+router.delete(
+  "/:contractId",
+  passport.authenticate("jwt", { session: false }),
+  deleteContract
+);
+
 module.exports = router;

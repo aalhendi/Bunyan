@@ -153,24 +153,46 @@ exports.requestOnboardClient = async (req, res, next) => {
 exports.updateContract = async (req, res, next) => {
   try {
     /* Company will update only the workerId */
-    if (req.user.profile.name && !req.user.email.endsWith("@worker.com") && (req.user.profile.id === req.contract.companyId)) {
+    if (
+      req.user.profile.name &&
+      !req.user.email.endsWith("@worker.com") &&
+      req.user.profile.id === req.contract.companyId
+    ) {
       await req.contract.update({
-        workerId: req.body.workerId
-      })
+        workerId: req.body.workerId,
+      });
       /* Client will update only the status */
-    } else if (req.user.profile.firstName && !req.user.email.endsWith("@worker.com") && (req.user.profile.id === req.contract.clientId)) {
+    } else if (
+      req.user.profile.firstName &&
+      !req.user.email.endsWith("@worker.com") &&
+      req.user.profile.id === req.contract.clientId
+    ) {
       await req.contract.update({
-        status: req.body.status
-      })
-    }
-    else {
+        status: req.body.status,
+      });
+    } else {
       const error = new Error("Unauthorized");
       error.status = 401;
       next(error);
     }
-    res.json(req.contract)
+    res.json(req.contract);
   } catch (error) {
-    next(error)
+    next(error);
   }
+};
 
-}
+/* Delete a contract object */
+exports.deleteContract = async (req, res, next) => {
+  try {
+    if (req.user.profile.id !== req.contract.clientId) {
+      const error = new Error("Unauthorized");
+      error.status = 401;
+      next(error);
+    }
+
+    await req.contract.destroy();
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+};
