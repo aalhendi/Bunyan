@@ -30,6 +30,7 @@ const TaskDetail = ({ navigation, route }) => {
     image: { uri: task.image },
     status: task.status,
   });
+
   if (taskStore.loading) <Spinner />;
 
   //Image picker
@@ -77,17 +78,15 @@ const TaskDetail = ({ navigation, route }) => {
 
   //Status change
   const handleChange = async () => {
-    setTaskInfo({
-      ...taskInfo,
-      status: 3,
-    });
-    await taskStore.updateTaskForClient(taskInfo, navigation);
-    if (taskInfo.status === 3) {
-      Alert.alert("Alert", "Job Aprroved");
-      navigation.goBack();
-      // await taskStore.fetchTasks();
-      // await clientStore.fetchContracts();
-    }
+    await taskStore.updateTaskForClient(
+      {
+        ...taskInfo,
+        status: 3,
+      },
+      navigation
+    );
+    Alert.alert("Alert", "Job Aprroved");
+    navigation.goBack();
   };
 
   //for image
@@ -158,11 +157,11 @@ const TaskDetail = ({ navigation, route }) => {
           ) : null
         }
 
-        {!authStore.user.email.endsWith("@worker.com") && task.status === 2 ? (
+        {!authStore.user.email.endsWith("@worker.com") && task.status === 2 && (
           <Button onPress={handleChange} style={{ margin: "2.5%" }}>
             Change Status
           </Button>
-        ) : null}
+        )}
       </ScrollView>
     </SafeAreaView>
   );

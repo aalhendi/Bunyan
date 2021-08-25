@@ -75,7 +75,7 @@ export const ActivityText = styled.Text`
 export const ScrollView = styled.ScrollView`
   margin-horizontal: 5%;
 `;
-export const ActivityContainer = styled.View`
+export const ActivityContainer = styled.TouchableOpacity`
   flex: 1;
   flex-direction: row;
   align-items: center;
@@ -87,7 +87,7 @@ export const ActivityContainer = styled.View`
   box-shadow: 0px 0px 1px rgba(25, 50, 47, 0.1);
   padding-horizontal: 5%;
 `;
-export const ActivityContainerView = styled.View`
+export const ActivityContainerView = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-around;
 `;
