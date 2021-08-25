@@ -39,7 +39,7 @@ export const MainContainer = styled.TouchableOpacity`
   padding: 2.5%;
   align-content: center;
   width: 90%;
-  ${"" /* height: 24%; */}
+  height: 20%;
   background-color: #5588a3;
   border-radius: 10px;
   margin-top: 5%;
@@ -47,6 +47,9 @@ export const MainContainer = styled.TouchableOpacity`
   shadow-opacity: 0.2;
 `;
 export const MainContainerText = styled.Text`
+  position: absolute;
+  top: 65px;
+  left: 40px;
   font-size: 30px;
   font-weight: 500;
   color: white;
@@ -112,7 +115,6 @@ export const HomeIcon = styled(AntDesign)`
 `;
 export const ProfileButton = styled(MaterialCommunityIcons)`
   color: ${({ theme }) => theme.blue};
-  flex: 1;
 `;
 export const FlexView = styled.View`
   padding-vertical: 2.5%;

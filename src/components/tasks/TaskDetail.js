@@ -15,6 +15,11 @@ import {
   BackIcon,
   TextTopNavigationBar,
   TopBarText,
+  DetailView,
+  DetailNameText,
+  TextDetailView,
+  DetailText,
+  ClientConfirm,
 } from "./styles";
 import clientStore from "../../stores/clientStore";
 
@@ -108,61 +113,66 @@ const TaskDetail = ({ navigation, route }) => {
         </TextTopNavigationBar>
         <FlexView />
       </TopNavigationBar>
-      <ScrollView keyboardShouldPersistTaps="always">
-        <Text> {task.name}</Text>
-        <Text> {task.description}</Text>
+      {/*====================*/}
+      <DetailView>
+        <DetailNameText>{task.name}</DetailNameText>
+        <ScrollView keyboardShouldPersistTaps="always">
+          <TextDetailView>
+            <DetailText> {task.description}</DetailText>
+          </TextDetailView>
 
-        {taskInfo !== null ? (
-          <Center>
-            <Image
-              source={{ uri: taskInfo.image.uri }}
-              alt={task.name}
-              style={{
-                width: win.width * 0.95,
-                height: 362 * ratio, //362 is actual height of image
-                borderRadius: 5,
-                padding: 10,
-              }}
-            />
-          </Center>
-        ) : (
-          <Center>No Uploaded Image</Center>
-        )}
-        {
-          //ToDo: make the submission button better
-          authStore.user.email.endsWith("@worker.com") ? (
-            !photoInserted ? (
-              <Button
-                onPress={handleSubmit}
+          {taskInfo !== null ? (
+            <Center>
+              <Image
+                source={{ uri: taskInfo.image.uri }}
+                alt={task.name}
                 style={{
-                  marginTop: "7.5%",
-                  marginBottom: "2.5%",
-                  marginHorizontal: "2.5%",
+                  marginTop: 15,
+                  width: win.width * 0.95,
+                  height: 362 * ratio, //362 is actual height of image
+                  borderRadius: 5,
+                  padding: 10,
                 }}
-              >
-                Insert an image
-              </Button>
-            ) : (
-              <Button
-                onPress={submitImage}
-                style={{
-                  marginTop: "7.5%",
-                  marginBottom: "2.5%",
-                  marginHorizontal: "2.5%",
-                }}
-              >
-                Submit the image
-              </Button>
-            )
-          ) : null
-        }
+              />
+            </Center>
+          ) : (
+            <Center>No Uploaded Image</Center>
+          )}
+          {
+            //ToDo: make the submission button better
+            authStore.user.email.endsWith("@worker.com") ? (
+              !photoInserted ? (
+                <Button
+                  onPress={handleSubmit}
+                  style={{
+                    marginTop: "7.5%",
+                    marginBottom: "2.5%",
+                    marginHorizontal: "2.5%",
+                  }}
+                >
+                  Insert an image
+                </Button>
+              ) : (
+                <Button
+                  onPress={submitImage}
+                  style={{
+                    marginTop: "7.5%",
+                    marginBottom: "2.5%",
+                    marginHorizontal: "2.5%",
+                  }}
+                >
+                  Submit the image
+                </Button>
+              )
+            ) : null
+          }
 
-        {!authStore.user.email.endsWith("@worker.com") && task.status === 2 && (
-          <Button onPress={handleChange} style={{ margin: "2.5%" }}>
-            Change Status
-          </Button>
-        )}
-      </ScrollView>
+          {!authStore.user.email.endsWith("@worker.com") &&
+            task.status === 2 && (
+              <ClientConfirm onPress={handleChange}>Approve</ClientConfirm>
+            )}
+        </ScrollView>
+      </DetailView>
     </SafeAreaView>
   );
 };

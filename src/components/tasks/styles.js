@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import { List } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
+import { Button } from "native-base";
 
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -57,7 +58,7 @@ export const ListItemContainer = styled(List)`
 
 export const ListItem = styled(List.Item)`
   flex: 1;
-  align-content:center
+  align-content: center;
   border-radius: 7.5px;
   box-shadow: 0px 0px 3px grey;
   border: 0.4px solid grey;
@@ -90,4 +91,34 @@ export const TaskText3 = styled.Text`
   font-weight: 400;
   margin-horizontal: 2%;
   color: #2a7e18;
+`;
+export const DetailView = styled.View`
+  background-color: white;
+  width: 100%;
+  flex-grow: 1;
+  height: 10%;
+  margin-top: 5%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  shadow-radius: 10px;
+  shadow-opacity: 0.15;
+`;
+export const DetailNameText = styled.Text`
+  font-size: 33px;
+  color: #5588a3;
+  font-weight: 600;
+  margin-top: 5%;
+  margin-left: 5%;
+`;
+export const TextDetailView = styled.View`
+  margin-top: 5%;
+  margin-left: 5%;
+`;
+export const DetailText = styled.Text`
+  font-size: 25px;
+  font-weight: 500;
+`;
+export const ClientConfirm = styled(Button)`
+  margin: 2.5%;
+  background-color: ${({ theme }) => theme.green};
 `;

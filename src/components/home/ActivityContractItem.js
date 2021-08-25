@@ -6,6 +6,7 @@ import {
   CrossIcon,
   CheckIcon,
   ActivityContainerView,
+  ActivityContainerText,
 } from "./styles";
 import { useState } from "react/cjs/react.development";
 import { ListItem } from "../tasks/styles";
@@ -19,6 +20,13 @@ const ActivityContractItem = ({ contract }) => {
     id: contract.id,
     status: contract.status,
   });
+
+  const company = clientStore.companies
+    .filter((c) => c.id === contract.companyId)
+    .map((c) => c);
+  const object = { ...company };
+  const companyName = object[0].name;
+  console.log(company);
 
   const handleChangeStatus = async () => {
     await clientStore.updateContarct({ ...contract, status: 1 });
@@ -49,7 +57,7 @@ const ActivityContractItem = ({ contract }) => {
   return (
     <>
       <ActivityContainer disabled={true}>
-        <Text>{contract.id}</Text>
+        <ActivityContainerText>{companyName}</ActivityContainerText>
         <ActivityContainerView disabled={true}>
           <CrossIcon
             name="cross"
