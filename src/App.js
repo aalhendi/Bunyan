@@ -37,7 +37,7 @@ const App = () => {
         {/* ToDo: Add Task Component */}
         <TaskList />
       </Route>
-      <Route path="/clientlist">
+      <Route path="/clientList">
         <Navbar />
         <ClientList />
       </Route>
@@ -51,6 +51,8 @@ const App = () => {
         {authStore.user ? (
           <>
             {/* TODO: Causes console error: <a> is not a valid child of <a> */}
+            <Redirect to="/clientList" />
+
             <Navbar />
             <Home />
           </>

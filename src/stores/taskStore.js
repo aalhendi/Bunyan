@@ -46,6 +46,17 @@ class TaskStore {
       console.error(error);
     }
   }
+  changeStatus = async (status, taskId) => {
+    try {
+      await instance.put(
+        `/tasks/${taskId}`,
+        { status }
+      );
+      this.loading = false;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 const taskStore = new TaskStore();
 taskStore.fetchTask();

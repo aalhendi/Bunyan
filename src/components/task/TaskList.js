@@ -47,7 +47,7 @@ const TaskList = () => {
   const workerItem = workerStore.workers.map((worker) => worker);
   const taskItem = taskStore.tasks
     .filter((task) => task.contract?.clientId === +clientId)
-    .map((task) => <TaskItem task={task} key={task.id} openTask={openTask} />);
+    .map((task) => <TaskItem task={task} key={task.id} openTask={openTask} contractId={client.contractId} />);
 
   return (
     <div>
