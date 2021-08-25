@@ -37,7 +37,6 @@ const Home = ({ navigation }) => {
     await authStore.logout();
     navigation.replace("Login");
   };
-
   return (
     <SafeAreaView>
       <CenteringElementStyled>
