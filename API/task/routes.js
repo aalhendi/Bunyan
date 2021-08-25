@@ -10,6 +10,7 @@ const {
   updateTask,
   fetchTask,
   fetchTaskByUserType,
+  deleteTask,
 } = require("./controllers");
 
 const router = express.Router();
@@ -43,6 +44,12 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.single("image"),
   updateTask
+);
+
+router.delete(
+  "/:taskId",
+  passport.authenticate("jwt", { session: false }),
+  deleteTask
 );
 
 module.exports = router;
