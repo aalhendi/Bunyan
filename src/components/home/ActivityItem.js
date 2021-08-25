@@ -1,29 +1,19 @@
 //library imports
 import React from "react";
-import { Text, View } from "native-base";
-import {
-  ActivityContainer,
-  CrossIcon,
-  CheckIcon,
-  ActivityContainerView,
-  ActivityContainerText,
-} from "./styles";
-import { TouchableOpacity } from "react-native";
+import { ActivityContainer, ActivityContainerText } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
 const ActivityItem = ({ task }) => {
   const navigation = useNavigation();
 
   return (
-    <View>
-      <TouchableOpacity
+    <>
+      <ActivityContainer
         onPress={() => navigation.navigate("TaskDetail", { task: task })}
       >
-        <ActivityContainer>
-          <ActivityContainerText>{task.name}</ActivityContainerText>
-        </ActivityContainer>
-      </TouchableOpacity>
-    </View>
+        <ActivityContainerText>{task.name}</ActivityContainerText>
+      </ActivityContainer>
+    </>
   );
 };
 

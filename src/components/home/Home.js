@@ -27,8 +27,12 @@ import { observer } from "mobx-react";
 import authStore from "../../stores/authStore";
 import taskStore from "../../stores/taskStore";
 import clientStore from "../../stores/clientStore";
+import { Spinner } from "native-base";
+import { FlatList, View } from "react-native";
 
 const Home = ({ navigation }) => {
+  if (taskStore.loading || clientStore.loading) return <Spinner />;
+
   const handleSubmit = async () => {
     await authStore.logout();
     navigation.replace("Login");

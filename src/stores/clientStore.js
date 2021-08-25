@@ -1,6 +1,6 @@
 /* State and Store */
 import instance from "./instance";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 
 class ClientStore {
   clients = [];
@@ -28,6 +28,25 @@ class ClientStore {
       this.loading = false;
     } catch (error) {
       console.error("fetchContracts: ", error);
+    }
+  };
+
+  updateContarct = async (updatedContract) => {
+    try {
+      const res = await instance.put(
+        `/contracts/${updatedContract.id}`,
+        updatedContract
+      );
+      const newContract = this.contracts.find(
+        (contract) => contract.id === updatedContract.id
+      );
+      runInAction(() => {
+        for (const key in newContract) {
+          newContract[key] = res.data[key];
+        }
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
 }
