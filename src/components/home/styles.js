@@ -1,5 +1,10 @@
 import styled from "styled-components/native";
-import { Feather, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  Entypo,
+  AntDesign,
+  MaterialCommunityIcons,
+  Feather,
+} from "@expo/vector-icons";
 
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -18,7 +23,7 @@ export const TextTopNavigationBar = styled.View`
   padding-vertical: 2.5%;
   flex-direction: column;
   align-items: center;
-  width: 85%;
+  width: 75%;
 `;
 export const WelcomeText = styled.Text`
   font-size: 25px;
@@ -71,14 +76,32 @@ export const ScrollView = styled.ScrollView`
   margin-horizontal: 5%;
 `;
 export const ActivityContainer = styled.View`
-  height: 100px;
-  width: 100%;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.grey};
   margin-top: 5%;
+  box-shadow: 0px 0px 1px rgba(25, 50, 47, 0.1);
+  padding-horizontal: 5%;
 `;
-export const MenuIcon = styled(Feather)`
-  color: #5588a3;
+export const ActivityContainerView = styled.View`
+  flex-direction: row;
+  justify-content: space-around;
+`;
+export const ActivityContainerText = styled.Text`
+  font-size: 25px;
+  font-weight: 400;
+  color: black;
+`;
+
+export const CheckIcon = styled(Entypo)`
+  color: #2a7e18;
+`;
+export const CrossIcon = styled(Entypo)`
+  color: #b33f40;
 `;
 export const LogoutIcon = styled(Feather)`
   color: red;

@@ -16,17 +16,17 @@ import {
   WelcomeText,
   ScrollView,
   SafeAreaView,
-  MenuIcon,
   HomeIcon,
   LogoutIcon,
   ProfileButton,
   FlexView,
-  ActivityContainer,
 } from "./styles";
 
 /* State and Store */
 import { observer } from "mobx-react";
 import authStore from "../../stores/authStore";
+import taskStore from "../../stores/taskStore";
+import clientStore from "../../stores/clientStore";
 
 const Home = ({ navigation }) => {
   const handleSubmit = async () => {
@@ -38,7 +38,7 @@ const Home = ({ navigation }) => {
     <SafeAreaView>
       <CenteringElementStyled>
         <TopNavigationBar>
-          {/* <MenuIcon name="menu" size={25} /> */}
+          <FlexView />
           <TextTopNavigationBar>
             <WelcomeText> Welcome, </WelcomeText>
             <NameText>
@@ -63,7 +63,7 @@ const Home = ({ navigation }) => {
         <ActivityView>
           <ActivityText>Activity</ActivityText>
           <ScrollView>
-            <ActivityContainer></ActivityContainer>
+            <ActivityList />
           </ScrollView>
         </ActivityView>
       </CenteringElementStyled>

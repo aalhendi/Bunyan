@@ -1,6 +1,6 @@
 //library imports
 import React from "react";
-import { Spinner } from "native-base";
+import { Spinner, View, Text } from "native-base";
 import { observer } from "mobx-react";
 import { ScrollView } from "react-native";
 //components
@@ -8,7 +8,6 @@ import TaskItem from "./TaskItem";
 //stores
 import taskStore from "../../stores/taskStore";
 import authStore from "../../stores/authStore";
-import workerStore from "../../stores/workerStore";
 import clientStore from "../../stores/clientStore";
 //styles
 import {
@@ -30,7 +29,7 @@ const TaskList = ({ navigation, route }) => {
     ? route.params
     : "";
   const clientObject = { ...client };
-  const taskList = authStore.user?.email.endsWith("@worker.com")
+  const taskListWaitingWorker = authStore.user?.email.endsWith("@worker.com")
     ? taskStore.tasks
         //filter by clientId for specific site => so I dont get all tasks for each site I enter
         .filter((task) => task.contract.clientId === clientObject[0].id)
@@ -59,7 +58,7 @@ const TaskList = ({ navigation, route }) => {
         <FlexView />
       </TopNavigationBar>
       <ScrollView>
-        <ListItemContainer>{taskList}</ListItemContainer>
+        <ListItemContainer>{taskListWaitingWorker}</ListItemContainer>
       </ScrollView>
     </SafeAreaView>
   );

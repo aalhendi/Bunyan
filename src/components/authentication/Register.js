@@ -22,7 +22,7 @@ const Register = ({ navigation }) => {
   const handleSubmit = async () => {
     user.userType = "client";
     await authStore.register(user, navigation);
-    taskStore.fetchTasks();
+    await taskStore.fetchTasks();
   };
 
   const [show, setShow] = useState(false);

@@ -28,7 +28,6 @@ class TaskStore {
       }
       const res = await instance.put(`/tasks/${updatedTask.id}`, formData);
       const newTask = this.tasks.find((task) => task.id === res.data.id);
-      console.log(newTask);
       const contract = newTask.contract;
       runInAction(() => {
         for (const key in newTask) {
@@ -43,12 +42,8 @@ class TaskStore {
   updateTaskForClient = async (updatedTask) => {
     try {
       const res = await instance.put(`/tasks/${updatedTask.id}`, updatedTask);
-      // console.log(this.tasks);
-      const newTask = this.tasks.find((task) => task.id === res.data.id);
+      const newTask = this.tasks.find((task) => task.id === updatedTask.id);
       // const newTask = res.data;
-      console.log(res.data);
-      console.log(newTask);
-
       runInAction(() => {
         for (const key in newTask) {
           newTask[key] = res.data[key];

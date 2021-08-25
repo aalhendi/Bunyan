@@ -1,14 +1,29 @@
 //library imports
 import React from "react";
-import { List } from "native-base";
 //Styles
-import { ActivityContainer } from "./styles";
+import taskStore from "../../stores/taskStore";
+import ActivityItem from "./ActivityItem";
+import { View } from "native-base";
+import clientStore from "../../stores/clientStore";
+import { observer } from "mobx-react";
+import ActivityContractItem from "./ActivityContractItem";
+import { Text } from "react-native";
 const ActivityList = () => {
+  const activityItemTasks = taskStore.tasks
+    .filter((task) => task.status === 2)
+    .map((task) => <ActivityItem task={task} key={task.id} />);
+  const activityItemContracts = clientStore.contracts
+    .filter((contract) => contract.status === 0)
+    .map((contract) => (
+      <ActivityContractItem contract={contract} key={contract.id} />
+    ));
   return (
-    <List>
-      <ActivityContainer></ActivityContainer>
-    </List>
+    <View>
+      <View>{activityItemContracts}</View>
+      <Text>----------</Text>
+      <View>{activityItemTasks}</View>
+    </View>
   );
 };
 
-export default ActivityList;
+export default observer(ActivityList);

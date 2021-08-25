@@ -1,6 +1,6 @@
 //library imports
 import React, { useState, useEffect } from "react";
-import { ScrollView, Text, Dimensions, Alert } from "react-native";
+import { Text, Dimensions, Alert, ScrollView } from "react-native";
 import { observer } from "mobx-react";
 import * as ImagePicker from "expo-image-picker";
 import { Image, Spinner, Button, Center } from "native-base";
@@ -16,6 +16,7 @@ import {
   TextTopNavigationBar,
   TopBarText,
 } from "./styles";
+import clientStore from "../../stores/clientStore";
 
 let photoInserted = false;
 
@@ -75,12 +76,18 @@ const TaskDetail = ({ navigation, route }) => {
   };
 
   //Status change
-  const handleChangeStatus = async () => {
+  const handleChange = async () => {
     setTaskInfo({
       ...taskInfo,
       status: 3,
     });
-    await taskStore.updateTaskForClient(taskInfo);
+    await taskStore.updateTaskForClient(taskInfo, navigation);
+    if (taskInfo.status === 3) {
+      Alert.alert("Alert", "Job Aprroved");
+      navigation.goBack();
+      // await taskStore.fetchTasks();
+      // await clientStore.fetchContracts();
+    }
   };
 
   //for image
@@ -102,7 +109,7 @@ const TaskDetail = ({ navigation, route }) => {
         </TextTopNavigationBar>
         <FlexView />
       </TopNavigationBar>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <Text> {task.name}</Text>
         <Text> {task.description}</Text>
 
@@ -151,8 +158,8 @@ const TaskDetail = ({ navigation, route }) => {
           ) : null
         }
 
-        {!authStore.user.email.endsWith("@worker.com") ? (
-          <Button onPress={handleChangeStatus} style={{ margin: "5%" }}>
+        {!authStore.user.email.endsWith("@worker.com") && task.status === 2 ? (
+          <Button onPress={handleChange} style={{ margin: "2.5%" }}>
             Change Status
           </Button>
         ) : null}
