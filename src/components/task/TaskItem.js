@@ -3,6 +3,7 @@ import { DeleteBtn, UpdateBtn } from './styles';
 /* State and Store */
 import { observer } from "mobx-react";
 import { Link } from 'react-router-dom';
+import taskStore from '../../stores/taskStore';
 
 function TaskItem({ task, openTask, updateTask }) {
     var taskBorder
@@ -31,7 +32,7 @@ function TaskItem({ task, openTask, updateTask }) {
 
                     <div className="">
                         <UpdateBtn onClick={check} />
-                        <DeleteBtn />
+                        <DeleteBtn onClick={() => taskStore.deleteTask(task.id)} />
                     </div>
                 </div>
             </div>

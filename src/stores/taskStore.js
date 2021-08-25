@@ -57,6 +57,16 @@ class TaskStore {
       console.error(error);
     }
   }
+
+  deleteTask = async (taskId) => {
+    try {
+      await instance.delete(`/tasks/${taskId}`);
+      const updateTask = this.tasks.filter((task) => task.id !== taskId);
+      this.tasks = updateTask;
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
 const taskStore = new TaskStore();
 taskStore.fetchTask();
