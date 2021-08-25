@@ -36,23 +36,58 @@ export const BackIcon = styled(Ionicons)`
 export const TaskContainer = styled.TouchableOpacity`
   height: 70px;
   width: 100%;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const TaskContainerDisabled = styled.TouchableOpacity`
+  height: 70px;
+  width: 100%;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 export const ListItemContainer = styled(List)`
   border-width: 0px;
   margin-left: 4%;
   margin-right: 4%;
 `;
+
 export const ListItem = styled(List.Item)`
-  border-radius: 10px;
-  box-shadow: 2px 2px 4px #000000;
+  flex: 1;
+  align-content:center
+  border-radius: 7.5px;
+  box-shadow: 0px 0px 3px grey;
   border: 0.4px solid grey;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 2.5%;
-  width: 98%;
+  margin-top: 3.5%;
+  width: 100%;
   background-color: ${({ theme }) => theme.white};
 `;
 export const TaskText = styled.Text`
-  padding-top: 4%;
-  font-size: 30px;
+  font-size: 25px;
+  font-weight: 500;
+`;
+export const TaskText0 = styled.Text`
+  font-size: 17.5px;
+  font-weight: 400;
+  margin-horizontal: 2%;
+`;
+export const TaskText1 = styled.Text`
+  font-size: 17.5px;
+  font-weight: 400;
+  margin-horizontal: 2%;
+`;
+export const TaskText2 = styled.Text`
+  font-size: 17.5px;
+  font-weight: 400;
+  margin-horizontal: 2%;
+  color: #5588a3;
+`;
+export const TaskText3 = styled.Text`
+  font-size: 17.5px;
+  font-weight: 400;
+  margin-horizontal: 2%;
+  color: #2a7e18;
 `;
