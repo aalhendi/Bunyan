@@ -16,8 +16,7 @@ function ClientItem({ client }) {
   const count = taskItem.reduce((a, b) => {
     return a + (b === 3)
   }, 0)
-  const totalResult = Math.floor((count / taskItem.length) * 100)
-
+  const totalResult = Math.floor((count / 1 * taskItem.length) * 100)
   return (
     <tr>
       {/* Client Name */}
